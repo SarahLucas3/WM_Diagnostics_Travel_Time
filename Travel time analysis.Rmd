@@ -821,13 +821,13 @@ GP_decrease_TT2<-Travel_time%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum(((cdc_diff)*procedures_by_transport_mode), na.rm=TRUE)) %>%
   bind_rows(Travel_time%>%
     filter(did_patsource_code==4) %>%
-  filter(cdc_closer==1) %>%
+    filter(cdc_closer==1) %>%
   group_by(mode, pt_accessible )%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum((cdc_diff*procedures_by_transport_mode), na.rm=TRUE))) %>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
   select(-pt_accessible, -TT_min, -TT_max)%>%
-  mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
+ mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
  mutate(Total=round(Total/60),1) %>%
  mutate(TT_diff=round(TT_diff,1)) %>%
    pivot_wider(., 
@@ -867,11 +867,10 @@ ungroup()%>%
 #Checking how many GP direct access would be going to the same site 
 Unchanged<-Travel_time%>%
   filter(did_patsource_code==4) %>%
-filter(closest_diff<0) %>%
+filter(closest_diff==0) %>%
 ungroup()%>%
  # group_by(ic_modality_desc)%>%
   summarise(total=sum(procedures_by_transport_mode))
-
 
 
 ```
@@ -1200,7 +1199,7 @@ save_as_docx(Xray, path = "Xray.docx")
 # Select current sites where greater than 365 procedures would be moved, based on CDC being closer or equal distance than current site
 higher_use_sites<-Travel_time%>%
     filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+  filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode)) %>%
    filter(count>1825)
@@ -1213,7 +1212,7 @@ higher_use_sites<-Travel_time%>%
 reason_order <- 
   Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(closest_cdc_site) %>% 
    summarise(count=sum(procedures_by_transport_mode, na.rm = TRUE))%>%
   arrange(count) %>% 
@@ -1223,7 +1222,7 @@ reason_order <-
 # Graph of activity at CDCs
 Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+  filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,closest_cdc_site) %>%
   summarise(count=sum(procedures_by_transport_mode))%>%
     mutate(closest_cdc_site = factor(closest_cdc_site, levels = reason_order$closest_cdc_site, ordered = TRUE)) %>% 
@@ -1245,7 +1244,7 @@ Travel_time%>%
 # Table of activity at CDCs
 Table_activity_to_cdcs<-Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,closest_cdc_site) %>%
   summarise(count=sum(procedures_by_transport_mode)) %>%
   mutate(count=round(count,0)) %>%
@@ -1276,7 +1275,7 @@ save_as_docx(Table_activity_to_cdcs, path = "Table_activity_to_cdcs.docx")
 reason_order <- 
   Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>% 
    summarise(count=sum(procedures_by_transport_mode, na.rm = TRUE))%>%
   arrange(count) %>% 
@@ -1285,7 +1284,7 @@ reason_order <-
 # Graph of reduction in procedures at hospital sites
 Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode, na.rm = TRUE))%>%
   filter(ic_sitename %in% (higher_use_sites$ic_sitename))%>%
@@ -1313,7 +1312,7 @@ Procedures_per_site<-Travel_time %>%
 #Table of activity moving from acute sites
 Table_activity_from_acute<-Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
 group_by(ic_modality_desc,ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode))%>%
   mutate(count=round(count,0)) %>%
@@ -1352,7 +1351,7 @@ save_as_docx(Table_activity_from_acute, path = "Table_activity_from_acute.docx")
  
  cdc_flow <- Travel_time%>%
   filter(did_patsource_code==4) %>%
-  filter(closest_cdc_time<=closest_time) %>%
+    filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename, closest_cdc_site) %>%
   summarise(count=sum(procedures_by_transport_mode))%>%
   filter(ic_sitename %in% (higher_use_sites$ic_sitename))
@@ -1360,10 +1359,10 @@ save_as_docx(Table_activity_from_acute, path = "Table_activity_from_acute.docx")
 
 site <- unique(as.character(cdc_flow$ic_sitename))
 cdc<-unique(as.character(cdc_flow$closest_cdc_site))
-nodes1 <- data.frame(node = c(0:17), 
+nodes1 <- data.frame(node = c(0:16), 
                     name = c(site),
                     type="acute")
-nodes2 <- data.frame(node = c(18:30), 
+nodes2 <- data.frame(node = c(17:29), 
                     name = c(cdc),
                     type="cdc")
 nodes<-rbind(nodes1, nodes2)

@@ -1,0 +1,271 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-03-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(janitor)
+library(sf)
+library(leaflet)
+library(readxl)
+library(stringr)
+library(ggplot2)
+
+
+
+```
+
+# Selecting all postcodes within the West Midlands and 10km buffer
+```{r}
+
+
+#Import sub ICB locations and filter down to Midlands
+map_sub_ICB<- st_read("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/SICBL_JUL_2022_EN_BFC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>% 
+  mutate(sicb_code_2 = sub('.*- ', '', SICBL22NM))%>%
+  filter(sicb_code_2 %in% c("18C","15E","04Y","05D","05G","05Q","05V","05W","M2L0M","D2P2L","B2M3M"))
+
+postcode_lookup<- read_csv("Postcodes.csv")%>%
+   clean_names()
+
+
+# Naming ICBs
+map_sub_ICB$ICB<- case_when(map_sub_ICB$sicb_code_2 %in% c("15E") ~"BIRMINGHAM AND SOLIHULL",
+                            map_sub_ICB$sicb_code_2 %in% c("18C") ~ "HEREFORDSHIRE AND WORCESTERSHIRE",
+                            map_sub_ICB$sicb_code_2 %in% c("M2L0M")~ "SHROPSHIRE, TELFORD AND WREKIN", 
+                            map_sub_ICB$sicb_code_2 %in% c("D2P2L") ~"BLACK COUNTRY",
+                            map_sub_ICB$sicb_code_2 %in% c("B2M3M")~"COVENTRY AND WARWICKSHIRE",
+                            map_sub_ICB$sicb_code_2 %in% c("04Y","05D","05G","05Q","05V","05W") ~"STAFFORDSHIRE AND STOKE-ON-TRENT" ) 
+
+#Combining sub ICBs to plot
+map_sub_ICB <- map_sub_ICB%>%
+    group_by(ICB) %>%
+    summarise(geometry = sf::st_union(geometry)) %>%
+    ungroup()
+
+
+#Combining sub ICBs to plot
+map_west_midlands <- map_sub_ICB%>%
+    summarise(geometry = sf::st_union(geometry)) %>%
+    ungroup()
+
+# Setting a 10 km buffer
+ICB_buffer <- st_buffer(map_west_midlands, 10000)%>%
+  mutate(West_mids_10Km_buffer= c("WestMids"))
+
+# Plotting the sub ICB polygons and 10 km buffer
+  leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(data = map_sub_ICB,
+              weight = 1,  
+              opacity = 1,  
+              color = "black", 
+              fillColor = "#5881c1",
+              label = ~ICB) %>% 
+  addPolygons(data = ICB_buffer,
+              weight = 1,  
+              opacity = 1,  
+              color = "blue", 
+              fillColor = "#5881c1") 
+ 
+# st_write(ICB_buffer, "West_Midlands_ICB_with_buffer.shp")
+ 
+#Spatial position of postcodes 
+postcode_spatial<- postcode_lookup %>%
+  drop_na(oseast1m) %>%
+  mutate(easting=oseast1m) %>%
+  mutate(northing=osnrth1m) %>%
+  st_as_sf(coords = c("oseast1m", "osnrth1m"), crs = 27700) %>% # as shape file
+  st_transform(4326) # geometry from eastings/northings to lng/lat
+
+ # Mark postcodes that are within the West Midlands region and 10km buffer 
+Postcodes_within_WestMids <- postcode_spatial %>%
+  st_transform(crs = 27700) %>%
+  st_join(st_transform(ICB_buffer, crs = 27700),
+    join = st_within)
+
+# Filter postcodes within the West Midlands region and 10km buffer 
+Postcodes_WestMids <-Postcodes_within_WestMids %>%
+  filter(!is.na(West_mids_10Km_buffer)) %>%
+    st_transform(4326) %>%
+  select(., pcd,pcd2,pcds, lat, long, easting, northing, lsoa11)%>%
+  filter(!str_detect(pcds, '^BT')) #Excluding some NI postcodes!
+
+test<-Postcodes_WestMids %>%
+  filter(str_detect(pcds, '^BT'))
+
+# Export a list of West Mids postcodes
+ #leaflet() %>% 
+#addTiles() %>% 
+#addCircleMarkers(data =Postcodes_WestMids,
+         #   weight = 1,  
+         #  opacity = 1,  
+         #  color = "black", 
+         #   fillColor = "#5881c1")
+         
+#Export a file of postcodes
+
+#write.csv(Postcodes_WestMids, "West_Mids_Postcodes_10km_buffer.csv")
+
+# Some postcode have the same easting and northing, so select only the unique easting and northings
+WestMids_unique_eastingnorthing<- Postcodes_WestMids %>%
+distinct(easting, northing, .keep_all = TRUE)
+
+#write.csv(WestMids_unique_eastingnorthing, "West_Mids_unique_geography.csv")
+
+
+```
+# Adding geography to CDC list
+```{r}
+
+
+ # Import list of CDC to add geography
+ cdc<-read_excel("Midlands CDCs.xlsx") %>%
+   clean_names()
+
+  cdc <- cdc %>%
+ left_join(postcode_lookup %>% select(pcds, oseast1m, osnrth1m, lat,long), by = c("postcode" = "pcds"))
+  
+  
+  cdc <- cdc  %>%
+  mutate(easting=oseast1m) %>%
+  mutate(northing=osnrth1m) %>%
+  st_as_sf(coords = c("oseast1m", "osnrth1m"), crs = 27700) %>%
+  st_join(st_transform(ICB_buffer, crs = 27700),
+    join = st_within) %>%
+  filter(!is.na(West_mids_10Km_buffer))
+  
+    cdc<-cdc%>%
+    st_transform(4326)
+  
+  #Export CDC geography file
+#  write.csv(cdc, "CDC_geography.csv")
+ 
+
+```
+
+# Adding geography to acute providers list
+```{r}
+
+
+ # Import list of CDC to add geography
+ acute<-read_excel("Providers.xlsx") %>%
+   clean_names()
+
+  acute <- acute %>%
+ left_join(postcode_lookup %>% select(pcds, oseast1m, osnrth1m, lat,long), by = c("ods_provsite_postcode" = "pcds"))
+  
+  acute<-acute %>%
+    filter(procedures>365)%>%
+  mutate(easting=oseast1m) %>%
+  mutate(northing=osnrth1m) %>%
+  st_as_sf(coords = c("oseast1m", "osnrth1m"), crs = 27700) %>%
+  st_join(st_transform(ICB_buffer, crs = 27700),
+    join = st_within) %>%
+  filter(!is.na(West_mids_10Km_buffer)) %>%
+   mutate(independent= ifelse((str_like(icsitecode, "N%")), 1, 0))
+  
+  acute<-acute %>%
+    st_transform(4326)
+  
+  #Export CDC geography file
+ # write.csv(acute, "acuteproviders_geography.csv")
+
+  
+
+```
+
+# Map of sites
+
+```{r}
+
+
+  # Plotting the sub ICB polygons and 10 km buffer
+    
+    pal<-colorFactor(palette = c("black", "#5881c1", "#ec6555"),domain = c("NHS acute providers", "Private providers", "Community Diagnostic Centres"),ordered = T)
+    
+  leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(data = map_sub_ICB,
+              weight = 1,  
+              opacity = 1,  
+              color = "#2c2825", 
+              fillColor = "#f9bf07",
+              label = ~ICB) %>% 
+  addPolygons(data = ICB_buffer,
+              weight = 1,  
+              opacity = 1,  
+              color = "#2c2825", 
+              fillColor = "#f9bf07") %>%
+    addCircleMarkers(data =(acute %>% filter(independent==0)),
+          weight = 1,
+          radius=2.5,
+          opacity = 1,  
+            color = "black", 
+             fillColor = "black",
+             fillOpacity = 1)%>%
+    addCircleMarkers(data =(acute %>% filter(independent==1)),
+          weight = 1,
+          radius=2.5,
+          opacity = 1,  
+            color = "#5881c1", 
+             fillColor = "#5881c1",
+             fillOpacity = 1)  %>%
+       addCircleMarkers(data =cdc,
+          weight = 1,
+          radius=2.5,
+          opacity = 1,  
+            color = "#ec6555", 
+             fillColor = "#ec6555",
+             fillOpacity = 1) %>%
+addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7)
+  
+
+```
+
+# Checking open roads map
+
+```{r}
+roads <- read_sf(dsn = ".", layer = "OpenRd_230405_013927")%>%
+   st_transform(4326)
+
+  leaflet() %>% 
+    addTiles()%>%
+    addPolygons(data = ICB_buffer,
+              weight = 1,  
+              opacity = 1,  
+              color = "blue", 
+              fillColor = "#5881c1") %>%
+    addPolylines(data=roads)
+```
+
+
+```{r, fig.width=9, fig.height=10}
+
+
+number_order <- acute %>% 
+  arrange(procedures) %>% 
+  mutate(ic_sitename = factor(ic_sitename))
+
+acute %>%
+    mutate(ic_sitename = factor(ic_sitename, levels =unique(number_order$ic_sitename), ordered = TRUE)) %>% 
+  ggplot() +
+  geom_bar(aes(x=ic_sitename, y =procedures), stat="identity", position="dodge", fill="#f9bf07")+
+  theme_bw()+
+  theme(panel.grid.major.x = element_line(color = "grey80"), panel.grid.major.y =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 8), 
+        axis.title.x = element_text(size = 14), axis.title.y = element_text(size = 14,vjust=2), 
+        legend.text=element_text(size=12),legend.title=element_blank(),
+        plot.title = element_text(size=14), legend.position= c(0.85, 0.8))+ 
+  scale_y_continuous(labels = scales::comma)+
+  coord_flip()
+
+
+
+
+
+
+```

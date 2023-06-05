@@ -1,0 +1,14 @@
+id,name,address,postcode,type,west_mids,lat,long,easting,northing
+1,Cannock Chase CDC,Cannock,WS11 5XY,Large,1,52.693241,-2.030614,398028,310618
+2,Corbett CDC,Stourbridge,DY8 4JB,Standard Hub,1,52.465406,-2.146398,390151,285284
+3,Corbett CDC (Castle Hill Institute of Technology),Dudley,DY1 4AL,Spoke,1,52.517334,-2.074665,395030,291051
+4,Corbett CDC (Guest),Dudley,DY1 4SE,Spoke,1,52.519082,-2.072625,395169,291247
+5,Corbett CDC (Merry Hill),Brierley Hill,DY5 1RU,Spoke,1,52.48177,-2.117851,392093,287099
+6,Coventry City Community CDC,Coventry,CV1 4FS,Large,1,52.413455,-1.507828,433573,279607
+7,Coventry City Community CDC (Rugby St Cross),Rugby,CV22 5PX,Spoke,1,52.365275,-1.259031,450551,274394
+8,Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC),Tamworth,B78 3NG,Spoke,1,52.620665,-1.723867,418791,302580
+9,Kidderminster CDC,Kidderminster,DY11 6RJ,Large,1,52.386056,-2.261161,382322,276478
+10,South Warwickshire CDC,Stratford-upon-Avon,CV37 6NX,Large,1,52.195265,-1.7134,419687,255264
+11,Warwickshire North,Nuneaton,CV10 7DJ,Standard,1,52.51258,-1.478439,435493,290649
+12,Washwood Heath,Birmingham,B8 3SN,Standard,1,52.488314,-1.849487,410317,287831
+13,Hinckley CDC,Hinckley,LE10 1AG,Large Hub,0,52.539751,-1.368258,442944,293731

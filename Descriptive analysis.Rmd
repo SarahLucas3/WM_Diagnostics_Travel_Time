@@ -1,0 +1,335 @@
+---
+title: "Descriptive"
+output: word_document
+date: "2023-05-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library(tidyverse)
+library(data.table)
+library(sf)
+library(leaflet)
+library(mapview)
+library(janitor)
+library(readxl)
+library(scales)
+
+activity<-read.csv("DIDs_data.csv") %>%clean_names()
+acute_tt_lsoa<-fread("acute_tt_lsoa.csv")
+cdc_tt_lsoa<-fread("cdc_tt_lsoa.csv")
+
+acute<-read_csv("acuteproviders_geography.csv")
+ cdc<-read_csv("CDC_geography.csv") 
+ 
+lsoa_pop<-read.csv("Mid-2019 LSOA pop estimates.csv")
+
+
+#Remove sites with less than 365 procedures
+activity<-activity %>%
+ left_join(., acute[,c("ic_sitename", "independent", "wm_site")], by=c("ic_sitename")) %>%
+ filter(did_patsource_code==3|did_patsource_code==4|did_patsource_code==6|did_patsource_code==7)%>%
+     filter(!is.na(wm_site)) %>%
+    filter(ic_lsoa!="NULL") %>%
+    group_by(ic_sitename)%>%
+  mutate(total=sum(procedure_count)) %>%
+  filter(total>365)%>%
+  select(c(-total))
+
+# Import West Midlands postcodes
+West_Mids_Postcodes<-read.csv("West_Mids_Postcodes_10km_buffer.csv")%>%
+  distinct(lsoa11)
+```
+
+
+# Adding activity at each location
+
+```{r}
+# Mark which sites have facilities to do which procedures using activity data
+activity_per_site<- activity %>%
+  mutate(mri=ifelse(ic_modality_desc=='Magnetic resonance imaging (procedure)',1,0))%>%
+  mutate(cat=ifelse(ic_modality_desc=='Computerized axial tomography (procedure)',1,0))%>%
+  mutate(us=ifelse(ic_modality_desc=='Diagnostic ultrasonography (procedure)',1,0))%>%
+  mutate(xray=ifelse(ic_modality_desc=='Plain radiography (procedure)',1,0)) %>%
+  group_by(ic_sitename)%>%
+  summarise(mri=max(mri),cat=max(cat), us=max(us), xray=max(xray))
+  
+
+# Join procedures available to acute site information
+acute<-left_join(acute, activity_per_site, by=c("ic_sitename"))
+
+#Filter out sites with no activity in any of these categories
+acute<-acute %>%
+  filter(!is.na(mri))
+
+```
+
+
+
+
+# IMD and activity
+
+Only used those resident in West Midlands for the IMD analysis (not those in the buffer region as activity was much lower in general)
+
+```{r}
+ # Adding in LSOA IMD for 2019
+ imd_england<-read.csv("imd2019lsoa.csv") %>% clean_names()%>%
+  select(lsoa_code_2011, index_of_multiple_deprivation_imd_decile)%>%
+  rename("IMD"="index_of_multiple_deprivation_imd_decile")
+
+ imd_wales<-read.csv("imd2019lsoa_wales.csv") %>%
+   select(LSOA.Code, WIMD.2019.Overall.Decile)%>%
+   rename("IMD"="WIMD.2019.Overall.Decile")%>%
+   rename("lsoa_code_2011"="LSOA.Code")
+
+
+imd<-rbind(imd_england, imd_wales)%>%
+  filter(!is.na(IMD))%>%
+  distinct()
+
+#Add activity to WM LSOAs
+activity<- left_join(West_Mids_Postcodes, activity, by=c("lsoa11"="ic_lsoa"))
+
+
+#Joining IMD data to Activity data
+activity<-left_join(activity, imd[, c("lsoa_code_2011","IMD")], by=c("lsoa11"="lsoa_code_2011"))%>%
+  left_join(., lsoa_pop, by=c("lsoa11"="LSOA.Code") ) %>%
+  mutate(procedure_count=ifelse(is.na(procedure_count), 0, procedure_count)) %>%
+  mutate(rate=(procedure_count/All.Ages)*1000) 
+ 
+# Number of imaging procedures per 1,000 people 
+activity%>%
+  filter(wm_resident==1 & wm_site==1)%>%
+  group_by(lsoa11,IMD,All.Ages) %>%
+  summarise(total=sum(procedure_count)) %>%
+  ungroup()%>%
+  group_by(IMD) %>%
+  summarise(rate=(sum(total)/sum(All.Ages))*1000) %>%
+ mutate(IMD=as.character(IMD)) %>%
+   mutate(IMD=fct_relevel(IMD,c("1","2","3","4","5","6","7","8","9", "10"))) %>%
+ arrange(IMD) %>%
+  ggplot(mapping=aes(x = IMD, y= rate))+
+    geom_bar(position="dodge", stat="identity", fill="#f9bf07")+
+  geom_text(aes(label=round(rate,0)),  vjust=1.2) +
+  ggtitle("Number of imaging procedures per 1,000 people") +
+  labs(y = "Number/1,000", x="Index of Multiple Deprivation decile")+
+  theme_bw()+
+  theme(panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size= 12), axis.text.y = element_text(size = 12), 
+        axis.title.x = element_text(size=14), axis.title.y = element_text(size = 14,vjust=2), 
+        legend.text=element_text(size=12),legend.title=element_blank(),plot.title = element_text(size=14), legend.position= "bottom") +
+       scale_y_continuous(expand = c(0, 0), limits=c(0,500,0)) 
+ 
+sum(activity$procedure_count)
+
+# Number of imaging procedures per 1,000 people 
+  activity%>%
+   filter(wm_resident==1 & wm_site==1)%>%
+    filter(!is.na(ic_modality_desc))%>%
+  group_by(lsoa11,IMD,All.Ages, ic_modality_desc) %>%
+  summarise(total=sum(procedure_count)) %>%
+  ungroup()%>%
+  group_by(IMD, ic_modality_desc) %>%
+  summarise(rate=(sum(total)/sum(All.Ages))*1000) %>%
+  ungroup()%>%
+   mutate(IMD=as.character(IMD)) %>%
+  arrange(IMD) %>%
+   mutate(IMD=fct_relevel(IMD,c("1","2","3","4","5","6","7","8","9","10"))) %>%
+  ggplot(mapping=aes(x = IMD, y= rate))+
+    geom_bar(position="dodge", stat="identity", fill="#f9bf07")+
+  facet_wrap(~ic_modality_desc,scales="free_y" )+
+  geom_text(aes(label=round(rate,0)),  vjust=1.2) +
+  ggtitle("Number of imaging procedures per 1,000 people by type") +
+  labs(y = "Number/1,000", x="Index of Multiple Deprivation decile")+
+  theme_bw()+
+  theme(strip.background = element_blank(), strip.text=element_text(size=11),
+        panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), 
+        panel.grid.minor.x =  element_blank(), 
+        panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size= 12), axis.text.y = element_text(size = 12), 
+        axis.title.x = element_text(size=14), axis.title.y = element_text(size = 14,vjust=2), 
+        legend.text=element_text(size=12),legend.title=element_blank(),plot.title = element_text(size=14), legend.position= "bottom") 
+ 
+
+
+```
+
+# Activity data summary
+
+```{r, fig.height=4.5, fig.width=7}
+
+
+Procedures_per_site<- activity  %>%
+  group_by(ic_modality_desc, ic_sitename, did_patsource_code, independent)%>%
+  summarise(total=sum(procedure_count)) %>%
+ mutate(ic_modality_desc = case_when(ic_modality_desc=="Computerized axial tomography (procedure)"~"CAT",
+                                    ic_modality_desc=="Diagnostic ultrasonography (procedure)" ~ "Ultrasound",
+                                    ic_modality_desc =="Magnetic resonance imaging (procedure)" ~ "MRI",
+                                    ic_modality_desc =="Plain radiography (procedure)" ~ "X-ray"))
+
+Procedures_per_site<-left_join(Procedures_per_site, activity_per_site, by=c("ic_sitename"))%>%
+  filter(!is.na(ic_sitename))
+
+# Number of sites providing each procedure
+Procedures_per_site %>%
+  ungroup()%>%
+  distinct(ic_sitename, mri,cat,xray,us) %>%
+  summarise(mri=sum(mri), cat=sum(cat), xray=sum(xray), us=sum(us)) %>%
+  gather(.,key=procedure, value=number) %>%
+ mutate(procedure = case_when(procedure=="cat"~"CAT",
+                                    procedure=="us" ~ "Ultrasound",
+                                    procedure =="mri" ~ "MRI",
+                                   procedure =="xray" ~ "X-ray"))%>%
+  ggplot(aes(x=procedure, y =number)) +
+  geom_bar( stat="identity", position="dodge", fill="#f9bf07") +
+  geom_text(aes(label=scales::comma(number)),  vjust=1.2, size=5) +
+  theme_bw()+
+  theme(panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 14), 
+        axis.title.y = element_text(size = 16), axis.title.x = element_blank(), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.85, 0.8))+ 
+   labs(y="Number of acute sites")+
+  scale_y_continuous(labels = scales::comma)  
+
+
+  
+  
+# Number of each procedure type
+Procedures_per_site %>% 
+  group_by(ic_modality_desc)%>%
+  summarise(total=sum(total)) %>%
+  ggplot(aes(x=ic_modality_desc, y =total)) +
+  geom_bar( stat="identity", position="dodge", fill="#f9bf07")+
+  geom_text(aes(label=scales::comma(total)),  vjust=1.2, size=5) +
+  theme_bw()+
+  theme(panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 14), 
+        axis.title.y = element_text(size = 16), axis.title.x = element_blank(), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.85, 0.8))+ 
+   labs(y="Number of imaging procedures")+
+  scale_y_continuous(labels = scales::comma) 
+
+
+# Number of imaging requests by each route
+Procedures_per_site %>% 
+   mutate(did_patsource_code=case_when(did_patsource_code==3 ~ "Outpatient",
+                               did_patsource_code==4 ~ "GP direct access",
+                               did_patsource_code==6 ~ "Other health care provider",
+                               did_patsource_code==7 ~ "Other"))%>%
+  group_by(did_patsource_code)%>%
+  summarise(total=sum(total)) %>%
+  ggplot(aes(x=did_patsource_code, y =total)) +
+  geom_bar(stat="identity", position="dodge", fill="#f9bf07")+
+    geom_text(aes(label=scales::comma(total)),  vjust=-0.1, size=5) +
+  theme_bw()+
+  theme(panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 14), 
+        axis.title.y = element_text(size = 16), axis.title.x = element_blank(), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.85, 0.8))+ 
+   labs(y="Number of imaging procedures")+
+  scale_y_continuous(labels = scales::comma) +
+scale_x_discrete(labels = wrap_format(15))
+
+# Number of procedures at acute sites vs private sites
+table<-Procedures_per_site %>% 
+  mutate(independent=case_when(independent==1 ~ "Private provider",
+                               independent==0 ~ "NHS acute provider"))%>%
+group_by(independent)%>%
+  summarise(total=sum(total), sites = n_distinct(ic_sitename))%>%
+  mutate(freq =(total / sum(total))*100)
+
+
+```
+
+#Number of procedures by Hospital
+
+```{r, fig.height=12, fig.width=12}
+# Number of procedures by hospital
+ number_order <- Procedures_per_site %>% 
+  group_by(ic_sitename)%>%
+  summarise(total=sum(total)) %>%
+  arrange(total) %>% 
+  mutate(ic_sitename = factor(ic_sitename))
+
+Procedures_per_site %>% 
+  group_by(ic_sitename)%>%
+  summarise(total=sum(total)) %>%
+    mutate(ic_sitename = factor(ic_sitename, levels =unique(number_order$ic_sitename), ordered = TRUE)) %>% 
+  ggplot() +
+  geom_bar(aes(x=ic_sitename, y =total), stat="identity", position="dodge", fill="#f9bf07")+
+  theme_bw()+
+  theme(panel.grid.major.x = element_line(color = "grey80"), panel.grid.major.y =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 12), 
+        axis.title.y = element_blank(), axis.title.x = element_text(size = 16), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.85, 0.8))+ 
+  scale_y_continuous(labels = scales::comma)+
+   labs(y = "Number of imaging procedures")+
+  coord_flip()
+```
+
+# Waiting lists by provider
+```{r, fig.height=4.5, fig.width=12}
+
+waiting_list<-read.csv("Waiting times by provider Feb 2023.csv") %>% clean_names()
+
+waiting_list<-waiting_list %>%
+  filter(diagnostic_test_name=="Magnetic Resonance Imaging"|diagnostic_test_name=="Computed Tomography"|diagnostic_test_name=="Non-obstetric Ultrasound")
+
+waiting_size_order <- waiting_list %>% 
+  group_by(provider_name)%>%
+  summarise(total=sum(total_waiting_list)) %>%
+  arrange(total) %>% 
+  mutate(provider_name = factor(provider_name ))
+
+
+# Total waiting list size
+waiting_list %>% 
+  filter(provider_code!="RWD"& provider_code!="RWE"& provider_code!="NVC21"&provider_code!="NVC40"&provider_code!="NVC23")%>%
+  mutate(provider_name = factor(provider_name, levels =unique(waiting_size_order$provider_name), ordered = TRUE)) %>% 
+  ggplot() +
+  geom_bar(aes(x=provider_name, y =total_waiting_list, fill=diagnostic_test_name), stat="identity", position="stack")+
+  theme_bw()+
+  theme(panel.grid.major.x = element_line(color = "grey80"), panel.grid.major.y =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 12), 
+        axis.title.y = element_blank(), axis.title.x = element_text(size = 16,vjust=2), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.65, 0.15))+ 
+  scale_y_continuous(labels = scales::comma)+
+   labs(y = "Waiting list size")+
+  scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555"))+
+  coord_flip()
+
+
+waiting_size_order2 <- waiting_list %>% 
+  group_by(provider_name)%>%
+  summarise(total=sum(percentage_waiting_6_weeks)) %>%
+  arrange(total) %>% 
+  mutate(provider_name = factor(provider_name ))
+
+# % percentage waiting 6 weeks
+waiting_list %>% 
+  filter(provider_code!="RWD"& provider_code!="RWE"& provider_code!="NVC21"&provider_code!="NVC40"&provider_code!="NVC23")%>%
+  mutate(provider_name = factor(provider_name, levels =unique(waiting_size_order2$provider_name), ordered = TRUE)) %>% 
+  ggplot() +
+  geom_bar(aes(x=provider_name, y =(percentage_waiting_6_weeks*100), fill=diagnostic_test_name), stat="identity", position="dodge")+
+  theme_bw()+
+  theme(panel.grid.major.x = element_line(color = "grey80"), panel.grid.major.y =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 12), 
+        axis.title.y = element_blank(), axis.title.x = element_text(size = 16,vjust=2), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=16), legend.position= c(0.65, 0.15))+ 
+  scale_y_continuous(labels = scales::comma)+
+   labs(y = "Percentage waiting 6 weeks+")+
+  scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555"))+
+  coord_flip()
+
+
+
+
+```

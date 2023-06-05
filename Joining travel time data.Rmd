@@ -1,0 +1,278 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-03-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(data.table)
+
+geography<-read.csv("West_Mids_unique_geography.csv")
+postcodes<-read.csv("West_Mids_Postcodes_10km_buffer.csv") 
+acute<-read.csv("acuteproviders_geography.csv")
+cdc<-read.csv("CDC_geography.csv")
+
+#Travel time data to CDCs
+walk_cdc <- fread("tracc/walk_cdc.csv")
+car_cdc <- fread("tracc/car_cdc.csv")
+PT_cdc <- fread("tracc/PT_cdc.csv")
+
+#Travel time data to Acute Providers
+walk_acute<- fread("tracc/walk_acute.csv")
+car_acute <- fread("tracc/car_acute.csv")
+
+
+#PT calculation for acute providers needed to be done is 6 parts
+PT_acute_ori1_des1<-fread("tracc/PT_acute_ori1_des1.csv")
+PT_acute_ori2_des1<-fread("tracc/PT_acute_ori2_des1.csv")
+
+PT_acute_ori1_des2a<-fread("tracc/PT_acute_ori1_des2a.csv")
+PT_acute_ori1_des2b<-fread("tracc/PT_acute_ori1_des2b.csv")
+
+PT_acute_ori2_des2a<-fread("tracc/PT_acute_ori2_des2a.csv")
+PT_acute_ori2_des2b<-fread("tracc/PT_acute_ori2_des2b.csv")
+
+# Add in files uploaded to TRACC as TRACC gives new IDs, the analysis files need to be merged to the uploaded files to associate the correct IDs
+origin1<-fread("Uploaded to tracc/Origins 1.csv")
+origin2<-fread("Uploaded to tracc/Origins 2.csv")
+
+des1<-fread("Uploaded to tracc/acute1.csv")
+des2a<-fread("Uploaded to tracc/acute2a.csv")
+des2b<-fread("Uploaded to tracc/acute2b.csv")
+
+```
+
+
+# CDCs merging travel time files for each mode (walk, car, PT) 
+
+```{r}
+#CDC travel time merge into one file
+
+#car
+car_cdc <-car_cdc%>% 
+  rename( car_distance = TotalJourneyDistance,
+    car_time = TotalJourneyTime)
+
+#walk
+walk_cdc <- walk_cdc %>% 
+  rename( walk_distance = TotalJourneyDistance,
+    walk_time = TotalJourneyTime)
+
+#PT
+PT_cdc <- PT_cdc %>% 
+  rename(pt_time = TotalJourneyTime)
+
+#merge
+cdc_travel_time<-merge(car_cdc, walk_cdc, by=c('OriginId','DestinationId'), all=T,allow.cartesian=TRUE )
+
+
+#merge
+cdc_travel_time<-merge(cdc_travel_time, PT_cdc, by=c('OriginId','DestinationId'), all=T,allow.cartesian=TRUE )
+
+
+```
+
+# CDCs Adding origin and destination details
+
+```{r}
+
+#Adding destination information
+cdc_tt<- left_join(cdc_travel_time, cdc, by=c('DestinationId'='id')) %>%
+  rename(destination_easting =easting, destination_northing=northing)
+
+#Add in the eastings and northings
+cdc_tt<-left_join(cdc_tt, geography[, c("id", "easting", "northing")], by=c('OriginId'='id'))
+
+# Add travel time to postcodes
+cdc_tt<- left_join(postcodes, cdc_tt,  by=c('easting','northing')) 
+
+# Find all possible combinations
+cdc2<-cdc %>%
+rename(cdc_id=id, easting_cdc=easting, northing_cdc=northing)
+
+all_cdc_combinations<-crossing(postcodes, cdc2)
+
+# Add in travel time data
+all_cdc_combinations<-left_join(all_cdc_combinations, cdc_tt[,c("pcds","name", "car_time", "car_distance", "pt_time", "walk_time", "walk_distance")], by=c("pcds", "name"))
+
+
+ readr::write_csv(all_cdc_combinations, file = "cdc_tt.csv")
+ 
+```
+
+# CDCs Calculate the average travel time for each LSOA to destination
+
+```{r}
+
+ cdc_tt_lsoa<-all_cdc_combinations %>%
+mutate(pt_time = ifelse(pt_time>60, 120, pt_time)) %>%
+  mutate(car_time = ifelse(car_time>60, 120, car_time)) %>%
+ mutate_all(~replace(., is.na(.), 120)) %>%
+  group_by(lsoa11,name) %>%
+  summarise(car_distance=median(car_distance), 
+            car_time=median(car_time), 
+            walk_distance= median(walk_distance),
+            walk_time=median(walk_time),
+            pt_time=median(pt_time) )%>%
+            mutate(centre="CDC")
+
+
+ readr::write_csv(cdc_tt_lsoa, file = "cdc_tt_lsoa.csv")
+
+```
+
+# Acute Providers merging travel time files for each mode (walk, car, PT) 
+
+```{r}
+#Acute provider travel time merge into one file
+
+#car
+car_acute <-car_acute%>% 
+rename( car_distance = TotalJourneyDistance,
+car_time = TotalJourneyTime)
+
+#walk
+walk_acute <- walk_acute %>% 
+  rename( walk_distance = TotalJourneyDistance,
+    walk_time = TotalJourneyTime)
+
+
+#Merging PT data for acute providers
+
+# Ori1 Des 1
+PT_acute_ori1_des1<-left_join(PT_acute_ori1_des1, origin1, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori1_des1<-left_join(PT_acute_ori1_des1, des1, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori1_des1<-PT_acute_ori1_des1 %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Ori2 Des 1
+PT_acute_ori2_des1<-left_join(PT_acute_ori2_des1, origin2, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori2_des1<-left_join(PT_acute_ori2_des1, des1, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori2_des1<-PT_acute_ori2_des1 %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Ori1 Des 2a
+PT_acute_ori1_des2a<-left_join(PT_acute_ori1_des2a, origin1, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori1_des2a<-left_join(PT_acute_ori1_des2a, des2a, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori1_des2a<-PT_acute_ori1_des2a %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Ori1 Des 2b
+PT_acute_ori1_des2b<-left_join(PT_acute_ori1_des2b, origin1, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori1_des2b<-left_join(PT_acute_ori1_des2b, des2b, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori1_des2b<-PT_acute_ori1_des2b %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Ori2 Des 2a
+PT_acute_ori2_des2a<-left_join(PT_acute_ori2_des2a, origin2, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori2_des2a<-left_join(PT_acute_ori2_des2a, des2a, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori2_des2a<-PT_acute_ori2_des2a %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Ori2 Des 2b
+PT_acute_ori2_des2b<-left_join(PT_acute_ori2_des2b, origin2, by=c('OriginId'='tracc_id'))
+
+PT_acute_ori2_des2b<-left_join(PT_acute_ori2_des2b, des2b, by=c('DestinationId'='tracc_id'))
+
+PT_acute_ori2_des2b<-PT_acute_ori2_des2b %>%
+  select(-OriginId, -DestinationId)%>%
+  rename('OriginId'='V1.x','DestinationId'='V1.y')
+
+# Merge PT into one file
+PT_acute<-rbind(PT_acute_ori1_des1, 
+                PT_acute_ori2_des1,
+                PT_acute_ori1_des2a,
+                PT_acute_ori1_des2b,
+                PT_acute_ori2_des2a,
+                PT_acute_ori2_des2b)
+
+PT_acute<- PT_acute %>%
+   rename(pt_time = TotalJourneyTime)%>%
+  select(OriginId, DestinationId, pt_time)
+
+#merge
+acute_travel_time<-full_join(car_acute, walk_acute, by=c('OriginId','DestinationId'))
+
+#merge
+acute_travel_time<-full_join(acute_travel_time, PT_acute, by=c('OriginId','DestinationId'))
+
+acute_travel_time<-acute_travel_time%>%
+mutate(pt_time = ifelse(pt_time>60, 120, pt_time)) %>%
+ mutate_all(~replace(., is.na(.), 120)) %>%
+  distinct()
+
+
+```
+
+# Acute Providers Adding origin and destination details
+
+```{r}
+
+# Add in Destination details
+acute_tt<- left_join(acute_travel_time, acute, by=c('DestinationId'='id'))%>%
+  rename(destination_easting =easting, destination_northing=northing)
+
+#Add in the eastings and northings
+acute_tt<-left_join(acute_tt, geography[, c("id", "easting", "northing")], by=c('OriginId'='id'))
+
+# Add travel time to postcodes
+acute_tt<- left_join(postcodes, acute_tt, by=c('easting','northing'))%>%
+  filter(!is.na(ic_sitename))
+
+test<-acute_tt %>%
+  filter(is.na(ic_sitename))
+
+# Find all possible combinations
+acute2<-acute %>%
+rename(acute_id=id, easting_acute=easting, northing_acute=northing)
+
+all_acute_combinations<-crossing(postcodes, acute2)
+
+# Add in travel time data
+all_acute_combinations<-left_join(all_acute_combinations, acute_tt[,c("pcds","ic_sitename", "car_time", "car_distance", "pt_time", "walk_time", "walk_distance")], by=c("pcds", "ic_sitename"))%>% 
+  distinct()
+
+
+ readr::write_csv(all_acute_combinations, file = "acute_tt.csv")
+```
+
+# Acute Providers Calculate the average travel time for each LSOA to destination
+
+```{r}
+all_acute_combinations<-read.csv("acute_tt.csv")
+
+acute_tt_lsoa<-all_acute_combinations %>%
+mutate(pt_time = ifelse(pt_time>60, 120, pt_time)) %>%
+  mutate(car_time = ifelse(car_time>60, 120, car_time)) %>%
+ mutate_all(~replace(., is.na(.), 120)) %>%
+  group_by(lsoa11, ic_sitename, independent) %>%
+  summarise(car_distance=median(car_distance), 
+            car_time=median(car_time), 
+            walk_distance= median(walk_distance),
+            walk_time=median(walk_time),
+            pt_time=median(pt_time)) %>%
+            mutate(centre=ifelse(independent==1, "Private", "Acute"))
+
+ readr::write_csv(acute_tt_lsoa, file = "acute_tt_lsoa.csv")
+ 
+
+```
+

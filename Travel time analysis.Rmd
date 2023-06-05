@@ -32,8 +32,8 @@ library(basemapR)
 activity<-read.csv("DIDs_data.csv") %>%clean_names()
 
 #Travel time data
-acute_tt_lsoa<-fread("acute_tt_lsoa.csv") %>% mutate(pt_time=ifelse(pt_time>60, 120, pt_time))
-cdc_tt_lsoa<-fread("cdc_tt_lsoa.csv")
+acute_tt_lsoa<-fread("acute_tt_lsoa.csv") %>% mutate(pt_time=ifelse(pt_time>60, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
+cdc_tt_lsoa<-fread("cdc_tt_lsoa.csv")%>% mutate(pt_time=ifelse(pt_time>60, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
 
 # Site data
 acute<-read_csv("acuteproviders_geography.csv")
@@ -631,13 +631,13 @@ activity_travel_time<-activity %>%
 Travel_time<-activity_travel_time %>%
   mutate(cdc_diff=closest_cdc_time-time) %>% #difference in TT using CDC compared to site used
   mutate(cdc_reduced_TT=ifelse(cdc_diff<0,1,0))%>% # flag LSOA where CDC is closer than the site that was used
-    mutate(cdc_diff=ifelse(time==120, NA ,cdc_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
+    mutate(cdc_diff=ifelse((time==120|closest_cdc_time==120), NA ,cdc_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
   mutate(closest_site=ifelse(closest_private_time<closest_nhs_time, closest_private_site, closest_nhs_site)) %>% #Closest site  
   mutate(closest_time=ifelse(closest_private_time<closest_nhs_time, closest_private_time, closest_nhs_time)) %>% #Closest time
   mutate(use_closest=ifelse(time<=closest_time,1,0)) %>% #flag where the closest site is currently used
     mutate(closest_diff=closest_cdc_time-closest_time) %>% # difference between CDC and nearest acute site
  mutate(cdc_closer=ifelse(closest_diff<0,1,0))%>% # flag LSOA where CDC is closer than the previous closest site
-    mutate(closest_diff=ifelse(closest_time==120, NA ,closest_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
+    mutate(closest_diff=ifelse((closest_time==120|closest_cdc_time==120), NA ,closest_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
   mutate(pt_accessible=ifelse(closest_time==120 & closest_cdc_time<120,1,0)) %>% #flag rows where new cdc's make areas accessible by pt
  mutate(ic_modality_desc=case_when(ic_modality_desc=='Magnetic resonance imaging (procedure)' ~ "MRI",
                        ic_modality_desc== 'Computerized axial tomography (procedure)'~ "CAT", 
@@ -839,6 +839,39 @@ GP_decrease_TT2<-Travel_time%>%
 mutate(Number_Car= paste(Number_Car, " (",round(((Number_Car/Number)*100),1), "%)", sep=""))%>%
 mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))%>%
 mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
+
+
+#Checking how many GP direct access have Private as their closest site
+private<-Travel_time%>%
+  filter(did_patsource_code==4) %>%
+filter(closest_site==closest_private_site) %>%
+    ungroup()%>%
+  #group_by(ic_modality_desc)%>%
+  summarise(total=sum(procedures_by_transport_mode))
+
+#Checking how many GP direct access would be going to the same site 
+Unchanged<-Travel_time%>%
+  filter(did_patsource_code==4) %>%
+filter(closest_diff==0 & ((closest_cdc_site=="Corbett CDC" & ic_sitename=="CORBETT HOSPITAL (RNA04)")|
+                      (closest_cdc_site=="Corbett CDC (Guest)" & ic_sitename=="GUEST HOSPITAL (RNA02)")|
+                      (closest_cdc_site=="Coventry City Community CDC" & ic_sitename=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
+                        (closest_cdc_site=="Coventry City Community CDC (Rugby St Cross)" & ic_sitename=="HOSPITAL OF ST CROSS (RKB03)")|
+                        (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & ic_sitename=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
+                        (closest_cdc_site=="Kidderminster CDC" & ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)")|
+                        (closest_cdc_site=="South Warwickshire CDC" & ic_sitename=="STRATFORD HOSPITAL (RJC03)")|
+                        (closest_cdc_site=="Warwickshire North" & ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)")) ) %>%
+ungroup()%>%
+ # group_by(ic_modality_desc)%>%
+  summarise(total=sum(procedures_by_transport_mode))
+
+#Checking how many GP direct access would be going to the same site 
+Unchanged<-Travel_time%>%
+  filter(did_patsource_code==4) %>%
+filter(closest_diff<0) %>%
+ungroup()%>%
+ # group_by(ic_modality_desc)%>%
+  summarise(total=sum(procedures_by_transport_mode))
+
 
 
 ```

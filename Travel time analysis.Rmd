@@ -572,6 +572,9 @@ car_ownership_by_lsoa<-car_ownership_by_lsoa %>%
   mutate(Proportion_with_car=((Households-no_car)/Households))
 
 
+
+
+
 ```
 
 # Merging and Reformitting travel time data
@@ -655,7 +658,46 @@ Travel_time<-left_join(Travel_time, car_ownership_by_lsoa[,c("lsoa11", "Proporti
 
 
 ```
+# Car ownership table
 
+```{r}
+# LSOA to ICB lookup
+lsoa_icb<-read.csv("LSOA_ICB.csv")
+
+# Add ICB information
+Travel_time<-Travel_time %>%
+  left_join(., lsoa_icb [,c("LSOA11CD", "ICB22NM")], by=c("ic_lsoa"="LSOA11CD")) 
+
+car_data<-Travel_time %>%
+  filter(mode=="Public transport") %>%
+  group_by(ICB22NM)%>%
+  summarise(car=(1-mean(Proportion_with_car))*100, number=sum(procedures_by_transport_mode)) %>%
+  filter(!is.na(ICB22NM))%>%
+  mutate(car=round(car,1)) %>%
+  mutate(number=round(number,0))
+
+
+car_ownership_table<-flextable(car_data) %>%
+align(.,  align = "center")  %>%
+align(., j=1, align = "left")  %>%
+  set_header_labels(.,
+     ICB22NM="ICB",
+     car="% of households without a car",
+     number="Estimated number of procedures where patients don't own a car") %>%
+  align(., i = 1, part = "header", align = "left")%>% 
+hline(.,  i = 1, part = "header", border=fp_border(color="#f9bf07")) %>%
+  bg(., bg = "#f9bf07", part = "header")  %>%
+  set_caption(., "Car ownership by ICB",  style = "Table Caption")%>%
+  hline_bottom (.,  border = fp_border(color="black", width = 2))%>%
+  hline_top(., part="all", border = fp_border(color="black", width = 2))%>%
+  bold(., i = 1, bold = TRUE, part="header")%>%
+    line_spacing(., i = NULL, j = NULL, space = 1.5, part = "body") 
+
+car_ownership_table
+
+
+
+```
 # Calculating impact of CDCs on travel time
 
 ```{r}
@@ -1354,10 +1396,12 @@ save_as_docx(Table_activity_from_acute, path = "Table_activity_from_acute.docx")
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename, closest_cdc_site) %>%
   summarise(count=sum(procedures_by_transport_mode))%>%
-  filter(ic_sitename %in% (higher_use_sites$ic_sitename))
-
+  filter(ic_sitename %in% (higher_use_sites$ic_sitename)) %>%
+group_by(ic_sitename) %>%
+  arrange(desc(count))
 
 site <- unique(as.character(cdc_flow$ic_sitename))
+
 cdc<-unique(as.character(cdc_flow$closest_cdc_site))
 nodes1 <- data.frame(node = c(0:16), 
                     name = c(site),
@@ -1367,9 +1411,11 @@ nodes2 <- data.frame(node = c(17:29),
                     type="cdc")
 nodes<-rbind(nodes1, nodes2)
 
-test<-cdc_flow %>%
+test<-cdc_flow  %>%
     left_join(., nodes1, by=c("ic_sitename"="name")) %>%
-   left_join(., nodes2, by=c("closest_cdc_site"="name"))
+   left_join(., nodes2, by=c("closest_cdc_site"="name")) 
+
+
 
 test<-as.data.frame(test)%>%
   mutate(group=ifelse((closest_cdc_site=="Corbett CDC" & ic_sitename=="CORBETT HOSPITAL (RNA04)")|
@@ -1380,7 +1426,7 @@ test<-as.data.frame(test)%>%
                         (closest_cdc_site=="Kidderminster CDC" & ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)")|
                         (closest_cdc_site=="South Warwickshire CDC" & ic_sitename=="STRATFORD HOSPITAL (RJC03)")|
                         (closest_cdc_site=="Warwickshire North" & ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)"), "a","b")) %>%
-  mutate(group=as.factor(group))
+  mutate(group=as.factor(group))  
 
 my_color <- 'd3.scaleOrdinal() .domain(["a", "b", "cdc", "acute"]) .range(["#f9bf07", "#9d928a","#f9bf07","#f9bf07" ])'
 
@@ -1390,7 +1436,8 @@ sankey<-networkD3::sankeyNetwork(Links = test, Nodes = nodes,
                          Value = 'count', 
                          NodeID = 'name',
                          fontSize = 11, nodePadding=10, height=500, width=800,
-                         colourScale = my_color, LinkGroup="group", NodeGroup="type")
+                         colourScale = my_color, LinkGroup="group", NodeGroup="type",
+              iterations = 0   )
 
 saveNetwork(sankey, "sankey.html")
 

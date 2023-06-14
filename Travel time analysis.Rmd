@@ -32,8 +32,8 @@ library(basemapR)
 activity<-read.csv("DIDs_data.csv") %>%clean_names()
 
 #Travel time data
-acute_tt_lsoa<-fread("acute_tt_lsoa.csv") %>% mutate(pt_time=ifelse(pt_time>60, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
-cdc_tt_lsoa<-fread("cdc_tt_lsoa.csv")%>% mutate(pt_time=ifelse(pt_time>60, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
+acute_tt_lsoa<-fread("acute_tt_lsoa.csv") %>% mutate(pt_time=ifelse(pt_time>60|pt_time==120.000, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
+cdc_tt_lsoa<-fread("cdc_tt_lsoa.csv")%>% mutate(pt_time=ifelse(pt_time>60|pt_time==120.000, 120, pt_time))%>% mutate(car_time=ifelse(car_time>60, 120, car_time))
 
 # Site data
 acute<-read_csv("acuteproviders_geography.csv")
@@ -44,7 +44,7 @@ lsoa_pop<-read.csv("Mid-2019 LSOA pop estimates.csv")
 
 # Filter on referral method/ Only WM sites (or those within 10 km)/ have a recorded LSOA/ 365 or more procedures
 activity<-activity %>%
- left_join(., acute[,c("ic_sitename", "independent", "wm_site")], by=c("ic_sitename")) %>%
+ left_join(., acute[,c("ic_sitename", "ic_provname","independent", "wm_site")], by=c("ic_sitename", "ic_provname")) %>%
  filter(did_patsource_code==3|did_patsource_code==4|did_patsource_code==6|did_patsource_code==7)%>%
      filter(!is.na(wm_site)) %>%
     filter(ic_lsoa!="NULL") %>%
@@ -53,6 +53,12 @@ activity<-activity %>%
   filter(total>365)%>%
   select(c(-total))
 
+test<-activity%>%
+  ungroup()%>%
+  summarise(total=sum(procedure_count))
+
+c<-activity %>%
+  filter(ic_lsoa=="W01000453" & ic_modality_desc=="Magnetic resonance imaging (procedure)" & ic_sitename=="ROYAL SHREWSBURY HOSPITAL (RXWAS)")
 
 ```
 
@@ -68,7 +74,6 @@ West_Mids_Postcodes<-read.csv("West_Mids_Postcodes_10km_buffer.csv")%>%
 lsoa_boundaries<- st_read("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LSOA_Dec_2011_Boundaries_Generalised_Clipped_BGC_EW_V3/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson")
 
 West_Mids_Lsoa<-left_join(West_Mids_Postcodes, lsoa_boundaries[, c("LSOA11CD", "geometry")], by=c('lsoa11'='LSOA11CD'))
-
 
 #Import sub ICB locations and filter down to Midlands
 map_sub_ICB<- st_read("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/SICBL_JUL_2022_EN_BFC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson") %>% 
@@ -246,7 +251,7 @@ addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers
     geom_sf(data = (acute %>% filter(independent==1)%>%filter({{procedure}}==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
     geom_sf(data = (acute %>% filter(independent==0)%>%filter({{procedure}}==1)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
        geom_sf(data = cdc, aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
-  scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85")+
+  scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,10),na.value = "grey85")+
   theme_void() +
  theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.89,0.82)) +
   labs( fill = "Travel time (mins)", size=16) +
@@ -371,6 +376,8 @@ Activity_by_LSOA <- West_Mids_Lsoa %>%
   mutate(rate=(procedure_count/All.Ages)*1000) 
 
 
+
+
 # Activity rate per 1000
 Activity_plot(Activity_by_LSOA, rate, '(procedure)' ,  "Total imaging procedures\n per 1,000")
 Activity_plot(Activity_by_LSOA, rate,  'Magnetic',  "MRI procedures\n per 1,000")
@@ -394,10 +401,10 @@ Activity_plot(Activity_by_LSOA, procedure_count, 'ultrasonography'  ,  "Ultrasou
 
 # Activity total
 Activity_leaflet(Activity_by_LSOA, procedure_count, '(procedure)',  "Total imaging procedures")
-Activity_leaflet(Activity_by_LSOA,  procedure_count, 'Magnetic' ,  "MRI procedures")
-Activity_leaflet(Activity_by_LSOA,  procedure_count, 'Computerized' ,  "CAT procedures")
-Activity_leaflet(Activity_by_LSOA,  procedure_count,'radiography' ,  "X-ray procedures")
-Activity_leaflet(Activity_by_LSOA,  procedure_count, 'ultrasonography' ,  "Ultrasound procedures")
+Activity_leaflet(Activity_by_LSOA,  rate, 'Magnetic' ,  "MRI procedures")
+Activity_leaflet(Activity_by_LSOA,  rate, 'Computerized' ,  "CAT procedures")
+Activity_leaflet(Activity_by_LSOA,  rate,'radiography' ,  "X-ray procedures")
+Activity_leaflet(Activity_by_LSOA, rate, 'ultrasonography' ,  "Ultrasound procedures")
 
 pal_fun <- colorNumeric("Spectral", NULL, n = 7, reverse = TRUE)
     
@@ -611,7 +618,7 @@ right_join(., acute_tt_lsoa [,c("ic_sitename", "lsoa11", "car_time", "pt_time")]
 #NHS
 min_nhs_travel_time <-activity %>%
    filter(independent==0) %>%
-select(ic_sitename, ic_modality_desc) %>%
+select(ic_sitename,  ic_modality_desc) %>%
 distinct() %>%
 right_join(., acute_tt_lsoa [,c("ic_sitename", "lsoa11", "car_time", "pt_time")], by=c("ic_sitename")) %>%
       filter(ic_sitename %in% activity_per_site$ic_sitename & !is.na(ic_modality_desc))   %>%
@@ -623,12 +630,13 @@ right_join(., acute_tt_lsoa [,c("ic_sitename", "lsoa11", "car_time", "pt_time")]
 # Joining activity with acute provider travel times and add in acute centres with min travel time
 activity_travel_time<-activity %>%
     filter(ic_lsoa %in% West_Mids_Lsoa$lsoa11)   %>%
-      filter(ic_sitename %in% activity_per_site$ic_sitename)   %>%
   left_join(.,acute_travel_time,  by=c("ic_lsoa"= "lsoa11", "ic_sitename")) %>%
   left_join(., min_cdc_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_cdc_mode"))%>%
   left_join(., min_private_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_private_mode", "ic_modality_desc"))%>%
   left_join(., min_nhs_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_nhs_mode", "ic_modality_desc")) %>%
   select(-wm_site,-wm_resident)
+
+
 
 #Add flags for closest nhs, cdc, private site and overall closest site
 Travel_time<-activity_travel_time %>%
@@ -640,7 +648,7 @@ Travel_time<-activity_travel_time %>%
   mutate(use_closest=ifelse(time<=closest_time,1,0)) %>% #flag where the closest site is currently used
     mutate(closest_diff=closest_cdc_time-closest_time) %>% # difference between CDC and nearest acute site
  mutate(cdc_closer=ifelse(closest_diff<0,1,0))%>% # flag LSOA where CDC is closer than the previous closest site
-    mutate(closest_diff=ifelse((closest_time==120|closest_cdc_time==120), NA ,closest_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
+  mutate(closest_diff=ifelse((closest_time==120|closest_cdc_time==120), NA ,closest_diff)) %>% #Mark rows with NA where TT is reduced so now under 1 hr
   mutate(pt_accessible=ifelse(closest_time==120 & closest_cdc_time<120,1,0)) %>% #flag rows where new cdc's make areas accessible by pt
  mutate(ic_modality_desc=case_when(ic_modality_desc=='Magnetic resonance imaging (procedure)' ~ "MRI",
                        ic_modality_desc== 'Computerized axial tomography (procedure)'~ "CAT", 
@@ -653,9 +661,40 @@ Travel_time<-activity_travel_time %>%
 
 # Divide activity (procedure count) between car and PT travel inline with car ownership
 Travel_time<-left_join(Travel_time, car_ownership_by_lsoa[,c("lsoa11", "Proportion_with_car")], by=c("ic_lsoa"="lsoa11")) %>%
-  mutate(procedures_by_transport_mode= ifelse(mode=="Public transport", (procedure_count*(1-Proportion_with_car)), (procedure_count*Proportion_with_car))) 
+  mutate(procedures_by_transport_mode= ifelse(mode=="Public transport", (procedure_count*(1-Proportion_with_car)), (procedure_count*Proportion_with_car)))
 
 
+#Checking how many procedures are moved to Car from PT due to inaccessibility
+PT_to_Car<-Travel_time %>%
+  filter(mode=="Public transport" & closest_time==120) %>%
+ group_by(ic_modality_desc, cdc_closer) %>%
+  summarise(total=round(sum(procedures_by_transport_mode)))
+
+#Selecting records where closest site is inaccessible by PT
+a<-Travel_time%>%
+  filter(mode=="Public transport" & closest_time==120)%>%
+  mutate(edit=1)
+
+#Count to check numbers
+counta<-a%>%
+  ungroup()%>%
+ summarise(total=sum(procedures_by_transport_mode))
+
+#Join to select records that need editing 
+b<-Travel_time %>%
+  inner_join(., a[,c("ic_lsoa","ic_modality_desc", "ic_sitename", "ic_provname" , "did_patsource_code" , "edit")], by=c("ic_lsoa","ic_modality_desc", "ic_sitename", "ic_provname" , "did_patsource_code" ))
+  
+ #  Marking records to be editted, changing procedure number, and removing public transport
+  Travel_time_edit<- Travel_time%>%
+    left_join(., b[,c("ic_lsoa","ic_modality_desc", "ic_sitename", "ic_provname" , "did_patsource_code" , "edit")], by=c("ic_lsoa","ic_modality_desc", "ic_sitename", "ic_provname" , "did_patsource_code" )) %>%
+    filter((is.na(edit) & mode=="Public transport") | mode=="Car") %>%
+    mutate(procedures_by_transport_mode=ifelse(is.na(edit),procedures_by_transport_mode, procedure_count))%>%
+    distinct()
+ 
+  #Checking numbers   
+count<-Travel_time_edit%>%
+  ungroup()%>%
+ summarise(total=sum(procedures_by_transport_mode)) 
 
 ```
 # Car ownership table
@@ -669,12 +708,14 @@ Travel_time<-Travel_time %>%
   left_join(., lsoa_icb [,c("LSOA11CD", "ICB22NM")], by=c("ic_lsoa"="LSOA11CD")) 
 
 car_data<-Travel_time %>%
-  filter(mode=="Public transport") %>%
-  group_by(ICB22NM)%>%
+ mutate(mode=ifelse((mode=="Public transport" & closest_time==120), "Car", mode)) %>%
+  group_by(ICB22NM,mode)%>%
   summarise(car=(1-mean(Proportion_with_car))*100, number=sum(procedures_by_transport_mode)) %>%
-  filter(!is.na(ICB22NM))%>%
+  mutate(ICB22NM=ifelse(is.na(ICB22NM), "Outside WM", ICB22NM))%>%
+  mutate(car=ifelse(mode=="Car",NA, car)) %>%
   mutate(car=round(car,1)) %>%
-  mutate(number=round(number,0))
+  mutate(number=round(number,0)) %>%
+  spread(key=mode, value=number)
 
 
 car_ownership_table<-flextable(car_data) %>%
@@ -683,7 +724,8 @@ align(., j=1, align = "left")  %>%
   set_header_labels(.,
      ICB22NM="ICB",
      car="% of households without a car",
-     number="Estimated number of procedures where patients don't own a car") %>%
+     `Public transport`="Procedures assigned to using Public transport",
+     Car="Procedures assigned to using Car") %>%
   align(., i = 1, part = "header", align = "left")%>% 
 hline(.,  i = 1, part = "header", border=fp_border(color="#f9bf07")) %>%
   bg(., bg = "#f9bf07", part = "header")  %>%
@@ -695,7 +737,7 @@ hline(.,  i = 1, part = "header", border=fp_border(color="#f9bf07")) %>%
 
 car_ownership_table
 
-
+save_as_docx(car_ownership_table, path ="car_ownership_table.docx")
 
 ```
 # Calculating impact of CDCs on travel time
@@ -821,20 +863,20 @@ GP_cdc_reduces_TT<-Travel_time%>%
 
 
 # GP direct access Number that will be made accessible by PT that were over 60 min previously and travel time reduction compared to current closest site.
-GP_decrease_TT<-Travel_time%>%
+GP_decrease_TT<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(ic_modality_desc, mode, pt_accessible )%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(closest_diff, na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))%>%
-  bind_rows(Travel_time%>%
+  bind_rows(Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(mode, pt_accessible )%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(closest_diff, na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))) %>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
-  select(-pt_accessible)%>%
-  mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
+ select(-pt_accessible)%>%
+#  mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
     mutate(TT_diff=round(TT_diff,1)) %>%
    pivot_wider(., 
             id_cols = ic_modality_desc, 
@@ -843,11 +885,12 @@ GP_decrease_TT<-Travel_time%>%
   mutate(Total=(Total_Car+`Total_Public transport`)) %>%
   left_join(.,GP_Total_procedures, by=c("ic_modality_desc")) %>%
 mutate(Number_Car= paste(Number_Car, " (",round(((Number_Car/Number)*100),1), "%)", sep=""))%>%
-mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))%>%
-mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
+mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))
+
+#mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
 
 
-test<-Travel_time%>%
+test<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   filter(mode=="Public transport")
@@ -856,20 +899,21 @@ qqnorm(test$closest_diff)
 
 
  # GP direct access Number that will be made accessible by PT that were over 60 min previously and travel time reduction compared to site they are currently using.
-GP_decrease_TT2<-Travel_time%>%
+GP_decrease_TT2<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(ic_modality_desc, mode, pt_accessible )%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum(((cdc_diff)*procedures_by_transport_mode), na.rm=TRUE)) %>%
-  bind_rows(Travel_time%>%
+  bind_rows(Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
     filter(cdc_closer==1) %>%
   group_by(mode, pt_accessible )%>%
   summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum((cdc_diff*procedures_by_transport_mode), na.rm=TRUE))) %>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
-  select(-pt_accessible, -TT_min, -TT_max)%>%
- mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
+ select(-pt_accessible)%>%
+  select( -TT_min, -TT_max)%>%
+# mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
  mutate(Total=round(Total/60),1) %>%
  mutate(TT_diff=round(TT_diff,1)) %>%
    pivot_wider(., 
@@ -879,12 +923,12 @@ GP_decrease_TT2<-Travel_time%>%
   mutate(Total=(Total_Car+`Total_Public transport`)) %>%
   left_join(.,GP_Total_procedures, by=c("ic_modality_desc")) %>%
 mutate(Number_Car= paste(Number_Car, " (",round(((Number_Car/Number)*100),1), "%)", sep=""))%>%
-mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))%>%
-mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
+mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))
+#mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
 
 
 #Checking how many GP direct access have Private as their closest site
-private<-Travel_time%>%
+private<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
 filter(closest_site==closest_private_site) %>%
     ungroup()%>%
@@ -892,7 +936,7 @@ filter(closest_site==closest_private_site) %>%
   summarise(total=sum(procedures_by_transport_mode))
 
 #Checking how many GP direct access would be going to the same site 
-Unchanged<-Travel_time%>%
+Unchanged<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
 filter(closest_diff==0 & ((closest_cdc_site=="Corbett CDC" & ic_sitename=="CORBETT HOSPITAL (RNA04)")|
                       (closest_cdc_site=="Corbett CDC (Guest)" & ic_sitename=="GUEST HOSPITAL (RNA02)")|
@@ -907,14 +951,15 @@ ungroup()%>%
   summarise(total=sum(procedures_by_transport_mode))
 
 #Checking how many GP direct access would be going to the same site 
-Unchanged<-Travel_time%>%
+Unchanged<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
 filter(closest_diff==0) %>%
 ungroup()%>%
  # group_by(ic_modality_desc)%>%
   summarise(total=sum(procedures_by_transport_mode))
 
-
+  
+  
 ```
 
 # Travel time tables
@@ -979,7 +1024,7 @@ Table2
 
 # Adjusting the numbers to account for car ownership
 # Table 3 For GP direct access referrals only How much will CDCs reduce the average journey time compared to current closest site
-Table3<-flextable(GP_decrease_TT%>% select(ic_modality_desc, Number_Car, TT_diff_Car, TT_range_Car, Total_Car, `Number_Public transport`, `TT_diff_Public transport`, `TT_range_Public transport`,                                                 `Total_Public transport`, `Number_Public transport2`, Total)) %>%
+Table3<-flextable(GP_decrease_TT%>% select(ic_modality_desc, Number_Car, TT_diff_Car, TT_range_Car, Total_Car, `Number_Public transport`, `TT_diff_Public transport`, `TT_range_Public transport`,                                                 `Total_Public transport`,  Total)) %>%
 align(.,  align = "center")  %>%
 align(., j=1, align = "left")  %>%
   set_header_labels(.,
@@ -994,7 +1039,7 @@ align(., j=1, align = "left")  %>%
     `Total_Public transport`= "Total reduction (hrs)",
    `Number_Public transport2`= "Within 60min journey time*",
    Total="Total reduction (hrs)") %>%
- add_header_row(values = c("", "By car", "By public transport", ""), colwidths = c(1,4,5,1)) %>% 
+ add_header_row(values = c("", "By car", "By public transport", ""), colwidths = c(1,4,4,1)) %>% 
   align(., i = 1, part = "header", align = "center")%>% 
      align(., i = 2,  part = "header", align = "center") %>% 
  align(., i = 2, j=1, part = "header", align = "left") %>% 
@@ -1019,7 +1064,7 @@ Table3
 
 
 # Table 4 For GP direct access referrals only How much will CDCs reduce the average journey time compared to site patient is currently using 
-Table4<-flextable(GP_decrease_TT2%>% select(ic_modality_desc, Number_Car, TT_diff_Car, TT_range_Car, Total_Car, `Number_Public transport`, `TT_diff_Public transport`, `TT_range_Public transport`,`Total_Public transport`, `Number_Public transport2`, Total)) %>%
+Table4<-flextable(GP_decrease_TT2%>% select(ic_modality_desc, Number_Car, TT_diff_Car, TT_range_Car, Total_Car, `Number_Public transport`, `TT_diff_Public transport`, `TT_range_Public transport`,`Total_Public transport`,  Total)) %>%
 align(.,  align = "center")  %>%
 align(., j=1, align = "left")  %>%
   set_header_labels(.,
@@ -1034,7 +1079,7 @@ align(., j=1, align = "left")  %>%
     `Total_Public transport`= "Total reduction (hrs)",
    `Number_Public transport2`= "Within 60min journey time*",
    Total="Total reduction (hrs)") %>%
- add_header_row(values = c("", "By car", "By public transport", ""), colwidths = c(1,4,5,1)) %>% 
+ add_header_row(values = c("", "By car", "By public transport", ""), colwidths = c(1,4,4,1)) %>% 
   align(., i = 1, part = "header", align = "center")%>% 
      align(., i = 2,  part = "header", align = "center") %>% 
  align(., i = 2, j=1, part = "header", align = "left") %>% 
@@ -1063,8 +1108,8 @@ Table4
 
 save_as_docx(Table1, path = "Table1.docx")
 save_as_docx(Table2, path = "Table2.docx")
-save_as_docx(Table3, path = "Table3.docx")
-save_as_docx(Table4, path = "Table4.docx")
+save_as_docx(Table3, path = "Table3b.docx")
+save_as_docx(Table4, path = "Table4b.docx")
 
 
 ```
@@ -1239,12 +1284,12 @@ save_as_docx(Xray, path = "Xray.docx")
 ```{r, fig.height=7, fig.width=7}
  
 # Select current sites where greater than 365 procedures would be moved, based on CDC being closer or equal distance than current site
-higher_use_sites<-Travel_time%>%
+higher_use_sites<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode)) %>%
-   filter(count>1825)
+   filter(count>1800)
 
 
 
@@ -1252,7 +1297,7 @@ higher_use_sites<-Travel_time%>%
 
 # Order number of procedures
 reason_order <- 
-  Travel_time%>%
+  Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(closest_cdc_site) %>% 
@@ -1262,7 +1307,7 @@ reason_order <-
 
 
 # Graph of activity at CDCs
-Travel_time%>%
+Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
   filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,closest_cdc_site) %>%
@@ -1283,8 +1328,16 @@ Travel_time%>%
    scale_x_discrete(labels = wrap_format(37) )+
   ylim(0, 45000)
 
+
+ttt<-Travel_time_edit%>%
+  filter(did_patsource_code==4) %>%
+  filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
+  ungroup() %>%
+  summarise(count=sum(procedures_by_transport_mode))
+
+
 # Table of activity at CDCs
-Table_activity_to_cdcs<-Travel_time%>%
+Table_activity_to_cdcs<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,closest_cdc_site) %>%
@@ -1315,7 +1368,7 @@ save_as_docx(Table_activity_to_cdcs, path = "Table_activity_to_cdcs.docx")
 #Number of procedures moved from current sites (only sites where >365 procedures would be moved)
 
 reason_order <- 
-  Travel_time%>%
+  Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>% 
@@ -1324,7 +1377,7 @@ reason_order <-
   mutate(ic_sitename = factor(ic_sitename))
 
 # Graph of reduction in procedures at hospital sites
-Travel_time%>%
+Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_modality_desc,ic_sitename) %>%
@@ -1343,16 +1396,16 @@ Travel_time%>%
  scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555","#9d928a" ))+
    labs(y = "Potential decrease in imaging procedures")+
   coord_flip()+                               
-   scale_x_discrete(labels = wrap_format(23) )
+   scale_x_discrete(labels = wrap_format(27) )
 
 
-Procedures_per_site<-Travel_time %>%
+Procedures_per_site<-Travel_time_edit %>%
   group_by(ic_sitename) %>%
   summarise(Number=sum(procedures_by_transport_mode))
 
 
 #Table of activity moving from acute sites
-Table_activity_from_acute<-Travel_time%>%
+Table_activity_from_acute<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
 group_by(ic_modality_desc,ic_sitename) %>%
@@ -1391,7 +1444,7 @@ hline(.,  i = 1, part = "header", border=fp_border(color="#f9bf07")) %>%
 save_as_docx(Table_activity_from_acute, path = "Table_activity_from_acute.docx")
 
  
- cdc_flow <- Travel_time%>%
+ cdc_flow <- Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
     filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename, closest_cdc_site) %>%
@@ -1436,8 +1489,9 @@ sankey<-networkD3::sankeyNetwork(Links = test, Nodes = nodes,
                          Value = 'count', 
                          NodeID = 'name',
                          fontSize = 11, nodePadding=10, height=500, width=800,
-                         colourScale = my_color, LinkGroup="group", NodeGroup="type",
-              iterations = 0   )
+                         colourScale = my_color, LinkGroup="group", NodeGroup="type")
+
+#, iterations = 0   
 
 saveNetwork(sankey, "sankey.html")
 

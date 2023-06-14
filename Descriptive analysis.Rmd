@@ -30,7 +30,7 @@ lsoa_pop<-read.csv("Mid-2019 LSOA pop estimates.csv")
 
 #Remove sites with less than 365 procedures
 activity<-activity %>%
- left_join(., acute[,c("ic_sitename", "independent", "wm_site")], by=c("ic_sitename")) %>%
+ left_join(., acute[,c("ic_sitename", "ic_provname","independent", "wm_site")], by=c("ic_sitename", "ic_provname")) %>%
  filter(did_patsource_code==3|did_patsource_code==4|did_patsource_code==6|did_patsource_code==7)%>%
      filter(!is.na(wm_site)) %>%
     filter(ic_lsoa!="NULL") %>%
@@ -38,6 +38,10 @@ activity<-activity %>%
   mutate(total=sum(procedure_count)) %>%
   filter(total>365)%>%
   select(c(-total))
+
+test <-activity%>%
+  group_by(ic_sitename)%>%
+  summarise(test=sum(procedure_count))
 
 # Import West Midlands postcodes
 West_Mids_Postcodes<-read.csv("West_Mids_Postcodes_10km_buffer.csv")%>%
@@ -91,8 +95,7 @@ imd<-rbind(imd_england, imd_wales)%>%
   distinct()
 
 #Add activity to WM LSOAs
-activity<- left_join(West_Mids_Postcodes, activity, by=c("lsoa11"="ic_lsoa"))
-
+activity<- left_join(West_Mids_Postcodes, activity, by=c("lsoa11"="ic_lsoa")) 
 
 #Joining IMD data to Activity data
 activity<-left_join(activity, imd[, c("lsoa_code_2011","IMD")], by=c("lsoa11"="lsoa_code_2011"))%>%

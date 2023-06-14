@@ -1,0 +1,1164 @@
+﻿Mode,"Community Hub appropriate (1=yes, 0=no)",SNOMED description,SNOMED code
+CAT,1,Computerized axial tomography of cervical spine with contrast ,762008
+CAT,1,"Computerized tomography, bone density study ",22059005
+CAT,1,Computerized tomography of abdomen with contrast ,32962002
+CAT,1,Computerized axial tomography of kidney ,55501000
+CAT,1,Computerized axial tomography of pelvis with contrast ,74710000
+CAT,1,Computed tomography of thorax with contrast ,75385009
+CAT,1,Computed tomography of face ,169067003
+CAT,1,Computed tomography of neck ,169068008
+CAT,1,Computed tomography of chest ,169069000
+CAT,1,Computed tomography of abdomen ,169070004
+CAT,1,Computed tomography of pelvis ,169071000
+CAT,1,Computed tomography of pituitary fossa ,241519005
+CAT,1,Computed tomography of orbits ,241520004
+CAT,1,Computed tomography of internal auditory meatus ,241521000
+CAT,1,Computed tomography of petrous bones ,241522007
+CAT,1,Computed tomography of paranasal sinuses ,241526005
+CAT,1,Computed tomography of temporomandibular joints ,241528006
+CAT,1,Computed tomography parotid gland ,241530008
+CAT,1,Computed tomography of thoracic aorta ,241548004
+CAT,1,Computed tomography of liver ,241549007
+CAT,1,Computed tomography of adrenals ,241550007
+CAT,1,Computed tomography of pancreas ,241551006
+CAT,1,Computed tomography of abdominal aorta ,241553009
+CAT,1,Computed tomography of upper arm ,241565008
+CAT,1,Computed tomography of elbow ,241566009
+CAT,1,Computed tomography of forearm ,241567000
+CAT,1,Computed tomography of wrist ,241568005
+CAT,1,Computed tomography of hand ,241569002
+CAT,1,Computed tomography of hip ,241571002
+CAT,1,Computed tomography of thigh ,241572009
+CAT,1,Computed tomography of knee ,241573004
+CAT,1,Computed tomography of lower leg ,241574005
+CAT,1,Computed tomography of ankle ,241575006
+CAT,1,Computed tomography of foot ,241576007
+CAT,1,Computed tomography of cervical spine ,241578008
+CAT,1,Computed tomography of thoracic spine ,241579000
+CAT,1,Computed tomography of lumbar spine ,241580002
+CAT,1,Computed tomography of sacral spine ,241581003
+CAT,1,Computed tomography arthrogram of shoulder ,241583000
+CAT,1,Computed tomography arthrogram of hip ,241586008
+CAT,1,Computed tomography arthrogram of knee ,241587004
+CAT,0,Computed tomography myelogram of cervical region ,241590005
+CAT,0,Computed tomography myelogram of thoracic region ,241591009
+CAT,0,Computed tomography myelogram of lumbar region ,241592002
+CAT,1,Digital slit-beam radiograph of leg length ,241599006
+CAT,0,Computed tomography guided biopsy ,277591006
+CAT,1,Computed tomography of aorta ,305053005
+CAT,1,Computerized axial tomography of brain with radiopaque contrast ,396207002
+CAT,1,Computed tomography of entire head ,408754009
+CAT,1,"Computerized axial tomography of elbow, left ",413901008
+CAT,1,"Computerized axial tomography of elbow, right ",413902001
+CAT,1,"Computed tomography of chest, abdomen and pelvis ",418023006
+CAT,0,Computed tomography and drainage of abdomen ,418199004
+CAT,1,Computed tomography angiography ,418272005
+CAT,1,"Computerized tomography of neck, thorax, abdomen and pelvis ",418332004
+CAT,1,Virtual computed tomography colonoscopy ,418714002
+CAT,1,Computed tomography of chest and abdomen ,418891003
+CAT,0,Computed tomography and drainage of pelvis ,419075009
+CAT,1,Computed tomography of urinary tract ,419084009
+CAT,1,Computed tomography angiography of lower limb artery ,419089004
+CAT,1,Computed tomography angiography of pulmonary artery ,419225001
+CAT,1,Computed tomography angiography of upper limb artery ,419277007
+CAT,0,Computed tomography and biopsy of pelvis ,419341002
+CAT,1,Computed tomography of mastoid ,419381009
+CAT,1,Computed tomography of abdomen and pelvis ,419394006
+CAT,1,Computed tomography angiography of coronary arteries ,419545005
+CAT,1,Computed tomography angiography of renal artery ,419559003
+CAT,1,Computed tomography of facial bones ,419673001
+CAT,0,Computed tomography and biopsy of abdomen ,419940006
+CAT,1,Computed tomography angiography of intracranial artery ,419949007
+CAT,1,Computed tomography of sternoclavicular joint ,419976007
+CAT,1,Computed tomography of mandible ,419978008
+CAT,0,Computed tomography cholangiogram ,419995000
+CAT,1,Computed tomography angiography of aortic arch and carotid arteries ,420017001
+CAT,0,Computed tomography and biopsy of neck ,420036006
+CAT,1,Computed tomography of calcaneum ,420145009
+CAT,1,Computed tomography of colon ,425666002
+CAT,0,Cardiac computed tomography for calcium scoring ,426005005
+CAT,1,Computerized tomography of right ankle ,426707009
+CAT,1,Computerized tomography of left ankle ,426817008
+CAT,1,Computed tomography of thorax for radiotherapy planning ,429851006
+CAT,1,Computed tomography of orbit with contrast ,429852004
+CAT,1,Computed tomography of toe ,429853009
+CAT,1,Computed tomography of internal auditory meatus with contrast ,429857005
+CAT,1,Computed tomography of head and neck ,429858000
+CAT,0,Injection of lumbar zygapophyseal joint using computed tomography guidance ,429860003
+CAT,0,Radiofrequency ablation of lesion of kidney using computed tomography guidance ,429861004
+CAT,1,Computed tomography of liver with contrast ,429862006
+CAT,1,Computed tomography of parotid gland with contrast ,429863001
+CAT,1,Computed tomography of thorax and abdomen with contrast ,429864007
+CAT,0,Injection of lumbar spinal nerve root using computed tomography guidance ,429868005
+CAT,1,Computed tomography of temporal bone ,429869002
+CAT,1,Computed tomography of pancreas with contrast ,429873004
+CAT,1,Computed tomography of sternum ,429874005
+CAT,1,Computed tomography of whole spine ,429875006
+CAT,0,Injection of hip joint using computed tomography guidance ,429876007
+CAT,1,Computed tomography of finger ,429924009
+CAT,1,Computed tomography of forefoot ,429925005
+CAT,1,Computed tomography of neck and thorax with contrast ,429927002
+CAT,0,Injection of sacral spinal nerve root using computed tomography guidance ,429930009
+CAT,1,Computed tomography of kidney with contrast ,429931008
+CAT,0,Biopsy of lung using computed tomography guidance ,429932001
+CAT,0,Computed tomography of pelvis for radiotherapy planning ,430194000
+CAT,0,Ablation using computed tomography guidance ,430269006
+CAT,1,Computed tomography of adrenal gland with contrast ,430430003
+CAT,1,Computed tomography of thumb ,430431004
+CAT,1,Computed tomography of lower leg with contrast ,430436009
+CAT,1,Computed tomography of pituitary fossa with contrast ,430437000
+CAT,1,"Computed tomography of neck, thorax and abdomen ",430439002
+CAT,0,Injection of cervical spinal nerve root using computed tomography guidance ,430445005
+CAT,0,Computed tomography for radiotherapy planning ,430447002
+CAT,1,Computed tomography of neck and thorax ,430448007
+CAT,1,Computed tomography of coccyx ,430451000
+CAT,1,Computed tomography enteroclysis ,431214001
+CAT,1,Computed tomography of neck with contrast ,431326009
+CAT,1,Computed tomography of paranasal sinuses with contrast ,431492000
+CAT,0,Vertebroplasty of lumbar spine using computed tomography guidance ,431496002
+CAT,1,Computed tomography venography ,431676002
+CAT,1,Computed tomography of face with contrast ,431714002
+CAT,0,Aspiration using computed tomography guidance ,431749009
+CAT,0,Insertion of drain using computed tomography guidance ,431842009
+CAT,0,Injection using computed tomography guidance ,431864000
+CAT,1,Computed tomography of larynx with contrast ,431997003
+CAT,0,Vertebroplasty of sacral spine using computed tomography guidance ,432037000
+CAT,1,Computed tomography of abdomen and pelvis with contrast ,432370003
+CAT,0,Biopsy of bone using computed tomography guidance ,432371004
+CAT,0,Epidural injection using computed tomography guidance ,432406007
+CAT,1,Computed tomography of clavicle ,432552002
+CAT,1,Computed tomography of scapula ,432665004
+CAT,1,Computed tomography sinogram ,432771002
+CAT,1,Computed tomography of base of skull ,432814005
+CAT,1,Computed tomography venography of cerebral vein ,432841000
+CAT,1,Computed tomography venography of intracranial vein ,432842007
+CAT,0,Injection of cervical zygapophyseal joint using computed tomography guidance ,432901008
+CAT,1,Computed tomography of head for cranioplasty planning ,432904000
+CAT,1,Computed tomography of liver and portal vein ,432905004
+CAT,0,Vertebroplasty of thoracic spine using computed tomography guidance ,433034001
+CAT,1,Computed tomography of brain perfusion ,433111008
+CAT,1,"Computed tomography of neck, thorax and abdomen with contrast ",433270008
+CAT,1,"Computed tomography of thorax, abdomen and pelvis with contrast ",433761009
+CAT,1,"Computed tomography of neck, thorax, abdomen and pelvis with contrast ",434438003
+CAT,1,Computed tomography dual phase study of liver ,438305004
+CAT,1,Computed tomography triple phase study of liver ,438591004
+CAT,0,Biopsy of kidney using computed tomography guidance ,438820000
+CAT,0,Percutaneous aspiration of abdomen using computed tomography guidance ,439087006
+CAT,1,Computed tomography of esophagus with contrast ,440330000
+CAT,1,"Computed tomography of head, neck, thorax, abdomen and pelvis ",440331001
+CAT,0,Biopsy of thorax using computed tomography guidance ,440491000
+CAT,1,Computed tomography of urinary tract with contrast ,440494008
+CAT,1,Computed tomography angiography of subclavian artery ,440513001
+CAT,1,Computed tomography dual phase study of pancreas ,440514007
+CAT,1,Computed tomography of small intestine ,441538004
+CAT,1,Computed tomography angiography of vascular structure of spine ,443426000
+CAT,0,Radionuclide imaging with computed tomography attenuation correction ,443579008
+CAT,1,Computed tomography with contrast for measurement of brain volume ,444037004
+CAT,1,"Computed tomography of head, abdomen and pelvis with contrast ",444628000
+CAT,1,"Computed tomography of head, neck, thorax, abdomen and pelvis with contrast ",444630003
+CAT,1,"Computed tomography of head, thorax, abdomen and pelvis with contrast ",444674001
+CAT,1,Computed tomography of maxilla ,444795004
+CAT,1,Computed tomography of abdominal aorta with contrast ,444968003
+CAT,1,Computed tomography of entire aorta with contrast ,444969006
+CAT,1,Computed tomography of thoracic aorta with contrast ,444970007
+CAT,1,Computed tomography triple phase study of kidney ,446224008
+CAT,1,Computed tomography of inguinal region ,446564006
+CAT,1,Gated computed tomography of heart with contrast ,448431001
+CAT,1,Computed tomography angiography of abdominal artery ,448443000
+CAT,1,Computed tomography of mandible and maxilla ,448770008
+CAT,1,Computed tomography angiography of mesenteric artery ,709553001
+CAT,1,Computed tomography of lower limb for bone length measurement ,712810001
+CAT,1,Computed tomography of urinary tract excretory phase with contrast ,713859006
+CAT,1,Computed tomography angiography for transcatheter aortic valve implantation planning ,726631002
+CAT,1,"Computed tomography of thorax, abdomen and pelvis with oral and intravenous contrast ",764731006
+CAT,1,Computed tomography of left hip ,1331000087102
+CAT,1,Computed tomography of right hip ,1351000087106
+CAT,1,Computed tomography of left knee ,1411000087101
+CAT,1,Computed tomography of right knee ,1421000087109
+CAT,1,Computed tomography of left shoulder ,1491000087107
+CAT,1,Computed tomography of right shoulder ,1511000087102
+CAT,1,Computed tomography of left wrist ,2021000087105
+CAT,1,Computed tomography of right wrist ,2031000087107
+CAT,1,Computed tomography of left calcaneum ,4161000087105
+CAT,1,Computed tomography of right calcaneum ,4171000087101
+CAT,1,Computed tomography of left clavicle ,4191000087102
+CAT,1,Computed tomography of right clavicle ,4201000087100
+CAT,1,Computed tomography of left forearm ,4291000087109
+CAT,1,Computed tomography of right forearm ,4311000087105
+CAT,1,Computed tomography of left hand ,4331000087100
+CAT,1,Computed tomography of right hand ,4341000087106
+CAT,1,Computed tomography of right scapula ,20021000087104
+CAT,1,Computed tomography of left scapula ,20111000087108
+CAT,1,Computerised tomography of chest with high resolution ,315941000000105
+CAT,1,Computed tomography angiography of renal artery and abdominal artery ,339901000000104
+CAT,1,Computed tomography of whole aorta ,356221000000109
+CAT,0,Percutaneous microwave ablation of lesion of lung using computed tomography guidance ,819801000000103
+CAT,1,Computed tomography arthrography of elbow with contrast ,839871000000101
+CAT,1,Computed tomography arthrography of subtalar joint with contrast ,839941000000103
+CAT,1,Electrocardiography gated computed tomography of thorax ,858161000000109
+CAT,1,Computed tomography four phase scan of liver with contrast ,1110571000000100
+CAT,1,Four dimensional computed tomography of parathyroid with contrast ,1110821000000100
+CAT,0,Biopsy of left kidney using computed tomography guidance ,
+CAT,0,Biopsy of right kidney using computed tomography guidance ,
+CAT,0,Computed tomography and biopsy of liver ,
+CAT,1,Computed tomography angiography of coronary artery bypass graft ,
+CAT,1,Computed tomography angiography of pulmonary and abdominal and pelvic arteries ,
+CAT,1,Computed tomography arthrography of ankle with contrast ,
+CAT,1,Computed tomography arthrography of knee with contrast ,
+CAT,1,Computed tomography arthrography of wrist with contrast ,
+CAT,0,Computed tomography cisternography ,
+CAT,0,Computed tomography cystography ,
+CAT,0,Computed tomography dacryocystography of lacrimal canaliculus ,
+CAT,1,Computed tomography for endovascular aneurysm repair planning ,
+CAT,1,Computed tomography for measurement of brain volume ,
+CAT,1,Computed tomography of abdomen and pelvis with oral and intravenous contrast ,
+CAT,1,Computed tomography of abdomen and pelvis with oral contrast ,
+CAT,0,Computed tomography of abdomen for radiotherapy planning ,
+CAT,1,Computed tomography of base of skull with contrast ,
+CAT,1,Computed tomography of bilateral ankles ,
+CAT,1,Computed tomography of bilateral scapulae ,
+CAT,0,Computed tomography of breast for radiotherapy planning ,
+CAT,1,Computed tomography of colon using intravenous contrast ,
+CAT,1,Computed tomography of facial bones with contrast ,
+CAT,1,Computed tomography of floor of mouth ,
+CAT,1,Computed tomography of floor of mouth with contrast ,
+CAT,1,Computed tomography of head and neck and thorax and abdomen with contrast ,
+CAT,0,Computed tomography of head and neck for radiotherapy planning ,
+CAT,1,Computed tomography of head and neck with contrast ,
+CAT,1,Computed tomography of head and orbits ,
+CAT,0,Computed tomography of head for radiotherapy planning ,
+CAT,1,"Computed tomography of head, thorax and abdomen with contrast ",
+CAT,1,"Computed tomography of head, thorax, abdomen and pelvis ",
+CAT,0,Computed tomography of heart ,
+CAT,0,Computed tomography of heart with contrast ,
+CAT,1,Computed tomography of internal auditory meatus with air contrast ,
+CAT,1,Computed tomography of larynx ,
+CAT,1,Computed tomography of left shoulder with contrast ,
+CAT,0,Computed tomography of lower limb for radiotherapy planning ,
+CAT,1,Computed tomography of lower limb with contrast ,
+CAT,1,Computed tomography of middle ear ,
+CAT,1,Computed tomography of nasopharynx ,
+CAT,1,Computed tomography of nasopharynx with contrast ,
+CAT,0,Computed tomography of neck for radiotherapy planning ,
+CAT,1,"Computed tomography of neck, thorax, abdomen and pelvis with oral and intravenous contrast ",
+CAT,1,Computed tomography of peritoneal cavity with contrast ,
+CAT,0,Computed tomography of prostate for radiotherapy planning ,
+CAT,1,Computed tomography of right hip with contrast ,
+CAT,1,Computed tomography of right shoulder with contrast ,
+CAT,1,Computed tomography of sacroiliac joints ,
+CAT,1,Computed tomography of salivary glands ,
+CAT,1,Computed tomography of shoulder with contrast ,
+CAT,0,Computed tomography of spine for radiotherapy planning ,
+CAT,1,Computed tomography of submandibular area ,
+CAT,1,Computed tomography of temporal bone with contrast ,
+CAT,1,Computed tomography of thigh with contrast ,
+CAT,1,Computed tomography of thoracic and lumbar spine ,
+CAT,0,Computed tomography of thoracic spine for radiotherapy planning ,
+CAT,1,Computed tomography of upper arm with contrast ,
+CAT,1,Computed tomography of whole body with contrast ,
+CAT,1,Computed tomography perfusion study of liver ,
+CAT,1,Computed tomography perfusion study of thorax ,
+CAT,1,Computed tomography scan - whole body ,
+CAT,1,Computed tomography shoulder region structure ,
+CAT,1,Computed tomography sialogram ,
+CAT,0,Computed tomography stereotactic localization ,
+CAT,1,Computed tomography triple phase study of abdomen and pelvis with contrast ,
+CAT,1,Computed tomography triple phase study of pancreas ,
+CAT,1,Computerised tomography of midfoot ,
+CAT,1,Computerized axial tomography of lumbar spine with contrast ,
+CAT,1,Computerized axial tomography of thoracic spine with contrast ,
+CAT,0,Drainage of thorax using computed tomography guidance ,
+CAT,0,Embolization using computed tomography guidance ,
+CAT,0,Forensic computed tomography ,
+CAT,1,Four dimensional computed tomography angiography of cerebrum ,
+CAT,1,Gated computed tomography for complex congenital heart disease with contrast ,
+CAT,0,Injection of sacroiliac joint using computed tomography guidance ,
+CAT,1,Low dose computed tomography colonography ,
+CAT,1,Low dose computed tomography of entire skeleton ,
+CAT,1,Low dose computed tomography of thorax ,
+CAT,0,Lumbar epidural injection using computed tomography guidance ,
+CAT,0,Nephrostomy using computed tomography guidance ,
+CAT,0,Percutaneous aspiration of thorax using computed tomography guidance ,
+CAT,0,Percutaneous cryoablation of neoplasm of right kidney using computed tomography guidance ,
+CAT,0,Post mortem computed tomography ,
+CAT,0,Radiofrequency ablation of lesion of liver using computed tomography guidance ,
+CAT,0,Radionuclide imaging with computed tomography attenuation correction and diagnostic study ,
+CAT,0,Radionuclide imaging with computed tomography attenuation correction and localization ,
+CAT,1,Respiratory and electrocardiography gated cardiac computed tomography of heart ,
+CAT,1,Retrospectively electrocardiogram gated computed tomography angiography of coronary artery ,
+CAT,1,Virtual computed tomography colonoscopy with radiopaque contrast ,
+Diagnostic ultrasonography,1,Echography of kidney ,306005
+Diagnostic ultrasonography,1,Diagnostic Doppler ultrasonography ,8306009
+Diagnostic ultrasonography,1,Diagnostic ultrasonography ,16310003
+Diagnostic ultrasonography,1,Ultrasound study of eye ,19731001
+Diagnostic ultrasonography,0,Fetal biophysical profile ,21623001
+Diagnostic ultrasonography,0,"Echography of prostate, transrectal approach ",22034001
+Diagnostic ultrasonography,1,Echography of scrotum and contents ,24737001
+Diagnostic ultrasonography,1,Pelvic echography ,24848001
+Diagnostic ultrasonography,1,Ultrasonography of abdomen ,45036003
+Diagnostic ultrasonography,1,Ultrasonography of breast ,47079000
+Diagnostic ultrasonography,0,Ultrasonic guidance for amniocentesis ,65388005
+Diagnostic ultrasonography,1,Ultrasound for foreign body localization ,69610007
+Diagnostic ultrasonography,0,Transesophageal echocardiography ,105376000
+Diagnostic ultrasonography,1,Ultrasonography of liver ,105377009
+Diagnostic ultrasonography,0,Placental localization ,164817009
+Diagnostic ultrasonography,0,Dating/booking ultrasound scan ,169229007
+Diagnostic ultrasonography,1,Ultrasound skull scan ,169238009
+Diagnostic ultrasonography,1,Ultrasound scan of gallbladder ,169250003
+Diagnostic ultrasonography,1,Ultrasound scan of bladder ,169251004
+Diagnostic ultrasonography,1,Ultrasound scan of neck ,241453007
+Diagnostic ultrasonography,1,Ultrasound scan of parathyroid ,241454001
+Diagnostic ultrasonography,1,Ultrasound scan of thyroid ,241455000
+Diagnostic ultrasonography,1,Ultrasound scan of salivary glands ,241456004
+Diagnostic ultrasonography,1,Ultrasound scan of parotid gland ,241457008
+Diagnostic ultrasonography,1,Ultrasound scan of submandibular gland ,241458003
+Diagnostic ultrasonography,1,Ultrasound scan of abdominal aorta ,241462009
+Diagnostic ultrasonography,1,Ultrasound scan of spleen ,241476005
+Diagnostic ultrasonography,1,Ultrasound scan of adrenals ,241480000
+Diagnostic ultrasonography,1,Ultrasound scan of transplant kidney ,241484009
+Diagnostic ultrasonography,1,Ultrasound scan of penis ,241485005
+Diagnostic ultrasonography,1,Ultrasound scan of prostate ,241487002
+Diagnostic ultrasonography,0,Ultrasound scan for fetal growth ,241493005
+Diagnostic ultrasonography,0,Ultrasound scan for amniotic fluid volume ,241494004
+Diagnostic ultrasonography,1,Ultrasound scan of shoulder joint ,241497006
+Diagnostic ultrasonography,1,Ultrasound scan of elbow ,241498001
+Diagnostic ultrasonography,1,Ultrasonography of wrist ,241499009
+Diagnostic ultrasonography,1,Ultrasonography of finger ,241500000
+Diagnostic ultrasonography,1,Ultrasound scan of hip ,241502008
+Diagnostic ultrasonography,1,Ultrasonography of knee ,241504009
+Diagnostic ultrasonography,1,Ultrasonography of ankle ,241505005
+Diagnostic ultrasonography,1,Ultrasound scan of joints of foot ,241506006
+Diagnostic ultrasonography,1,Ultrasonography of Achilles tendon ,241512001
+Diagnostic ultrasonography,1,Ultrasound scan of spine ,241516003
+Diagnostic ultrasonography,0,Ultrasound scan - obstetric ,268445003
+Diagnostic ultrasonography,0,Fetal anatomy study ,271442007
+Diagnostic ultrasonography,0,Ultrasound guided biopsy ,277667006
+Diagnostic ultrasonography,1,Ultrasound of urinary tract ,303917008
+Diagnostic ultrasonography,1,Ultrasound scan of hand ,303924009
+Diagnostic ultrasonography,1,Carotid artery doppler assessment ,394719009
+Diagnostic ultrasonography,1,Ankle brachial pressure index ,401221002
+Diagnostic ultrasonography,0,Nuchal ultrasound scan ,414880004
+Diagnostic ultrasonography,1,Ultrasound doppler scan of iliac and femoral arteries ,417912007
+Diagnostic ultrasonography,0,Ultrasound scan and drainage of pelvis ,418030000
+Diagnostic ultrasonography,0,Ultrasound obstetric doppler ,418090003
+Diagnostic ultrasonography,1,Ultrasonography of inguinal region ,418105000
+Diagnostic ultrasonography,1,Doppler ultrasonography of kidney ,418354002
+Diagnostic ultrasonography,1,Ultrasound scan of abdomen and pelvis ,418394000
+Diagnostic ultrasonography,1,Ultrasound scan of upper abdomen ,418398002
+Diagnostic ultrasonography,1,Ultrasound doppler scan of penis ,418762008
+Diagnostic ultrasonography,1,Ultrasound doppler scan of femoropopliteal artery ,418793009
+Diagnostic ultrasonography,1,Ultrasound scan of diaphragm ,418889006
+Diagnostic ultrasonography,1,Ultrasound doppler scan of vertebral arteries ,418956005
+Diagnostic ultrasonography,0,Ultrasound scan and biopsy of pelvis ,420041003
+Diagnostic ultrasonography,1,Ultrasound scan of lower abdomen ,420052009
+Diagnostic ultrasonography,1,Ultrasound scan of thigh ,425410009
+Diagnostic ultrasonography,1,Ultrasound scan of buttock ,425848005
+Diagnostic ultrasonography,1,Ultrasonography of forearm ,426019005
+Diagnostic ultrasonography,1,Ultrasound scan of left hip ,426100003
+Diagnostic ultrasonography,0,Obstetric uterine artery Doppler ,426295007
+Diagnostic ultrasonography,1,Ultrasound scan of calcaneum ,426494009
+Diagnostic ultrasonography,0,Endoscopic ultrasound examination of pancreas ,426808008
+Diagnostic ultrasonography,1,Ultrasound scan of chest wall ,426827002
+Diagnostic ultrasonography,1,Ultrasound scan of both hips ,426903000
+Diagnostic ultrasonography,1,Ultrasound scan of upper arm ,427043003
+Diagnostic ultrasonography,1,Ultrasound scan of lower leg ,427253008
+Diagnostic ultrasonography,1,Ultrasound scan of right hip ,427472005
+Diagnostic ultrasonography,0,Obstetric umbilical artery Doppler ,427623005
+Diagnostic ultrasonography,1,Ultrasound scan of sacral spine ,428605000
+Diagnostic ultrasonography,1,Transvaginal doppler ultrasonography of pelvis ,429807002
+Diagnostic ultrasonography,0,Endorectal ultrasonography ,429820004
+Diagnostic ultrasonography,1,Transvaginal ultrasonography of pelvis ,429915000
+Diagnostic ultrasonography,0,Transvaginal nuchal ultrasonography ,430063002
+Diagnostic ultrasonography,0,Transvaginal obstetric ultrasonography ,430064008
+Diagnostic ultrasonography,0,Ablation using ultrasound guidance ,430270007
+Diagnostic ultrasonography,1,Ultrasonography of artery ,431201002
+Diagnostic ultrasonography,0,Injection of tendon using ultrasound guidance ,431203004
+Diagnostic ultrasonography,1,Ultrasound doppler flow mapping of artery of lower limb ,431217008
+Diagnostic ultrasonography,1,Ultrasound doppler flow mapping of vein of lower limb ,431218003
+Diagnostic ultrasonography,0,Injection of trochanteric bursa using ultrasound guidance ,431227002
+Diagnostic ultrasonography,0,Injection of bursa using ultrasound guidance ,431248000
+Diagnostic ultrasonography,1,Doppler ultrasonography of artery of lower limb ,431323001
+Diagnostic ultrasonography,1,Doppler ultrasonography of artery of upper limb ,431324007
+Diagnostic ultrasonography,0,Injection of tendon sheath using ultrasound guidance ,431344001
+Diagnostic ultrasonography,0,Hydrodistension of glenohumeral joint using ultrasound guidance ,431345000
+Diagnostic ultrasonography,1,Marking of skin using ultrasound guidance ,431349006
+Diagnostic ultrasonography,1,Doppler ultrasonography of liver and portal system ,431362005
+Diagnostic ultrasonography,1,Doppler ultrasonography of superior mesenteric artery ,431363000
+Diagnostic ultrasonography,0,Fine needle aspiration biopsy of axilla using ultrasound guidance ,431364006
+Diagnostic ultrasonography,1,Ultrasound doppler flow mapping of vein of upper limb ,431394000
+Diagnostic ultrasonography,1,Ultrasound doppler flow mapping of artery of upper limb ,431512001
+Diagnostic ultrasonography,0,Biopsy of soft tissue using ultrasound guidance ,431513006
+Diagnostic ultrasonography,0,Endoanal ultrasound examination of rectal sphincter ,431553009
+Diagnostic ultrasonography,0,Transrectal biopsy of prostate using ultrasound guidance ,431605004
+Diagnostic ultrasonography,0,Insertion of drain into thorax using ultrasound guidance ,431618007
+Diagnostic ultrasonography,1,Ultrasonography of calf ,431622002
+Diagnostic ultrasonography,1,Ultrasonography of cervical spine ,431623007
+Diagnostic ultrasonography,1,Transcranial doppler ultrasonography ,431648005
+Diagnostic ultrasonography,1,Doppler ultrasonography of aorta and iliac artery ,431653000
+Diagnostic ultrasonography,0,Injection of marker into breast using ultrasound guidance ,431717009
+Diagnostic ultrasonography,0,Fine needle aspiration and core needle biopsy of axilla using ultrasound guidance ,431732002
+Diagnostic ultrasonography,0,Biopsy of tibia and fibula using ultrasound guidance ,431744004
+Diagnostic ultrasonography,1,Doppler ultrasonography flow mapping of vein ,431750009
+Diagnostic ultrasonography,1,Ultrasonography of cranial cavity ,431756003
+Diagnostic ultrasonography,1,Ultrasonography of pleural cavity ,431757007
+Diagnostic ultrasonography,1,Ultrasonography of supraclavicular fossa ,431767002
+Diagnostic ultrasonography,0,Insertion of central venous catheter using doppler ultrasound guidance ,431779002
+Diagnostic ultrasonography,1,Ultrasound compression venography of lower limb ,431785009
+Diagnostic ultrasonography,0,Embolization using ultrasound guidance ,431805002
+Diagnostic ultrasonography,0,Biopsy of femur using ultrasound guidance ,431810003
+Diagnostic ultrasonography,0,Measurement of cervical length using obstetric ultrasonography ,431816009
+Diagnostic ultrasonography,1,Doppler ultrasonography of vein of upper limb ,431818005
+Diagnostic ultrasonography,0,Endoscopic ultrasonography of stomach ,431841002
+Diagnostic ultrasonography,1,Ultrasonography of subtalar joint ,431843004
+Diagnostic ultrasonography,1,Ultrasonography of acromioclavicular joint ,431844005
+Diagnostic ultrasonography,0,Barbotage of joint using ultrasound guidance ,431848008
+Diagnostic ultrasonography,1,Ultrasonography of graft ,431895007
+Diagnostic ultrasonography,0,Measurement of cervical length using transvaginal obstetric ultrasonography ,431941001
+Diagnostic ultrasonography,0,Injection of hip using ultrasound guidance ,431979006
+Diagnostic ultrasonography,0,Injection of knee using ultrasound guidance ,431980009
+Diagnostic ultrasonography,0,Aspiration of shoulder using ultrasound guidance ,431983006
+Diagnostic ultrasonography,1,Doppler ultrasonography of transplanted kidney ,431988002
+Diagnostic ultrasonography,0,Injection of intermetatarsal bursa using ultrasound guidance ,431998008
+Diagnostic ultrasonography,1,Ultrasonography of thumb ,432002003
+Diagnostic ultrasonography,1,Ultrasonography of rib ,432003008
+Diagnostic ultrasonography,1,Ultrasonography of scalp ,432004002
+Diagnostic ultrasonography,1,Marking of skin over long saphenous vein using ultrasound guidance ,432089005
+Diagnostic ultrasonography,0,Injection of foot using ultrasound guidance ,432106002
+Diagnostic ultrasonography,0,Aspiration of hand using ultrasound guidance ,432107006
+Diagnostic ultrasonography,0,Injection of hand using ultrasound guidance ,432147004
+Diagnostic ultrasonography,0,Aspiration of foot using ultrasound guidance ,432148009
+Diagnostic ultrasonography,0,Vacuum assisted biopsy of breast using ultrasound guidance ,432157003
+Diagnostic ultrasonography,1,Ultrasonography of popliteal fossa ,432216002
+Diagnostic ultrasonography,0,Biopsy of neck using ultrasound guidance ,432217006
+Diagnostic ultrasonography,0,Injection of wrist using ultrasound guidance ,432234003
+Diagnostic ultrasonography,0,Injection using ultrasound guidance ,432235002
+Diagnostic ultrasonography,0,Aspiration of knee using ultrasound guidance ,432236001
+Diagnostic ultrasonography,0,Aspiration of hip using ultrasound guidance ,432237005
+Diagnostic ultrasonography,0,Aspiration of neck using ultrasound guidance ,432238000
+Diagnostic ultrasonography,0,Endoscopic ultrasonography of esophagus ,432239008
+Diagnostic ultrasonography,1,Ultrasonography of plantar fascia ,432245000
+Diagnostic ultrasonography,0,Transvaginal obstetric doppler ultrasonography ,432246004
+Diagnostic ultrasonography,0,Insertion of drain using ultrasound guidance ,432273003
+Diagnostic ultrasonography,0,Aspiration of elbow using ultrasound guidance ,432311005
+Diagnostic ultrasonography,0,Core needle biopsy of axilla using ultrasound guidance ,432313008
+Diagnostic ultrasonography,1,Doppler ultrasonography of vein of lower limb ,432336004
+Diagnostic ultrasonography,0,Fine needle aspiration biopsy of breast using ultrasound guidance ,432337008
+Diagnostic ultrasonography,1,Ultrasonography of coccyx ,432372006
+Diagnostic ultrasonography,1,Ultrasonography of temporomandibular joint ,432404005
+Diagnostic ultrasonography,1,Ultrasonography of sternum ,432405006
+Diagnostic ultrasonography,0,Insertion of dialysis catheter using doppler ultrasound guidance ,432509002
+Diagnostic ultrasonography,0,Aspiration of thorax using ultrasound guidance ,432539007
+Diagnostic ultrasonography,0,Core needle biopsy of breast using ultrasound guidance ,432550005
+Diagnostic ultrasonography,0,Aspiration of abdomen using ultrasound guidance ,432556004
+Diagnostic ultrasonography,0,Aspiration using ultrasound guidance ,432557008
+Diagnostic ultrasonography,0,Insertion of suprapubic catheter using ultrasound guidance ,432587002
+Diagnostic ultrasonography,0,Aspiration of wrist using ultrasound guidance ,432629009
+Diagnostic ultrasonography,1,Ultrasonography of axilla ,432635009
+Diagnostic ultrasonography,0,Barbotage of tendon using ultrasound guidance ,432638006
+Diagnostic ultrasonography,1,Ultrasonography of lumbar spine ,432651001
+Diagnostic ultrasonography,0,Biopsy of lung using ultrasound guidance ,432652008
+Diagnostic ultrasonography,1,Ultrasonography of toe ,432663006
+Diagnostic ultrasonography,1,Ultrasonography of biceps tendon ,432667007
+Diagnostic ultrasonography,1,Ultrasonography of hand and wrist ,432668002
+Diagnostic ultrasonography,1,Ultrasonography of sacroiliac joint ,432674002
+Diagnostic ultrasonography,1,Compression ultrasonography of vein of upper limb ,432692005
+Diagnostic ultrasonography,0,Injection of shoulder using ultrasound guidance ,432816007
+Diagnostic ultrasonography,1,Ultrasonography of forefoot ,432849003
+Diagnostic ultrasonography,1,Ultrasonography of anterior abdominal wall ,432853001
+Diagnostic ultrasonography,1,Ultrasonography of symphysis pubis ,432855008
+Diagnostic ultrasonography,1,Ultrasonography of sternoclavicular joint ,432856009
+Diagnostic ultrasonography,0,Injection of ankle using ultrasound guidance ,432872001
+Diagnostic ultrasonography,0,Injection of elbow using ultrasound guidance ,432873006
+Diagnostic ultrasonography,0,Insertion of drain into neck using ultrasound guidance ,432875004
+Diagnostic ultrasonography,1,Ultrasonography of thoracic spine ,432898007
+Diagnostic ultrasonography,0,Insertion of drain into abdomen using ultrasound guidance ,433043005
+Diagnostic ultrasonography,0,Radiofrequency ablation using ultrasound guidance ,433058002
+Diagnostic ultrasonography,1,Marking of skin of breast using ultrasound guidance ,433069004
+Diagnostic ultrasonography,0,Biopsy of knee using ultrasound guidance ,433135003
+Diagnostic ultrasonography,0,Biopsy of hand using ultrasound guidance ,433136002
+Diagnostic ultrasonography,0,Biopsy of radius and ulna using ultrasound guidance ,433167000
+Diagnostic ultrasonography,1,Ultrasonography of clavicular region ,433169002
+Diagnostic ultrasonography,1,Ultrasonography of thyroid and parathyroid ,433175006
+Diagnostic ultrasonography,0,Aspiration of ovarian cyst using ultrasound guidance ,433176007
+Diagnostic ultrasonography,1,Ultrasonography of scapula ,433177003
+Diagnostic ultrasonography,0,Insertion of guide wire into breast using ultrasound guidance ,433222002
+Diagnostic ultrasonography,1,Doppler ultrasonography of aorta ,433223007
+Diagnostic ultrasonography,0,Exercise stress echocardiography ,433233004
+Diagnostic ultrasonography,0,Fetal echocardiography ,433235006
+Diagnostic ultrasonography,1,Transthoracic echocardiography ,433236007
+Diagnostic ultrasonography,0,Injection of subacromial bursa using ultrasound guidance ,433774003
+Diagnostic ultrasonography,0,Injection of subdeltoid bursa using ultrasound guidance ,433843006
+Diagnostic ultrasonography,0,Exercise stress ultrasonography of heart with contrast ,433862009
+Diagnostic ultrasonography,1,Transthoracic ultrasonography of heart with contrast ,434167009
+Diagnostic ultrasonography,0,Biopsy of liver using ultrasound guidance ,438300009
+Diagnostic ultrasonography,0,Biopsy of salivary gland using ultrasound guidance ,438301008
+Diagnostic ultrasonography,0,Aspiration of breast using ultrasound guidance ,438344007
+Diagnostic ultrasonography,0,Aspiration of pelvis using ultrasound guidance ,438521008
+Diagnostic ultrasonography,1,Ultrasonography of soft tissue ,438527007
+Diagnostic ultrasonography,0,Biopsy of kidney using ultrasound guidance ,438813007
+Diagnostic ultrasonography,0,Aspiration of thyroid using ultrasound guidance ,438819006
+Diagnostic ultrasonography,0,Biopsy of thyroid using ultrasound guidance ,440492007
+Diagnostic ultrasonography,1,Doppler ultrasonography of testis ,440495009
+Diagnostic ultrasonography,1,Ultrasound elastography of liver ,441491005
+Diagnostic ultrasonography,0,Puncture of peripheral vein using ultrasound guidance ,443272003
+Diagnostic ultrasonography,1,Ultrasonography of liver with contrast ,443630007
+Diagnostic ultrasonography,1,Ultrasonography with contrast ,443631006
+Diagnostic ultrasonography,0,Core needle biopsy using ultrasound guidance ,444704008
+Diagnostic ultrasonography,1,Ultrasonography of abdomen with contrast ,444900008
+Diagnostic ultrasonography,0,Fine needle aspiration using ultrasound guidance ,444945007
+Diagnostic ultrasonography,1,Doppler ultrasonography of temporal artery ,445751002
+Diagnostic ultrasonography,0,Ultrasonography of multiple pregnancy for fetal anomaly ,445866007
+Diagnostic ultrasonography,1,Ultrasonography of arteriovenous fistula ,445867003
+Diagnostic ultrasonography,0,Ultrasonography in second trimester ,446208007
+Diagnostic ultrasonography,0,Ultrasonography in third trimester ,446353007
+Diagnostic ultrasonography,0,Ultrasonography in first trimester ,446522006
+Diagnostic ultrasonography,0,Biopsy of abdomen using ultrasound guidance ,446595004
+Diagnostic ultrasonography,0,Ultrasonography of multiple pregnancy for fetal nuchal translucency ,446810002
+Diagnostic ultrasonography,0,Biopsy of chest using ultrasound guidance ,446843003
+Diagnostic ultrasonography,1,Doppler ultrasonography of jugular vein ,446849004
+Diagnostic ultrasonography,0,Fine needle aspiration biopsy of neck using ultrasound guidance ,447853006
+Diagnostic ultrasonography,0,Fine needle aspiration biopsy of inguinal region using ultrasound guidance ,449202009
+Diagnostic ultrasonography,1,Ultrasonography of upper limb ,449921006
+Diagnostic ultrasonography,0,Drainage procedure using ultrasound guidance ,702768002
+Diagnostic ultrasonography,0,Vacuum assisted excision of lesion of breast using ultrasonographic guidance ,725505001
+Diagnostic ultrasonography,1,Ultrasonography of left axilla ,911000087107
+Diagnostic ultrasonography,1,Ultrasonography of right axilla ,921000087104
+Diagnostic ultrasonography,0,Aspiration of left breast using ultrasonographic guidance ,931000087102
+Diagnostic ultrasonography,0,Aspiration of right breast using ultrasonographic guidance ,941000087108
+Diagnostic ultrasonography,1,Ultrasonography of left elbow ,1011000087109
+Diagnostic ultrasonography,1,Ultrasonography of right elbow ,1021000087101
+Diagnostic ultrasonography,1,Ultrasonography of left foot ,1031000087104
+Diagnostic ultrasonography,1,Ultrasonography of right foot ,1041000087105
+Diagnostic ultrasonography,0,Biopsy of left kidney using ultrasonographic guidance ,1141000087106
+Diagnostic ultrasonography,0,Biopsy of right kidney using ultrasonographic guidance ,1151000087109
+Diagnostic ultrasonography,1,Ultrasonography of left thigh ,1241000087104
+Diagnostic ultrasonography,1,Ultrasonography of right thigh ,1251000087101
+Diagnostic ultrasonography,1,Ultrasonography of left thumb ,1261000087103
+Diagnostic ultrasonography,1,Ultrasonography of right thumb ,1271000087107
+Diagnostic ultrasonography,1,Ultrasonography of bilateral axillae ,1551000087103
+Diagnostic ultrasonography,0,Drainage of left breast using ultrasonographic guidance ,12601000087109
+Diagnostic ultrasonography,0,Biopsy of right buttock using ultrasonographic guidance ,13151000087108
+Diagnostic ultrasonography,0,Ultrasound monitoring of early pregnancy ,228881000000102
+Diagnostic ultrasonography,0,Aspiration of ganglion cyst using ultrasonographic guidance ,328201000000100
+Diagnostic ultrasonography,1,Ultrasonography of craniofacial soft tissue ,352871000000108
+Diagnostic ultrasonography,1,Ultrasonography of abdomen and renal tract ,353031000000108
+Diagnostic ultrasonography,0,Biopsy of soft tissue of thigh using ultrasonographic guidance ,811131000000103
+Diagnostic ultrasonography,1,Transvaginal and transabdominal ultrasonography of pelvis ,826601000000101
+Diagnostic ultrasonography,0,Fine needle aspiration biopsy of chest wall using ultrasonography guidance ,843611000000109
+Diagnostic ultrasonography,0,Core needle biopsy of chest wall using ultrasonography guidance ,843631000000101
+Diagnostic ultrasonography,0,Suprascapular nerve block using ultrasonography guidance ,844541000000109
+Diagnostic ultrasonography,0,Ultrasonography of multiple pregnancy ,855021000000107
+Diagnostic ultrasonography,0,Doppler ultrasonography of multiple pregnancy ,855031000000109
+Diagnostic ultrasonography,1,Ultrasonography of small intestine ,859251000000105
+Diagnostic ultrasonography,1,Ultrasonography of urethra ,865041000000107
+Diagnostic ultrasonography,0,Ultrasonography to determine estimated date of confinement ,866481000000104
+Diagnostic ultrasonography,0,Percutaneous injection of sclerosing agent into long saphenous vein using ultrasonography guidance ,914001000000103
+Diagnostic ultrasonography,1,Ultrasonography of right popliteal fossa ,16436111000119100
+Diagnostic ultrasonography,1,Ultrasonography of left popliteal fossa ,16436161000119100
+Diagnostic ultrasonography,0,Aspiration of kidney using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of bone using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of elbow using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of foot using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of hip using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of left buttock using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Biopsy of shoulder using ultrasound guidance ,
+Diagnostic ultrasonography,0,Biopsy of transplanted kidney using ultrasound guidance ,
+Diagnostic ultrasonography,0,Chorionic villus sampling using obstetric ultrasound guidance ,
+Diagnostic ultrasonography,0,Cryoablation of lesion using ultrasonography guidance ,
+Diagnostic ultrasonography,1,Doppler ultrasonography of iliac vein ,
+Diagnostic ultrasonography,1,Doppler ultrasonography of renal artery ,
+Diagnostic ultrasonography,1,Doppler ultrasound scan of middle cerebral artery of fetus ,
+Diagnostic ultrasonography,0,Drainage of amniotic fluid using ultrasound guidance ,
+Diagnostic ultrasonography,0,Drainage of cyst of kidney using ultrasound guidance ,
+Diagnostic ultrasonography,0,Drainage of right breast using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Dry needling of tendon using ultrasound guidance ,
+Diagnostic ultrasonography,0,Endoanal ultrasound examination ,
+Diagnostic ultrasonography,0,Endoscopic core needle biopsy of pancreas using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic core needle biopsy of stomach using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic core needle biopsy using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic drainage using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic examination of pancreatic duct using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy of duodenum using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy of mediastinal lymph node using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy of oesophagus using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy of pancreas using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy of stomach using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic fine needle aspiration biopsy using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Endoscopic ultrasonography ,
+Diagnostic ultrasonography,0,Endoscopic ultrasonography of bronchus ,
+Diagnostic ultrasonography,0,Endoscopic ultrasound examination of bile duct ,
+Diagnostic ultrasonography,0,Fine needle aspiration and core needle biopsy of breast using ultrasound guidance ,
+Diagnostic ultrasonography,0,Injection of Botulinum toxin using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Injection of intraarticular ligament using ultrasound guidance ,
+Diagnostic ultrasonography,0,Injection of steroid using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Injection of thrombin using ultrasound guidance ,
+Diagnostic ultrasonography,0,Insertion of fiducial marker into prostate using ultrasonography guidance ,
+Diagnostic ultrasonography,0,Insertion of magnetic marker into left breast using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Insertion of magnetic marker into right breast using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Insertion of tunnelled drain into abdomen using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Intracardiac echocardiography with contrast ,
+Diagnostic ultrasonography,0,Intravascular ultrasonography of coronary artery using fluoroscopic guidance ,
+Diagnostic ultrasonography,0,Intravascular ultrasound scan ,
+Diagnostic ultrasonography,0,Removal of tunnelled drain from abdomen using ultrasonographic guidance ,
+Diagnostic ultrasonography,0,Sampling of fetal blood using ultrasound guidance ,
+Diagnostic ultrasonography,1,Three dimensional ultrasonography ,
+Diagnostic ultrasonography,0,Transoesophageal echocardiography for complex congenital heart disease ,
+Diagnostic ultrasonography,1,Transthoracic echocardiography for complex congenital heart disease ,
+Diagnostic ultrasonography,0,Transvaginal ultrasonography to determine the estimated date of confinement ,
+Diagnostic ultrasonography,1,Ultrasonography of bilateral elbows ,
+Diagnostic ultrasonography,1,Ultrasonography of bilateral feet ,
+Diagnostic ultrasonography,1,Ultrasonography of bilateral thighs ,
+Diagnostic ultrasonography,1,Ultrasonography of bilateral thumbs ,
+Diagnostic ultrasonography,0,Ultrasonography of fetal ductus venosus ,
+Diagnostic ultrasonography,1,Ultrasonography of midfoot ,
+Diagnostic ultrasonography,0,Ultrasonography of pathological specimen ,
+Diagnostic ultrasonography,1,Ultrasonography of seminal vesicles ,
+Diagnostic ultrasonography,1,Ultrasonography of stent graft of aorta ,
+Diagnostic ultrasonography,1,Ultrasonography of urinary bladder for flow rate ,
+Diagnostic ultrasonography,1,Ultrasonography of vocal cord ,
+Diagnostic ultrasonography,1,Ultrasonography surveillance of liver for hepatocellular carcinoma ,
+Diagnostic ultrasonography,1,Ultrasound elastography ,
+Diagnostic ultrasonography,0,Ultrasound scan and drainage of thyroid ,
+Diagnostic ultrasonography,1,Ultrasound scan of pancreas ,
+Diagnostic ultrasonography,1,Ultrasound scan of pylorus ,
+Diagnostic ultrasonography,1,Ultrasound scan of transplant liver ,
+Endoscopy,0,Endoscopic biopsy of stomach ,10077008
+Endoscopy,0,Flexible fiberoptic sigmoidoscopy ,44441009
+Endoscopy,0,Colonoscopy ,73761001
+Endoscopy,0,Diagnostic fiberoptic endoscopic examination of upper gastrointestinal tract ,265371001
+Endoscopy,0,Therapeutic colonoscopy ,303587008
+Endoscopy,0,Endoscopic retrograde cholangiopancreatography ,386718000
+Endoscopy,0,Endoscopy of stomach ,386831001
+Endoscopy,0,Ureteroscopy ,387717002
+Endoscopy,0,Flexible fiberoptic sigmoidoscopy with biopsy ,396226005
+Endoscopy,0,Endoscopic excision of polyp of large intestine using sigmoidoscope ,442830000
+Endoscopy,0,Colonoscopy and biopsy of colon ,446745002
+Endoscopy,0,Endoscopic retrograde cholangiopancreatography with removal of biliary stent using fluoroscopic guidance ,850221000000108
+Endoscopy,0,Brain endoscopy ,
+Endoscopy,0,Bronchoscopy ,
+Endoscopy,0,Capsule endoscopy ,
+Endoscopy,0,Diagnostic fiberoptic endoscopic examination of larynx ,
+Endoscopy,0,Diagnostic nasendoscopy ,
+Endoscopy,0,Endoscopic banding of oesophageal varices using fluoroscopic guidance ,
+Endoscopy,0,Endoscopic retrograde cholangiopancreatography with balloon dilatation of sphincter of pancreatic duct using fluoroscopic guidance ,
+Endoscopy,0,Endoscopic retrograde cholangiopancreatography with replacement of biliary stent using fluoroscopic guidance ,
+Endoscopy,0,Endoscopy of ear ,
+Endoscopy,0,Endoscopy of large intestine ,
+Endoscopy,0,Endoscopy of pharynx ,
+Endoscopy,0,Endoscopy of respiratory system ,
+Endoscopy,0,Endoscopy of salivary gland ,
+Endoscopy,0,Endoscopy of urethra ,
+Endoscopy,0,Endoscopy of urinary bladder ,
+Endoscopy,0,Fiberoptic colonoscopy with biopsy ,
+Endoscopy,0,Laparoscopy ,
+Endoscopy,0,Nasal sinus endoscopy ,
+Endoscopy,0,Proctoscopy ,
+Endoscopy,0,Sphincterotomy of sphincter of Oddi by endoscopic retrograde cholangiopancreatography ,
+Endoscopy,0,Thoracoscopy ,
+MRI,1,Magnetic resonance imaging of urinary bladder ,1292009
+MRI,1,Magnetic resonance imaging of pelvis ,2690005
+MRI,1,Magnetic resonance imaging of chest ,6007000
+MRI,1,Magnetic resonance imaging of orbit ,30957007
+MRI,1,Magnetic resonance imaging of face ,35249003
+MRI,1,Magnetic resonance imaging of temporomandibular joint ,57902003
+MRI,1,Magnetic resonance imaging of cervical spine with contrast ,60443006
+MRI,1,Magnetic resonance imaging of neck ,72221006
+MRI,1,Magnetic resonance imaging of prostate ,75691003
+MRI,1,Magnetic resonance imaging of thoracic spine with contrast ,91333005
+MRI,1,Magnetic resonance imaging ,113091000
+MRI,1,Magnetic resonance imaging of lower extremity ,113109007
+MRI,0,Radiotherapy planning using magnetic resonance imaging ,228712001
+MRI,1,Magnetic resonance imaging of head ,241601008
+MRI,1,Magnetic resonance imaging of brain with functional imaging ,241603006
+MRI,1,Magnetic resonance imaging of posterior fossa ,241604000
+MRI,1,Magnetic resonance imaging of pituitary fossa ,241605004
+MRI,1,Magnetic resonance imaging of internal auditory meatus ,241606003
+MRI,1,Magnetic resonance imaging of paranasal sinuses ,241609005
+MRI,1,Magnetic resonance imaging of salivary glands ,241611001
+MRI,1,Magnetic resonance imaging of breast ,241615005
+MRI,1,Magnetic resonance imaging of axilla ,241617002
+MRI,1,Magnetic resonance imaging of brachial plexus ,241618007
+MRI,1,Magnetic resonance imaging of thoracic inlet ,241619004
+MRI,1,Magnetic resonance imaging of heart ,241620005
+MRI,1,Magnetic resonance imaging of abdomen ,241621009
+MRI,1,Magnetic resonance imaging of liver ,241622002
+MRI,1,Magnetic resonance imaging of adrenals ,241623007
+MRI,1,Magnetic resonance imaging of kidneys ,241624001
+MRI,1,Magnetic resonance imaging of pancreas ,241625000
+MRI,1,Magnetic resonance imaging of rectum ,241629006
+MRI,1,Magnetic resonance imaging of scrotum ,241630001
+MRI,1,Magnetic resonance imaging of shoulder ,241633004
+MRI,1,Magnetic resonance imaging of upper arm ,241634005
+MRI,1,Magnetic resonance imaging of elbow ,241635006
+MRI,1,Magnetic resonance imaging of forearm ,241636007
+MRI,1,Magnetic resonance imaging of wrist ,241637003
+MRI,1,Magnetic resonance imaging of hand ,241638008
+MRI,1,Magnetic resonance imaging of hip ,241639000
+MRI,1,Magnetic resonance imaging of knee ,241641004
+MRI,1,Magnetic resonance imaging of lower leg ,241642006
+MRI,1,Magnetic resonance imaging of ankle ,241643001
+MRI,1,Magnetic resonance imaging of foot ,241644007
+MRI,1,Magnetic resonance imaging of spine ,241645008
+MRI,1,Magnetic resonance imaging of cervical spine ,241646009
+MRI,1,Magnetic resonance imaging of thoracic spine ,241647000
+MRI,1,Magnetic resonance imaging of lumbar spine ,241648005
+MRI,1,Magnetic resonance imaging arthrography of shoulder ,241650002
+MRI,1,Magnetic resonance imaging arthrography of wrist ,241652005
+MRI,1,Magnetic resonance imaging arthrography of hip ,241653000
+MRI,1,Magnetic resonance imaging of neck vessels ,241665001
+MRI,1,Magnetic resonance imaging of thoracic aorta ,241666000
+MRI,1,Magnetic resonance imaging of abdominal aorta ,241668004
+MRI,1,Magnetic resonance spectroscopy ,241671007
+MRI,1,Magnetic resonance spectroscopy of head ,241672000
+MRI,1,Magnetic resonance phosphorus spectroscopy of head ,241673005
+MRI,1,Magnetic resonance imaging of aorta ,306992007
+MRI,1,Magnetic resonance cholangiopancreatography ,314635004
+MRI,1,Magnetic resonance imaging angiography of head ,417936006
+MRI,1,Magnetic resonance imaging of fingers ,418003005
+MRI,1,Magnetic resonance imaging angiography of upper limb artery ,418062002
+MRI,1,Magnetic resonance imaging angiography of lower limb artery ,418180008
+MRI,1,Magnetic resonance imaging venography of intracranial veins ,418463004
+MRI,1,Magnetic resonance imaging of cervix ,418592002
+MRI,1,Magnetic resonance imaging angiography of pulmonary arteries ,418786005
+MRI,1,Magnetic resonance imaging of clavicle ,418917004
+MRI,1,Magnetic resonance imaging cerebral perfusion study ,419059006
+MRI,1,Magnetic resonance imaging venography ,419194002
+MRI,1,Magnetic resonance imaging of urinary tract ,419275004
+MRI,1,Magnetic resonance imaging angiography of renal artery ,419311004
+MRI,1,Magnetic resonance imaging of cervicothoracic spine ,419356006
+MRI,1,Magnetic resonance imaging perfusion study of heart ,419535008
+MRI,1,Magnetic resonance imaging angiography of visceral arteries ,419555009
+MRI,1,Magnetic resonance imaging angiography of renal and visceral arteries ,419580009
+MRI,1,Magnetic resonance imaging of thoracolumbar spine ,419636004
+MRI,1,Magnetic resonance imaging venography of cerebral veins ,419701008
+MRI,1,Magnetic resonance imaging angiography of subclavian artery ,419713003
+MRI,1,Magnetic resonance imaging angiography of coronary arteries ,419997008
+MRI,1,Magnetic resonance imaging of sacroiliac joints ,420078000
+MRI,1,Magnetic resonance imaging of parotid gland ,420137004
+MRI,1,Magnetic resonance imaging of whole body ,426252008
+MRI,1,Magnetic resonance imaging of femur ,427366006
+MRI,1,Magnetic resonance imaging myelography of cervical spine ,430021001
+MRI,1,"Magnetic resonance imaging of calcaneus, talus, navicular and cuboid bones of foot ",430227007
+MRI,1,Magnetic resonance cholangiopancreatography with contrast ,430272004
+MRI,1,Magnetic resonance imaging for patella tracking ,430473007
+MRI,1,Magnetic resonance imaging myelography of lumbar spine ,430507007
+MRI,1,Magnetic resonance imaging of cerebrospinal fluid flow ,431225005
+MRI,1,Magnetic resonance imaging of breast implant ,431249008
+MRI,1,Magnetic resonance imaging of lumbar spine and pelvis ,431250008
+MRI,1,Magnetic resonance imaging of perfusion of heart under stress ,431299007
+MRI,1,Magnetic resonance imaging of rest perfusion of heart ,431392001
+MRI,0,Marking of skin of head using magnetic resonance imaging guidance ,431402006
+MRI,1,Magnetic resonance imaging of fetus ,431407000
+MRI,1,Magnetic resonance imaging angiography of whole aorta ,431431005
+MRI,1,Magnetic resonance imaging angiography of entire blood vessel ,431508007
+MRI,1,Magnetic resonance imaging of midfoot ,431608002
+MRI,1,Magnetic resonance imaging stress study of cardiac function ,431609005
+MRI,1,Magnetic resonance imaging of internal auditory meatus with contrast ,431625000
+MRI,1,Magnetic resonance imaging of small intestine ,431627008
+MRI,1,Magnetic resonance imaging of liver with contrast ,431839003
+MRI,1,Magnetic resonance imaging of salivary gland with contrast ,431840001
+MRI,1,Magnetic resonance imaging of brachial plexus with contrast ,431849000
+MRI,1,Magnetic resonance imaging of spine with contrast ,431985004
+MRI,1,Magnetic resonance imaging of sternoclavicular joint ,431986003
+MRI,1,Diffusion weighted magnetic resonance imaging of brain ,431999000
+MRI,1,Magnetic resonance imaging of hand with contrast ,432000006
+MRI,1,Magnetic resonance imaging of buttock ,432001005
+MRI,0,Magnetic resonance imaging of head for radiotherapy planning ,432022004
+MRI,1,Magnetic resonance angiography of carotid artery ,432103005
+MRI,1,Magnetic resonance imaging of ankle with contrast ,432111000
+MRI,1,Magnetic resonance imaging of scapula ,432112007
+MRI,1,Magnetic resonance imaging of elbow with contrast ,432151002
+MRI,1,Magnetic resonance imaging of sacral spine ,432152009
+MRI,1,Magnetic resonance imaging of floor of mouth ,432153004
+MRI,1,Magnetic resonance imaging of upper arm with contrast ,432215003
+MRI,1,Magnetic resonance imaging of foot with contrast ,432240005
+MRI,1,Magnetic resonance imaging of coccyx ,432241009
+MRI,1,Magnetic resonance imaging myelography of thoracic spine with contrast ,432244001
+MRI,0,Aspiration using magnetic resonance imaging guidance ,432312003
+MRI,1,Magnetic resonance imaging of sternum ,432314002
+MRI,1,Magnetic resonance imaging of nasal sinuses with contrast ,432368007
+MRI,1,Magnetic resonance imaging of abdomen with contrast ,432369004
+MRI,1,Magnetic resonance imaging of neck with contrast ,432541008
+MRI,1,Magnetic resonance imaging of axilla with contrast ,432544000
+MRI,1,Magnetic resonance imaging of oral cavity ,432549005
+MRI,1,Magnetic resonance imaging of liver and spleen ,432551009
+MRI,1,Magnetic resonance imaging of liver and biliary tract with contrast ,432633002
+MRI,1,Magnetic resonance imaging of breast with contrast ,432634008
+MRI,1,Magnetic resonance imaging of calcaneus ,432653003
+MRI,1,Magnetic resonance imaging of pelvis and hip ,432672003
+MRI,1,Magnetic resonance imaging of adrenal gland with contrast ,432767000
+MRI,1,Magnetic resonance imaging of chest with contrast ,432815006
+MRI,1,Magnetic resonance imaging of cardiac valvular function ,432845009
+MRI,1,Magnetic resonance imaging of cardiac ventricular volume ,432846005
+MRI,1,Magnetic resonance imaging of thumb ,432854007
+MRI,1,Magnetic resonance imaging of head with contrast ,432874000
+MRI,1,Magnetic resonance imaging of mandible ,433006008
+MRI,1,Magnetic resonance imaging of penis ,433007004
+MRI,1,Magnetic resonance imaging of lower leg with contrast ,433009001
+MRI,1,Magnetic resonance imaging spectroscopy of prostate ,433110009
+MRI,1,Magnetic resonance imaging of pituitary fossa with contrast ,433132000
+MRI,1,Magnetic resonance imaging of orbit with contrast ,433133005
+MRI,1,Magnetic resonance imaging of pelvis with contrast ,433138001
+MRI,1,Magnetic resonance imaging of lumbar and sacral spine with contrast ,433140006
+MRI,1,Magnetic resonance imaging of lumbar and sacral spine ,433141005
+MRI,1,Magnetic resonance imaging of forefoot ,433170001
+MRI,1,Magnetic resonance imaging of femur with contrast ,433174005
+MRI,1,Magnetic resonance imaging of craniofacial structure ,438834000
+MRI,1,Magnetic resonance venography of pelvis ,439085003
+MRI,1,Diffusion weighted magnetic resonance imaging ,440408002
+MRI,1,Magnetic resonance angiography of vascular structure of spine ,443077003
+MRI,1,Magnetic resonance imaging of lumbosacral plexus ,443078008
+MRI,1,Magnetic resonance imaging of face using contrast ,443233002
+MRI,1,Magnetic resonance imaging of trigeminal nerve ,443517001
+MRI,0,Intraoperative magnetic resonance imaging of brain with contrast ,444585009
+MRI,1,Magnetic resonance imaging of Achilles tendon ,445847007
+MRI,1,Magnetic resonance imaging of spinal cord ,445946004
+MRI,1,Magnetic resonance imaging of scaphoid ,446060009
+MRI,1,Magnetic resonance imaging of pancreas with contrast ,446061008
+MRI,1,Magnetic resonance imaging of rib ,446063006
+MRI,1,Magnetic resonance imaging of spinal cord with contrast ,446448001
+MRI,1,Magnetic resonance imaging of base of skull ,446772005
+MRI,1,Magnetic resonance imaging of inguinal region ,447218006
+MRI,1,Magnetic resonance imaging of anal sphincter ,447224000
+MRI,1,Magnetic resonance imaging of temporal lobe ,447334006
+MRI,1,Diffusion tensor magnetic resonance imaging of brain ,448306001
+MRI,1,Diffusion tensor magnetic resonance imaging of cerebral nerve tracts ,448307005
+MRI,1,Magnetic resonance imaging of thoracic and lumbar spine with contrast ,448641007
+MRI,1,Magnetic resonance imaging of sacroiliac joints with contrast ,448718007
+MRI,1,Magnetic resonance imaging for cardiac morphology and function ,449876000
+MRI,1,"Magnetic resonance imaging for cardiac morphology, function, and velocity ",449877009
+MRI,1,Magnetic resonance imaging for cardiac morphology and function with contrast ,449879007
+MRI,1,"Magnetic resonance imaging for cardiac morphology, function, and velocity with contrast ",449880005
+MRI,1,Magnetic resonance imaging of aorta with contrast ,450527004
+MRI,1,Magnetic resonance imaging of thoracic aorta with contrast ,450528009
+MRI,1,Magnetic resonance imaging of temporomandibular joint with contrast ,702721007
+MRI,1,Magnetic resonance angiography of head and neck ,702726002
+MRI,1,Magnetic resonance imaging of prostate with contrast ,709525001
+MRI,1,Magnetic resonance imaging of urinary bladder with contrast ,709528004
+MRI,1,Magnetic resonance imaging of parotid gland with contrast ,709578002
+MRI,0,Magnetic resonance imaging proctography ,711304008
+MRI,1,Magnetic resonance imaging of thigh with contrast ,718071002
+MRI,1,Multiparametric magnetic resonance imaging of prostate ,719178004
+MRI,1,Magnetic resonance imaging of perianal fistula with contrast ,719348000
+MRI,1,Magnetic resonance imaging of bilateral thighs with contrast ,724215003
+MRI,1,Magnetic resonance imaging of left ankle ,2051000087103
+MRI,1,Magnetic resonance imaging of left ankle with contrast ,2061000087100
+MRI,1,Magnetic resonance imaging of right ankle ,2071000087109
+MRI,1,Magnetic resonance imaging of right ankle with contrast ,2081000087106
+MRI,1,Magnetic resonance imaging of left elbow ,2191000087107
+MRI,1,Magnetic resonance imaging of left elbow with contrast ,2201000087109
+MRI,1,Magnetic resonance imaging of right elbow ,2211000087106
+MRI,1,Magnetic resonance imaging of right elbow with contrast ,2221000087103
+MRI,1,Magnetic resonance imaging of left femur ,2231000087101
+MRI,1,Magnetic resonance imaging of left femur with contrast ,2241000087107
+MRI,1,Magnetic resonance imaging of right femur ,2251000087105
+MRI,1,Magnetic resonance imaging of right femur with contrast ,2261000087108
+MRI,1,Magnetic resonance imaging of left foot ,2271000087104
+MRI,1,Magnetic resonance imaging of left foot with contrast ,2281000087102
+MRI,1,Magnetic resonance imaging of right foot ,2291000087100
+MRI,1,Magnetic resonance imaging of right foot with contrast ,2301000087101
+MRI,1,Magnetic resonance imaging of left forearm ,2311000087104
+MRI,1,Magnetic resonance imaging of left forearm with contrast ,2321000087107
+MRI,1,Magnetic resonance imaging of right forearm ,2331000087109
+MRI,1,Magnetic resonance imaging of right forearm with contrast ,2341000087103
+MRI,1,Magnetic resonance imaging of left hand ,2351000087100
+MRI,1,Magnetic resonance imaging of left hand with contrast ,2361000087102
+MRI,1,Magnetic resonance imaging of right hand ,2371000087106
+MRI,1,Magnetic resonance imaging of right hand with contrast ,2381000087108
+MRI,1,Magnetic resonance imaging of left hip ,2391000087105
+MRI,1,Magnetic resonance imaging of left hip with contrast ,2401000087108
+MRI,1,Magnetic resonance imaging of right hip ,2411000087105
+MRI,1,Magnetic resonance imaging of right hip with contrast ,2421000087102
+MRI,1,Magnetic resonance imaging of left upper arm ,2431000087100
+MRI,1,Magnetic resonance imaging of left upper arm with contrast ,2441000087106
+MRI,1,Magnetic resonance imaging of right upper arm ,2451000087109
+MRI,1,Magnetic resonance imaging of right upper arm with contrast ,2461000087107
+MRI,1,Magnetic resonance imaging of left knee ,2471000087103
+MRI,1,Magnetic resonance imaging of left knee with contrast ,2481000087101
+MRI,1,Magnetic resonance imaging of right knee ,2491000087104
+MRI,1,Magnetic resonance imaging of right knee with contrast ,2501000087107
+MRI,1,Magnetic resonance imaging of left scapula ,2551000087108
+MRI,1,Magnetic resonance imaging of right scapula ,2561000087106
+MRI,1,Magnetic resonance imaging of left shoulder ,2581000087100
+MRI,1,Magnetic resonance imaging of left shoulder with contrast ,2591000087103
+MRI,1,Magnetic resonance imaging of right shoulder ,2601000087106
+MRI,1,Magnetic resonance imaging of right shoulder with contrast ,2611000087108
+MRI,1,Magnetic resonance imaging of left wrist ,2661000087105
+MRI,1,Magnetic resonance imaging of right wrist ,2671000087101
+MRI,1,Magnetic resonance imaging of left wrist with contrast ,3181000087102
+MRI,1,Magnetic resonance imaging of right wrist with contrast ,3191000087100
+MRI,1,Magnetic resonance imaging of left clavicle ,12931000087106
+MRI,1,Magnetic resonance imaging of right clavicle ,12941000087100
+MRI,1,Magnetic resonance imaging of left thigh ,16831000087101
+MRI,1,Magnetic resonance imaging of right thigh ,16841000087107
+MRI,1,Magnetic resonance imaging of bilateral thighs ,17501000087108
+MRI,1,Magnetic resonance imaging of left thigh with contrast ,17511000087105
+MRI,1,Magnetic resonance arthrography of right shoulder ,19521000087107
+MRI,1,Magnetic resonance arthrography of left hip ,19621000087108
+MRI,1,Magnetic resonance arthrography of right knee ,19741000087109
+MRI,1,Magnetic resonance arthrography of right wrist ,19771000087101
+MRI,1,Magnetic resonance arthrography of right elbow ,19791000087102
+MRI,1,Magnetic resonance arthrography of right hip ,19831000087106
+MRI,1,Magnetic resonance arthrography of left shoulder ,20051000087106
+MRI,1,Magnetic resonance arthrography of left wrist ,20171000087101
+MRI,1,Magnetic resonance arthrography of left elbow ,20271000087105
+MRI,1,Magnetic resonance imaging study for cardiac congenital anomaly ,322731000000101
+MRI,0,Magnetic resonance imaging defecating proctogram ,353471000000101
+MRI,1,Magnetic resonance imaging of bilateral breasts with contrast ,427031000119100
+MRI,1,Magnetic resonance imaging of tongue ,810151000000104
+MRI,1,Magnetic resonance imaging of tongue with contrast ,810171000000108
+MRI,1,Magnetic resonance imaging of facial nerve ,810181000000105
+MRI,1,Magnetic resonance imaging of liver for assessment of hepatic iron load ,810831000000104
+MRI,1,Magnetic resonance imaging of cervicothoracic spine with contrast ,824041000000100
+MRI,1,Magnetic resonance imaging angiography of head with contrast ,824691000000101
+MRI,0,Obstetric magnetic resonance imaging of pelvis ,826581000000105
+MRI,1,Gynaecological magnetic resonance imaging of pelvis ,826591000000107
+MRI,1,Magnetic resonance imaging of craniofacial structure with contrast ,826751000000109
+MRI,1,Magnetic resonance imaging enteroclysis ,843191000000108
+MRI,1,Magnetic resonance imaging of small intestine with contrast ,864461000000104
+MRI,1,Diffusion weighted magnetic resonance imaging of prostate ,910541000000104
+MRI,1,Diffusion weighted magnetic resonance imaging of internal auditory meatus ,911821000000101
+MRI,1,Magnetic resonance imaging of heart for assessment of myocardial viability ,931021000000101
+MRI,1,Magnetic resonance imaging of pelvis and prostate using contrast ,963511000000109
+MRI,1,Magnetic resonance imaging of lumbar spine and sacroiliac joints ,1052431000000100
+MRI,1,Magnetic resonance imaging of pelvis and rectum with contrast ,1077851000000100
+MRI,1,Magnetic resonance imaging of lumbosacral plexus with contrast ,1089591000000100
+MRI,1,Magnetic resonance imaging of heart and liver for assessment of cardiac and hepatic iron load ,1095721000000100
+MRI,0,Core needle biopsy of breast using magnetic resonance imaging guidance ,
+MRI,1,Dynamic magnetic resonance imaging of pelvis ,
+MRI,0,Fine needle aspiration and core needle biopsy of breast using magnetic resonance imaging guidance ,
+MRI,0,Focused ultrasound ablation of prostate using magnetic resonance imaging guidance ,
+MRI,0,Insertion of marker into breast using magnetic resonance imaging guidance ,
+MRI,1,Magnetic resonance angiography of iliac artery ,
+MRI,1,Magnetic resonance angiography of neck vessel with contrast ,
+MRI,1,Magnetic resonance angiography of pelvis without contrast ,
+MRI,1,Magnetic resonance angiography of transplanted kidney ,
+MRI,1,Magnetic resonance arthrography of left ankle ,
+MRI,1,Magnetic resonance arthrography of right ankle ,
+MRI,1,Magnetic resonance cholangiopancreatography with secretin stimulation ,
+MRI,1,Magnetic resonance imaging chemical shift imaging ,
+MRI,1,Magnetic resonance imaging for cardiac morphology and function under stress with contrast ,
+MRI,1,"Magnetic resonance imaging for cardiac morphology, function, and velocity under stress ",
+MRI,1,"Magnetic resonance imaging for cardiac morphology, function, and velocity under stress with contrast ",
+MRI,1,Magnetic resonance imaging for measurement of brain volume ,
+MRI,1,Magnetic resonance imaging for measurement of brain volume with contrast ,
+MRI,0,Magnetic resonance imaging for radiotherapy planning ,
+MRI,1,Magnetic resonance imaging of abdomen and pelvis ,
+MRI,1,Magnetic resonance imaging of abdomen and pelvis with contrast ,
+MRI,1,Magnetic resonance imaging of abdominal aorta with contrast ,
+MRI,1,Magnetic resonance imaging of bilateral clavicles ,
+MRI,1,Magnetic resonance imaging of brain and cervical spinal cord ,
+MRI,0,Magnetic resonance imaging of brain of fetus ,
+MRI,1,Magnetic resonance imaging of brain with arterial spin labeling ,
+MRI,1,Magnetic resonance imaging of breast for screening ,
+MRI,1,Magnetic resonance imaging of floor of mouth with contrast ,
+MRI,0,Magnetic resonance imaging of head for stereotactic planning ,
+MRI,1,Magnetic resonance imaging of heart for assessment of cardiac iron load ,
+MRI,1,Magnetic resonance imaging of heart with contrast ,
+MRI,1,Magnetic resonance imaging of hip with contrast ,
+MRI,1,Magnetic resonance imaging of kidney with contrast ,
+MRI,1,Magnetic resonance imaging of knee with contrast ,
+MRI,1,Magnetic resonance imaging of left acromioclavicular joint ,
+MRI,1,Magnetic resonance imaging of left breast ,
+MRI,1,Magnetic resonance imaging of left breast with contrast ,
+MRI,1,Magnetic resonance imaging of liver and spleen with contrast ,
+MRI,1,Magnetic resonance imaging of lumbar spine with contrast ,
+MRI,1,Magnetic resonance imaging of mediastinum ,
+MRI,0,Magnetic resonance imaging of multiple pregnancy ,
+MRI,1,Magnetic resonance imaging of nasopharynx ,
+MRI,1,Magnetic resonance imaging of pelvic cavity ,
+MRI,0,Magnetic resonance imaging of pelvis for radiotherapy planning ,
+MRI,1,Magnetic resonance imaging of perineum ,
+MRI,1,Magnetic resonance imaging of posterior fossa with contrast ,
+MRI,0,Magnetic resonance imaging of prostate for radiotherapy planning ,
+MRI,1,Magnetic resonance imaging of pulmonary perfusion ,
+MRI,1,Magnetic resonance imaging of right acromioclavicular joint ,
+MRI,1,Magnetic resonance imaging of right breast ,
+MRI,1,Magnetic resonance imaging of right breast with contrast ,
+MRI,1,Magnetic resonance imaging of right thigh with contrast ,
+MRI,1,Magnetic resonance imaging of right upper limb ,
+MRI,1,Magnetic resonance imaging of shoulder with contrast ,
+MRI,0,Magnetic resonance imaging of spine for radiotherapy planning ,
+MRI,0,Magnetic resonance imaging of spine of fetus ,
+MRI,1,Magnetic resonance imaging of sternoclavicular joint with contrast ,
+MRI,1,Magnetic resonance imaging of subclavian vein ,
+MRI,1,Magnetic resonance imaging of submandibular gland ,
+MRI,1,Magnetic resonance imaging of thoracic inlet with contrast ,
+MRI,1,Magnetic resonance imaging of thoracic outlet with contrast ,
+MRI,1,"Magnetic resonance imaging of thorax, abdomen and pelvis ",
+MRI,1,Magnetic resonance imaging of thyroid ,
+MRI,1,Magnetic resonance imaging of trigeminal nerve with contrast ,
+MRI,1,Magnetic resonance imaging of vessels ,
+MRI,1,Magnetic resonance imaging susceptibility imaging ,
+MRI,1,Magnetic resonance imaging T2 mapping ,
+MRI,1,Magnetic resonance imaging venography of inferior vena cava ,
+MRI,1,Magnetic resonance imaging venography of lower limb ,
+MRI,1,Magnetic resonance imaging venography of superior vena cava ,
+MRI,1,Magnetic resonance imaging venography of upper limb ,
+MRI,1,Magnetic resonance venography of abdomen and pelvis ,
+MRI,1,Magnetic resonance venography of iliac vein ,
+MRI,1,Magnetic resonance venography of neck ,
+MRI,0,Vacuum assisted core needle biopsy of breast using magnetic resonance imaging guidance ,
+Plain radiography,1,Radiography of humerus ,1225002
+Plain radiography,1,Skeletal X-ray of ankle and foot ,1597004
+Plain radiography,1,Skeletal X-ray of lower limb ,5433008
+Plain radiography,1,Diagnostic radiography of toes ,5846007
+Plain radiography,1,Diagnostic radiography of sacroiliac joints ,6238009
+Plain radiography,1,Radiography of sacrococcygeal spine ,8449009
+Plain radiography,1,Radiography of ankle ,19490002
+Plain radiography,1,Radiography of mandible ,19589009
+Plain radiography,1,Orthodontic cephalogram ,19961003
+Plain radiography,1,Radiography of ribs ,21970003
+Plain radiography,1,Radiography of sternum ,23394003
+Plain radiography,0,Screening mammography ,24623002
+Plain radiography,1,Diagnostic radiography of coccyx ,24856003
+Plain radiography,1,Radiography of shoulder ,29592009
+Plain radiography,0,Intravenous pyelogram ,32265006
+Plain radiography,1,Radiography of nasopharynx ,37307009
+Plain radiography,1,Diagnostic radiography of calcaneus ,37815002
+Plain radiography,1,Skeletal X-ray of wrist and hand ,39714003
+Plain radiography,1,Skeletal X-ray of pelvis and hip ,40348008
+Plain radiography,1,Diagnostic radiography of temporomandibular joint ,40372003
+Plain radiography,1,Diagnostic radiography of skull ,42075002
+Plain radiography,1,Bilateral mammography ,43204002
+Plain radiography,1,Radiography of thoracic spine ,45554006
+Plain radiography,1,"Radiologic examination, osseous survey, complete ",45732007
+Plain radiography,1,Radiography of hand ,49345004
+Plain radiography,1,Diagnostic radiography of scapula ,49626003
+Plain radiography,1,Radiography of foot ,52221007
+Plain radiography,1,Diagnostic radiography of sacrum ,57235004
+Plain radiography,1,Radiography of wrist ,60027007
+Plain radiography,1,Diagnostic radiography of abdomen ,60654006
+Plain radiography,1,Diagnostic radiography for foreign body detection and localization ,66596009
+Plain radiography,1,Radiography of cervical spine ,66769009
+Plain radiography,1,Diagnostic radiography of facial bones ,68306006
+Plain radiography,1,Mammography ,71651007
+Plain radiography,1,Radiologic examination of knee ,74016001
+Plain radiography,1,Radiography of forearm ,74809003
+Plain radiography,1,Diagnostic radiography of orbits ,75675001
+Plain radiography,1,Radiography of elbow ,76913009
+Plain radiography,1,Radiography of spine ,79760008
+Plain radiography,1,Radiography of nasal sinuses ,84492002
+Plain radiography,1,Orthopantogram ,89846007
+Plain radiography,1,Diagnostic radiography of lumbar spine ,90805008
+Plain radiography,1,Mastoid processes X-ray ,168564007
+Plain radiography,1,Plain X-ray of clavicle ,168594001
+Plain radiography,1,Sternoclavicular joint X-ray ,168599006
+Plain radiography,1,Thoracic inlet X-ray ,168600009
+Plain radiography,1,Acromioclavicular joint X-ray ,168633004
+Plain radiography,1,Instability views carpus ,168655007
+Plain radiography,1,Plain X-ray of patella ,168669007
+Plain radiography,1,Neck soft tissue X-ray ,168719007
+Plain radiography,1,Soft tissue X-ray kidney ,168770003
+Plain radiography,1,X-ray of pathological specimen ,169116004
+Plain radiography,1,X-ray of eye for foreign body ,241037002
+Plain radiography,1,Cephalometry X-ray ,241040002
+Plain radiography,1,Dental X-ray bitewing ,241046008
+Plain radiography,1,Dental X-ray periapical ,241047004
+Plain radiography,1,Maxillary occlusal X-ray ,241049001
+Plain radiography,1,Mandibular occlusal X-ray ,241050001
+Plain radiography,1,Mammogram magnification ,241058008
+Plain radiography,1,Plain X-ray of scaphoid ,241071006
+Plain radiography,1,Carpal tunnel X-ray ,241072004
+Plain radiography,1,Thumb X-ray ,241074003
+Plain radiography,1,Plain X-ray of femur ,241075002
+Plain radiography,1,Tibia and/or fibula X-ray ,241076001
+Plain radiography,1,Hindfoot X-ray ,241081005
+Plain radiography,1,Hallux X-ray ,241082003
+Plain radiography,1,Cervicothoracic junction X-ray ,241092006
+Plain radiography,1,Thoracolumbar spine X-ray ,241093001
+Plain radiography,0,Submandibular sialogram ,241133000
+Plain radiography,0,Dual energy X-ray photon absorptiometry ,241686001
+Plain radiography,1,Pelvis X-ray ,268425006
+Plain radiography,1,Forefoot X-ray ,276015003
+Plain radiography,1,Full mouth periapical radiographs ,285569006
+Plain radiography,1,Plain chest X-ray ,399208008
+Plain radiography,1,Radiography of hip ,408740001
+Plain radiography,0,X-ray for colonic transit study ,418181007
+Plain radiography,1,X-ray of fingers ,418426008
+Plain radiography,1,X-ray of little finger ,418515004
+Plain radiography,1,X-ray of index finger ,418802004
+Plain radiography,1,X-ray of ring finger ,419080000
+Plain radiography,1,X-ray of middle finger ,419380005
+Plain radiography,1,X-ray of lumbar spine and sacroiliac joints ,419942003
+Plain radiography,1,X-ray of chest and abdomen ,420233006
+Plain radiography,1,X-ray of both ankles ,425703002
+Plain radiography,1,X-ray of right foot ,426311001
+Plain radiography,1,X-ray of left ankle ,426420006
+Plain radiography,1,X-ray of both feet ,426581005
+Plain radiography,1,X-ray of right ankle ,426721006
+Plain radiography,1,X-ray of both knees ,426860004
+Plain radiography,1,X-ray of left foot ,426908009
+Plain radiography,1,X-ray of left knee ,427019001
+Plain radiography,1,X-ray of right knee ,427407003
+Plain radiography,1,Radiographic imaging of acetabulum ,427961005
+Plain radiography,0,Dual energy X-ray photon absorptiometry scan of lumbar spine ,428377003
+Plain radiography,1,X-ray of hand and wrist for bone age ,428603007
+Plain radiography,0,Plain X-ray guided wire localization of breast lesion ,428907005
+Plain radiography,0,Dual energy X-ray photon absorptiometry scan of hip ,429529009
+Plain radiography,0,X-ray of pelvis using mobile image intensifier ,431251007
+Plain radiography,0,X-ray of cervical spine using mobile image intensifier ,431557005
+Plain radiography,0,X-ray of upper limb using mobile image intensifier ,431677006
+Plain radiography,0,X-ray of lumbar spine using mobile image intensifier ,431871005
+Plain radiography,1,X-ray of lumbar spine and pelvis ,431892005
+Plain radiography,0,X-ray of sacrum using mobile image intensifier ,432078003
+Plain radiography,0,X-ray of thorax using mobile image intensifier ,432769002
+Plain radiography,0,X-ray of thoracic spine using mobile image intensifier ,432770001
+Plain radiography,0,X-ray of abdomen using mobile image intensifier ,432778008
+Plain radiography,0,X-ray of hip using mobile image intensifier ,432848006
+Plain radiography,0,X-ray of lower limb using mobile image intensifier ,432906003
+Plain radiography,1,Mammogram in compression view ,439324009
+Plain radiography,0,Dual energy X-ray photon absorptiometry scan of whole body ,440496005
+Plain radiography,1,X-ray of midfoot ,440695003
+Plain radiography,1,X-ray of thoracic and lumbar spine ,444634007
+Plain radiography,1,X-ray of cerebrospinal fluid shunt ,445515006
+Plain radiography,1,X-ray of lower limb for bone length measurement ,449616006
+Plain radiography,0,X-ray of whole spine using mobile image intensifier ,715458009
+Plain radiography,0,Vacuum assisted excision of lesion of breast using stereotactic X-ray guidance ,719573001
+Plain radiography,0,Dual energy X-ray photon absorptiometry of vertebral column ,723193006
+Plain radiography,1,Digital tomosynthesis of right breast ,723778004
+Plain radiography,1,Digital tomosynthesis of left breast ,723779007
+Plain radiography,1,Digital tomosynthesis of bilateral breasts ,723780005
+Plain radiography,0,Checking position of nasogastric tube using X-ray ,744880001
+Plain radiography,0,X-ray guided core needle biopsy of breast ,305011000000108
+Plain radiography,0,Upright stereotactic X-ray guided core needle biopsy of breast ,306641000000107
+Plain radiography,0,Upright stereotactic X-ray guided wire localisation of breast lesion ,306661000000108
+Plain radiography,0,Upright stereotactic X-ray guided vacuum assisted biopsy of breast ,307981000000107
+Plain radiography,1,Mammogram lateral view ,308001000000100
+Plain radiography,1,Mammography of right breast ,566571000119105
+Plain radiography,1,Mammography of left breast ,572701000119102
+Plain radiography,1,X-ray of sesamoid bone of foot ,752201000000100
+Plain radiography,0,Insertion of marker into breast using X-ray guidance ,836381000000102
+Plain radiography,0,Insertion of marker into breast using stereotactic mammography guidance ,872661000000104
+Plain radiography,1,X-ray skeletal survey of thorax with oblique ribs ,989481000000102
+Plain radiography,1,Biopsy of left breast using digital tomosynthesis guidance ,1093281000000100
+Plain radiography,1,Biopsy of right breast using digital tomosynthesis guidance ,1093291000000100
+Plain radiography,0,Radiographic imaging for post mortem skeletal survey ,1051351000000100
+Plain radiography,1,Diagnostic radiography of cervical spine with flexion and extension studies ,
+Plain radiography,1,Diagnostic radiography of nasal bones ,
+Plain radiography,0,Dual energy X-ray photon absorptiometry scan of forearm ,
+Plain radiography,0,Insertion of magnetic marker into left breast using stereotactic mammography guidance ,
+Plain radiography,0,Insertion of magnetic marker into right breast using stereotactic mammography guidance ,
+Plain radiography,0,Insertion of magnetic marker into right breast using X-ray guidance ,
+Plain radiography,1,Mammogram extended view ,
+Plain radiography,1,Mandibular anterior occlusal plain X-ray ,
+Plain radiography,1,Mandibular oblique lateral occlusal plain X-ray ,
+Plain radiography,1,Multidirectional X-ray tomography ,
+Plain radiography,0,Parotid sialogram ,
+Plain radiography,0,Peripheral dual energy X-ray photon absorptiometry scan ,
+Plain radiography,0,Prone stereotactic X-ray guided vacuum assisted biopsy of breast ,
+Plain radiography,1,Radiography of penis ,
+Plain radiography,0,Screening mammography of bilateral breasts ,
+Plain radiography,0,Screening mammography of left breast ,
+Plain radiography,0,Screening mammography of right breast ,
+Plain radiography,1,Subtalar joint X-ray ,
+Plain radiography,1,X-ray for ulnar variance view ,
+Plain radiography,1,X-ray of anteroposterior pelvis for hip surveillance ,
+Plain radiography,1,X-ray of carpometacarpal joint under stress ,
+Plain radiography,1,X-ray of cochlear implant ,
+Plain radiography,1,X-ray of hand and wrist for metacarpal index ,
+Plain radiography,0,X-ray of soft tissue specimen ,
+Plain radiography,1,X-ray of teeth in oblique lateral view ,
+Plain radiography,1,X-ray of urinary bladder structure ,
+Plain radiography,1,X-ray of zygoma ,
+Plain radiography,1,X-ray tomography ,

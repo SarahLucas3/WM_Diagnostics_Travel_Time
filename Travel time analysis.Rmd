@@ -57,9 +57,6 @@ test<-activity%>%
   ungroup()%>%
   summarise(total=sum(procedure_count))
 
-c<-activity %>%
-  filter(ic_lsoa=="W01000453" & ic_modality_desc=="Magnetic resonance imaging (procedure)" & ic_sitename=="ROYAL SHREWSBURY HOSPITAL (RXWAS)")
-
 ```
 
 # Selecting WM LSOA's
@@ -704,11 +701,10 @@ count<-Travel_time_edit%>%
 lsoa_icb<-read.csv("LSOA_ICB.csv")
 
 # Add ICB information
-Travel_time<-Travel_time %>%
+Travel_time_edit<-Travel_time_edit%>%
   left_join(., lsoa_icb [,c("LSOA11CD", "ICB22NM")], by=c("ic_lsoa"="LSOA11CD")) 
 
-car_data<-Travel_time %>%
- mutate(mode=ifelse((mode=="Public transport" & closest_time==120), "Car", mode)) %>%
+car_data<-Travel_time_edit %>%
   group_by(ICB22NM,mode)%>%
   summarise(car=(1-mean(Proportion_with_car))*100, number=sum(procedures_by_transport_mode)) %>%
   mutate(ICB22NM=ifelse(is.na(ICB22NM), "Outside WM", ICB22NM))%>%
@@ -876,7 +872,6 @@ GP_decrease_TT<-Travel_time_edit%>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
  select(-pt_accessible)%>%
-#  mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
     mutate(TT_diff=round(TT_diff,1)) %>%
    pivot_wider(., 
             id_cols = ic_modality_desc, 
@@ -887,7 +882,12 @@ GP_decrease_TT<-Travel_time_edit%>%
 mutate(Number_Car= paste(Number_Car, " (",round(((Number_Car/Number)*100),1), "%)", sep=""))%>%
 mutate(`Number_Public transport`= paste(`Number_Public transport`, " (",round(((`Number_Public transport`/Number)*100),1), "%)", sep=""))
 
-#mutate(`Number_Public transport2`= paste(`Number_Public transport2`, " (",round(((`Number_Public transport2`/Number)*100),1), "%)", sep=""))
+#Where CDC's increase accessibility by Public transport. Using original Travel Time dataframe
+ptaccessbility<-Travel_time%>%
+  filter(mode=="Public transport" & closest_time==120) %>%
+ungroup()%>%
+  summarise(total=sum(procedure_count))
+
 
 
 test<-Travel_time_edit%>%
@@ -913,7 +913,7 @@ GP_decrease_TT2<-Travel_time_edit%>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
  select(-pt_accessible)%>%
   select( -TT_min, -TT_max)%>%
-# mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
+mutate(mode=ifelse(is.na(TT_diff), "Public transport2", mode)) %>%
  mutate(Total=round(Total/60),1) %>%
  mutate(TT_diff=round(TT_diff,1)) %>%
    pivot_wider(., 
@@ -950,13 +950,6 @@ ungroup()%>%
  # group_by(ic_modality_desc)%>%
   summarise(total=sum(procedures_by_transport_mode))
 
-#Checking how many GP direct access would be going to the same site 
-Unchanged<-Travel_time_edit%>%
-  filter(did_patsource_code==4) %>%
-filter(closest_diff==0) %>%
-ungroup()%>%
- # group_by(ic_modality_desc)%>%
-  summarise(total=sum(procedures_by_transport_mode))
 
   
   

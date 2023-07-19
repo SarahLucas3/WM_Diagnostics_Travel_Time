@@ -59,9 +59,41 @@ test<-activity%>%
 
 ```
 
-# Selecting WM LSOA's
+# Adding location of CDCs and acute providers
 
 ```{r}
+# Mark which sites have facilities to do which procedures using activity data
+activity_per_site<- activity %>%
+  mutate(mri=ifelse(ic_modality_desc=='Magnetic resonance imaging (procedure)',1,0))%>%
+  mutate(cat=ifelse(ic_modality_desc=='Computerized axial tomography (procedure)',1,0))%>%
+  mutate(us=ifelse(ic_modality_desc=='Diagnostic ultrasonography (procedure)',1,0))%>%
+  mutate(xray=ifelse(ic_modality_desc=='Plain radiography (procedure)',1,0)) %>%
+  group_by(ic_sitename)%>%
+  summarise(mri=max(mri),cat=max(cat), us=max(us), xray=max(xray))
+
+ # Set up geometry information for CDCs and acute sites
+ cdc<-cdc %>%
+  st_as_sf(coords = c("easting", "northing"), crs = 27700) %>%
+    st_transform(4326)
+
+acute<-acute%>%
+  st_as_sf(coords = c("easting", "northing"), crs = 27700) %>%
+    st_transform(4326)
+
+# Join procedures available to acute site information
+acute<-acute %>%
+  left_join(., activity_per_site, by=c("ic_sitename")) %>%
+  filter(!is.na(mri)) #Filter out sites with no activity in any of these categories
+
+
+```
+
+
+
+
+# Selecting WM LSOA's
+
+```{r, fig.height=8, fig.width=8}
 
 # Import West Midlands postcodes
 West_Mids_Postcodes<-read.csv("West_Mids_Postcodes_10km_buffer.csv")%>%
@@ -94,6 +126,15 @@ map_sub_ICB <- map_sub_ICB%>%
     summarise(geometry = sf::st_union(geometry)) %>%
     ungroup()
 
+#Combining sub ICBs to plot
+map_west_midlands <- map_sub_ICB%>%
+    summarise(geometry = sf::st_union(geometry)) %>%
+    ungroup()
+
+# Setting a 10 km buffer
+ICB_buffer <- st_buffer(map_west_midlands, 10000)%>%
+  mutate(West_mids_10Km_buffer= c("WestMids"))
+
 
 #Setting up background map bounding box
 WM_bb <- West_Mids_Lsoa%>%
@@ -105,37 +146,21 @@ my_bbox <- st_bbox(WM_bb) %>%
   st_as_sfc()%>%
   st_bbox()
 
+ggplot() +
+     base_map(bbox = my_bbox, basemap = 'mapnik', increase_zoom = 2) +
+    geom_sf(data=ICB_buffer, fill="#f9bf07", linewidth=0.8, alpha = 0.2) +
+    geom_sf(data=map_sub_ICB, fill="#f9bf07", linewidth=0.8, alpha = 0.2) +
+    geom_sf(data = (acute %>% filter(independent==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
+    geom_sf(data = (acute %>% filter(independent==0)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
+       geom_sf(data = cdc, aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
+  theme_void() +
+ theme(legend.text = element_text(size=14),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.86,0.95), legend.title=element_blank()) +
+  labs( fill = "Travel time (mins)", size=16) +
+    scale_color_manual(values = c("Private providers" = "#9d928a","Acute providers" = "black","CDCs"= "#ec6555"), 
+                       name = "" )
   
 ```
 
-# Adding location of CDCs and acute providers
-
-```{r}
-# Mark which sites have facilities to do which procedures using activity data
-activity_per_site<- activity %>%
-  mutate(mri=ifelse(ic_modality_desc=='Magnetic resonance imaging (procedure)',1,0))%>%
-  mutate(cat=ifelse(ic_modality_desc=='Computerized axial tomography (procedure)',1,0))%>%
-  mutate(us=ifelse(ic_modality_desc=='Diagnostic ultrasonography (procedure)',1,0))%>%
-  mutate(xray=ifelse(ic_modality_desc=='Plain radiography (procedure)',1,0)) %>%
-  group_by(ic_sitename)%>%
-  summarise(mri=max(mri),cat=max(cat), us=max(us), xray=max(xray))
-
- # Set up geometry information for CDCs and acute sites
- cdc<-cdc %>%
-  st_as_sf(coords = c("easting", "northing"), crs = 27700) %>%
-    st_transform(4326)
-
-acute<-acute%>%
-  st_as_sf(coords = c("easting", "northing"), crs = 27700) %>%
-    st_transform(4326)
-
-# Join procedures available to acute site information
-acute<-acute %>%
-  left_join(., activity_per_site, by=c("ic_sitename")) %>%
-  filter(!is.na(mri)) #Filter out sites with no activity in any of these categories
-
-
-```
 
 # Functions
 
@@ -938,20 +963,23 @@ filter(closest_site==closest_private_site) %>%
 #Checking how many GP direct access would be going to the same site 
 Unchanged<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
-filter(closest_diff==0 & ((closest_cdc_site=="Corbett CDC" & ic_sitename=="CORBETT HOSPITAL (RNA04)")|
-                      (closest_cdc_site=="Corbett CDC (Guest)" & ic_sitename=="GUEST HOSPITAL (RNA02)")|
-                      (closest_cdc_site=="Coventry City Community CDC" & ic_sitename=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
-                        (closest_cdc_site=="Coventry City Community CDC (Rugby St Cross)" & ic_sitename=="HOSPITAL OF ST CROSS (RKB03)")|
-                        (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & ic_sitename=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
-                        (closest_cdc_site=="Kidderminster CDC" & ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)")|
-                        (closest_cdc_site=="South Warwickshire CDC" & ic_sitename=="STRATFORD HOSPITAL (RJC03)")|
-                        (closest_cdc_site=="Warwickshire North" & ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)")) ) %>%
+filter(((closest_cdc_site=="Corbett CDC" & closest_site=="CORBETT HOSPITAL (RNA04)")|
+                      (closest_cdc_site=="Corbett CDC (Guest)" & closest_site=="GUEST HOSPITAL (RNA02)")|
+                      (closest_cdc_site=="Coventry City Community CDC" & closest_site=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
+                        (closest_cdc_site=="Coventry City Community CDC (Rugby St Cross)" & closest_site=="HOSPITAL OF ST CROSS (RKB03)")|
+                        (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & closest_site=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
+                        (closest_cdc_site=="Kidderminster CDC" & closest_site=="KIDDERMINSTER HOSPITAL (RWP31)")|
+                        (closest_cdc_site=="South Warwickshire CDC" & closest_site=="STRATFORD HOSPITAL (RJC03)")|
+                        (closest_cdc_site=="Warwickshire North" & closest_site=="GEORGE ELIOT RADIOLOGY (RLT06)")) ) %>%
 ungroup()%>%
  # group_by(ic_modality_desc)%>%
   summarise(total=sum(procedures_by_transport_mode))
 
 
-  
+  test<-Travel_time_edit %>%
+    filter(did_patsource_code==4& closest_diff==0) %>%
+    ungroup() %>%
+    summarise(total=sum(procedures_by_transport_mode))
   
 ```
 

@@ -17,6 +17,9 @@ library(mapview)
 library(janitor)
 library(readxl)
 library(scales)
+library(stringr)
+
+
 
 activity<-read.csv("DIDs_data.csv") %>%clean_names()
 acute_tt_lsoa<-fread("acute_tt_lsoa.csv")
@@ -302,9 +305,9 @@ activity %>%
 
 
 # Waiting lists by provider
-```{r, fig.height=4.5, fig.width=12}
+```{r, fig.height=5, fig.width=12}
 
-waiting_list<-read.csv("Waiting times by provider Feb 2023.csv") %>% clean_names()
+waiting_list<-read.csv("Waiting times by provider March 2023.csv") %>% clean_names()
 
 waiting_list<-waiting_list %>%
   filter(diagnostic_test_name=="Magnetic Resonance Imaging"|diagnostic_test_name=="Computed Tomography"|diagnostic_test_name=="Non-obstetric Ultrasound")
@@ -313,12 +316,14 @@ waiting_size_order <- waiting_list %>%
   group_by(provider_name)%>%
   summarise(total=sum(total_waiting_list)) %>%
   arrange(total) %>% 
-  mutate(provider_name = factor(provider_name ))
+  mutate(provider_name = factor(provider_name))
 
 
 # Total waiting list size
 waiting_list %>% 
-  filter(provider_code!="RWD"& provider_code!="RWE"& provider_code!="NVC21"&provider_code!="NVC40"&provider_code!="NVC23")%>%
+   filter(str_detect(provider_code, "^R"))%>%
+  filter(provider_code!="RF5"& provider_code!="RK5"& provider_code!="RNQ"&
+         provider_code!="RNS"& provider_code!="RWD"& provider_code!="RWE" & provider_code!="RX1" & provider_code!="RFS")%>%
   mutate(provider_name = factor(provider_name, levels =unique(waiting_size_order$provider_name), ordered = TRUE)) %>% 
   ggplot() +
   geom_bar(aes(x=provider_name, y =total_waiting_list, fill=diagnostic_test_name), stat="identity", position="stack")+
@@ -328,10 +333,16 @@ waiting_list %>%
         axis.title.y = element_blank(), axis.title.x = element_text(size = 16,vjust=2), 
         legend.text=element_text(size=14),legend.title=element_blank(),
         plot.title = element_text(size=16), legend.position= c(0.65, 0.15))+ 
-  scale_y_continuous(labels = scales::comma)+
+  scale_y_continuous(labels = scales::comma, limits = c(0,25500),breaks = scales::pretty_breaks(n = 5) )+
    labs(y = "Waiting list size")+
   scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555"))+
   coord_flip()
+
+
+
+
+```
+```{r, fig.height=6, fig.width=12}
 
 
 waiting_size_order2 <- waiting_list %>% 
@@ -342,7 +353,9 @@ waiting_size_order2 <- waiting_list %>%
 
 # % percentage waiting 6 weeks
 waiting_list %>% 
-  filter(provider_code!="RWD"& provider_code!="RWE"& provider_code!="NVC21"&provider_code!="NVC40"&provider_code!="NVC23")%>%
+   filter(str_detect(provider_code, "^R"))%>%
+  filter(provider_code!="RF5"& provider_code!="RK5"& provider_code!="RNQ"&
+         provider_code!="RNS"& provider_code!="RWD"& provider_code!="RWE" & provider_code!="RX1" & provider_code!="RFS")%>%
   mutate(provider_name = factor(provider_name, levels =unique(waiting_size_order2$provider_name), ordered = TRUE)) %>% 
   ggplot() +
   geom_bar(aes(x=provider_name, y =(percentage_waiting_6_weeks*100), fill=diagnostic_test_name), stat="identity", position="dodge")+
@@ -352,16 +365,14 @@ waiting_list %>%
         axis.title.y = element_blank(), axis.title.x = element_text(size = 16,vjust=2), 
         legend.text=element_text(size=14),legend.title=element_blank(),
         plot.title = element_text(size=16), legend.position= c(0.65, 0.15))+ 
-  scale_y_continuous(labels = scales::comma)+
+  scale_y_continuous(labels = scales::comma, limits = c(0,65), breaks = scales::pretty_breaks(n = 6))+
    labs(y = "Percentage waiting 6 weeks+")+
   scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555"))+
   coord_flip()
 
 
 
-
 ```
-
 
 # Selecting WM LSOA's
 

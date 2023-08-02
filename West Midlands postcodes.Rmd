@@ -123,7 +123,7 @@ distinct(easting, northing, .keep_all = TRUE)
 
 
  # Import list of CDC to add geography
- cdc<-read_excel("Midlands CDCs.xlsx") %>%
+ cdc<-read_csv("Midlands CDCs FINAL.csv") %>%
    clean_names()
 
   cdc <- cdc %>%
@@ -142,7 +142,7 @@ distinct(easting, northing, .keep_all = TRUE)
     st_transform(4326)
   
   #Export CDC geography file
-#  write.csv(cdc, "CDC_geography.csv")
+ # write.csv(cdc, "CDC_geography.csv")
  
 
 ```

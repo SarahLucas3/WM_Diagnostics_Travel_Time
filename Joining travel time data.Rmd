@@ -16,12 +16,14 @@ acute<-read.csv("acuteproviders_geography.csv")
 cdc<-read.csv("CDC_geography.csv")
 
 #Travel time data to CDCs
-walk_cdc <- fread("tracc/walk_cdc.csv")
-car_cdc <- fread("tracc/car_cdc.csv")
-PT_cdc <- fread("tracc/PT_cdc.csv")
+car_cdc <- fread("car_cdc.csv")%>%
+  mutate_at(1:4, as.numeric)%>%
+  distinct(OriginId, DestinationId, .keep_all = TRUE)
+PT_cdc <- fread("PT_cdc.csv")%>%
+  mutate_at(1:3, as.numeric)%>%
+  distinct(OriginId, DestinationId, .keep_all = TRUE)
 
 #Travel time data to Acute Providers
-walk_acute<- fread("tracc/walk_acute.csv")
 car_acute <- fread("tracc/car_acute.csv")
 
 
@@ -56,21 +58,13 @@ car_cdc <-car_cdc%>%
   rename( car_distance = TotalJourneyDistance,
     car_time = TotalJourneyTime)
 
-#walk
-walk_cdc <- walk_cdc %>% 
-  rename( walk_distance = TotalJourneyDistance,
-    walk_time = TotalJourneyTime)
-
 #PT
 PT_cdc <- PT_cdc %>% 
   rename(pt_time = TotalJourneyTime)
 
-#merge
-cdc_travel_time<-merge(car_cdc, walk_cdc, by=c('OriginId','DestinationId'), all=T,allow.cartesian=TRUE )
-
 
 #merge
-cdc_travel_time<-merge(cdc_travel_time, PT_cdc, by=c('OriginId','DestinationId'), all=T,allow.cartesian=TRUE )
+cdc_travel_time<-merge(car_cdc, PT_cdc, by=c('OriginId','DestinationId'), all=T,allow.cartesian=TRUE )
 
 
 ```
@@ -96,10 +90,16 @@ rename(cdc_id=id, easting_cdc=easting, northing_cdc=northing)
 all_cdc_combinations<-crossing(postcodes, cdc2)
 
 # Add in travel time data
-all_cdc_combinations<-left_join(all_cdc_combinations, cdc_tt[,c("pcds","name", "car_time", "car_distance", "pt_time", "walk_time", "walk_distance")], by=c("pcds", "name"))
+all_cdc_combinations<-left_join(all_cdc_combinations, cdc_tt[,c("pcds","name", "car_time", "car_distance", "pt_time")], by=c("pcds", "name"))
+
+all_cdc_combinations<-all_cdc_combinations%>%
+  distinct()
+
 
 
  readr::write_csv(all_cdc_combinations, file = "cdc_tt.csv")
+ 
+ 
  
 ```
 
@@ -114,8 +114,6 @@ mutate(pt_time = ifelse(pt_time>60, 120, pt_time)) %>%
   group_by(lsoa11,name) %>%
   summarise(car_distance=median(car_distance), 
             car_time=median(car_time), 
-            walk_distance= median(walk_distance),
-            walk_time=median(walk_time),
             pt_time=median(pt_time) )%>%
             mutate(centre="CDC")
 

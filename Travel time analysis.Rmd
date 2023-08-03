@@ -237,7 +237,7 @@ leaflet() %>%
             color = "#ec6555", 
              fillColor ="#ec6555",
              fillOpacity = 1) %>%
-addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7)%>%
+#addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7)%>%
     addLegend(data=(Activity_by_LSOA%>%
                         group_by(lsoa11,geometry)%>%
                         summarise(total=sum({{measure}}))),
@@ -272,19 +272,18 @@ addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers
     geom_sf(data=map_sub_ICB, fill=NA) +
     geom_sf(data = (acute %>% filter(independent==1)%>%filter({{procedure}}==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
     geom_sf(data = (acute %>% filter(independent==0)%>%filter({{procedure}}==1)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
-       geom_sf(data = cdc, aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
-  scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,10),na.value = "grey85")+
-  theme_void() +
- theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.89,0.82)) +
-  labs( fill = "Travel time (mins)", size=16) +
+       geom_sf(data = (cdc%>%filter({{procedure}}==1)), aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
+    scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85")+
+    theme_void() +
+    theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.89,0.82)) +
+    labs( fill = "Travel time (mins)", size=16) +
     ggtitle(label)+
-    scale_color_manual(values = c("Private providers" = "#9d928a","Acute providers" = "black","CDCs"= "#ec6555"), 
-                       name = "" )
+    scale_color_manual(values = c("Private providers" = "#9d928a","Acute providers" = "black","CDCs"= "#ec6555"), name = "" )
 }
 
     # without cdcs
 ggtravel_plot<-function(dataset, procedure, mode, label) {
-  #08589e
+
   
      color2<-c("#08589e", "#2b8cbe","#4eb3d3", "#7bccc4","#a8ddb5","#e0f3db")
 
@@ -371,7 +370,7 @@ addPolygons(data = t2, group="discrete",
             color = "#bd0026", 
              fillColor = "#bd0026",
              fillOpacity = 1) %>%
-addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7) %>%
+#addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = Diagnostic sites", shape='circle',width=7, height=7) %>%
   addLegend(data=t2, "topright", pal = pal2, values = ~group,na.label="",
   title = "Travel time (mins)",
   opacity = 1) 
@@ -422,7 +421,7 @@ Activity_plot(Activity_by_LSOA, procedure_count, 'ultrasonography'  ,  "Ultrasou
 ```{r, fig.width=8, fig.height=8}
 
 # Activity total
-Activity_leaflet(Activity_by_LSOA, procedure_count, '(procedure)',  "Total imaging procedures")
+Activity_leaflet(Activity_by_LSOA, rate, '(procedure)',  "Total imaging procedures")
 Activity_leaflet(Activity_by_LSOA,  rate, 'Magnetic' ,  "MRI procedures")
 Activity_leaflet(Activity_by_LSOA,  rate, 'Computerized' ,  "CAT procedures")
 Activity_leaflet(Activity_by_LSOA,  rate,'radiography' ,  "X-ray procedures")
@@ -482,8 +481,8 @@ left_join(., activity_per_site, by=c('ic_sitename')) %>%
 left_join(., West_Mids_Lsoa[,c("geometry","lsoa11")], by=c("lsoa11"))%>%
   st_as_sf()%>%
   filter(!is.na(mri))%>%
-  select(-car_distance, -walk_distance, -walk_time)%>%
-  gather(., key=mode, value=time, -mri,-cat,-us,-xray, -geometry, -independent, -ic_sitename, -lsoa11)%>%
+  select(-car_distance, -walk_distance, -walk_time, -independent)%>%
+  gather(., key=mode, value=time, -mri,-cat,-us,-xray, -geometry, -ic_sitename, -lsoa11)%>%
   mutate(time=as.numeric(time))
 
 
@@ -503,22 +502,17 @@ left_join(., West_Mids_Lsoa[,c("geometry","lsoa11")], by=c("lsoa11"))%>%
 #leaflettravel_plot(isochrones_LSOA, cat, "car_time",  "Travel by car for CAT")
 #leaflettravel_plot(isochrones_LSOA, cat, "pt_time", "Travel by public transport for CAT")
 
-
-
 # Setting isochrones With CDC's added
-isochrones_CDC <-acute_tt_lsoa %>%
-  select(lsoa11, ic_sitename, car_time, pt_time) %>%
-  left_join(., activity_per_site, by=c('ic_sitename'))%>%
-  filter(!is.na(mri))%>%
-  left_join(.,cdc_tt_lsoa [,c("lsoa11","car_time", "pt_time")],by=c("lsoa11") ) %>%
-   mutate_all(~replace(., is.na(.), 1)) %>%
-  mutate(car_time=pmin(car_time.x, car_time.y), pt_time=pmin(pt_time.x, pt_time.y)) %>%
-  select(lsoa11, mri, cat,us, xray, car_time, pt_time)%>%
-  gather(., key=mode, value=time, -mri,-cat,-us,-xray, -lsoa11)%>%
-  mutate(time=as.numeric(time)) %>%
+isochrones_CDC<-cdc_tt_lsoa %>%
+left_join(., cdc[,c("mri", "cat", "us", "xray", "ic_sitename")], by=c("ic_sitename")) %>%
+  select(-geometry)%>%
 left_join(., West_Mids_Lsoa[,c("geometry","lsoa11")], by=c("lsoa11"))%>%
-  st_as_sf()
+  st_as_sf()%>%
+  select(-car_distance, -centre) %>%
+  gather(., key=mode, value=time, -mri,-cat,-us,-xray, -geometry, -ic_sitename, -lsoa11)%>%
+  mutate(time=as.numeric(time))
 
+isochrones_CDC<-rbind(isochrones_CDC, isochrones_LSOA)
 
 # With and without CDC plots
 
@@ -612,11 +606,11 @@ car_ownership_by_lsoa<-car_ownership_by_lsoa %>%
 
 # Select closest CDC to each LSOA by car and PT
 min_cdc_travel_time<-cdc_tt_lsoa  %>%
-  select(-centre, -car_distance, -walk_distance, -walk_time) %>%
-  gather("mode", "time",-lsoa11,-name ) %>%
+  select(-centre, -car_distance) %>%
+  gather("mode", "time",-lsoa11,-ic_sitename ) %>%
   group_by(lsoa11, mode) %>%
     slice(which.min(time))%>%
-  rename(closest_cdc_site=name, closest_cdc_mode=mode, closest_cdc_time=time) 
+  rename(closest_cdc_site=ic_sitename, closest_cdc_mode=mode, closest_cdc_time=time) 
 
 #Travel time from each LSOA to each site
 acute_travel_time<-acute_tt_lsoa %>%

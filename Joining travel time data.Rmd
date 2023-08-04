@@ -17,11 +17,13 @@ cdc<-read.csv("CDC_geography.csv")
 
 #Travel time data to CDCs
 car_cdc <- fread("car_cdc.csv")%>%
-  mutate_at(1:4, as.numeric)%>%
-  distinct(OriginId, DestinationId, .keep_all = TRUE)
+    filter(OriginId!="OriginId")%>%
+mutate_at(1:4, as.numeric)%>%
+distinct(OriginId, DestinationId, .keep_all = TRUE)
 PT_cdc <- fread("PT_cdc.csv")%>%
-  mutate_at(1:3, as.numeric)%>%
-  distinct(OriginId, DestinationId, .keep_all = TRUE)
+        filter(OriginId!="OriginId")%>%
+mutate_at(1:3, as.numeric)%>%
+distinct(OriginId, DestinationId, .keep_all = TRUE)
 
 #Travel time data to Acute Providers
 car_acute <- fread("tracc/car_acute.csv")
@@ -90,7 +92,7 @@ rename(cdc_id=id, easting_cdc=easting, northing_cdc=northing)
 all_cdc_combinations<-crossing(postcodes, cdc2)
 
 # Add in travel time data
-all_cdc_combinations<-left_join(all_cdc_combinations, cdc_tt[,c("pcds","name", "car_time", "car_distance", "pt_time")], by=c("pcds", "name"))
+all_cdc_combinations<-left_join(all_cdc_combinations, cdc_tt[,c("pcds","ic_sitename", "car_time", "car_distance" , "pt_time")], by=c("pcds", "ic_sitename"))
 
 all_cdc_combinations<-all_cdc_combinations%>%
   distinct()
@@ -99,7 +101,7 @@ all_cdc_combinations<-all_cdc_combinations%>%
 
  readr::write_csv(all_cdc_combinations, file = "cdc_tt.csv")
  
- 
+
  
 ```
 
@@ -111,7 +113,7 @@ all_cdc_combinations<-all_cdc_combinations%>%
 mutate(pt_time = ifelse(pt_time>60, 120, pt_time)) %>%
   mutate(car_time = ifelse(car_time>60, 120, car_time)) %>%
  mutate_all(~replace(., is.na(.), 120)) %>%
-  group_by(lsoa11,name) %>%
+  group_by(lsoa11,ic_sitename) %>%
   summarise(car_distance=median(car_distance), 
             car_time=median(car_time), 
             pt_time=median(pt_time) )%>%

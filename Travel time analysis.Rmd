@@ -604,13 +604,35 @@ car_ownership_by_lsoa<-car_ownership_by_lsoa %>%
 
 ```{r}
 
+# Format CDC and modality data
+cdc_formatted<-cdc|>
+  as.data.frame()|>
+  select(ic_sitename, cat,mri,us,xray)|>
+  gather(key="ic_modality_desc", value="value", -ic_sitename)|>
+  mutate(ic_modality_desc=case_when(ic_modality_desc=="cat"~ "Computerized axial tomography (procedure)",
+                                    ic_modality_desc=="mri"~"Magnetic resonance imaging (procedure)",
+                                    ic_modality_desc=="us"~"Diagnostic ultrasonography (procedure)",
+                                    ic_modality_desc=="xray"~"Plain radiography (procedure)"))|>
+  filter(value==1)|>
+  select(-value)
+
+
 # Select closest CDC to each LSOA by car and PT
-min_cdc_travel_time<-cdc_tt_lsoa  %>%
-  select(-centre, -car_distance) %>%
-  gather("mode", "time",-lsoa11,-ic_sitename ) %>%
-  group_by(lsoa11, mode) %>%
-    slice(which.min(time))%>%
+min_cdc_travel_time<-cdc_formatted  %>%
+  right_join(., cdc_tt_lsoa [,c("ic_sitename", "lsoa11", "car_time", "pt_time")], by=c("ic_sitename"))|>
+  gather("mode", "time", -lsoa11, -ic_sitename, -ic_modality_desc) %>%
+  group_by (lsoa11, mode, ic_modality_desc)%>%
+  slice(which.min(time)) %>%
   rename(closest_cdc_site=ic_sitename, closest_cdc_mode=mode, closest_cdc_time=time) 
+
+
+#Old code
+#min_cdc_travel_time<-cdc_tt_lsoa  %>%
+# select(-centre, -car_distance) %>%
+# gather("mode", "time",-lsoa11,-ic_sitename ) %>%
+#  group_by(lsoa11, mode) %>%
+#    slice(which.min(time))%>%
+# rename(closest_cdc_site=ic_sitename, closest_cdc_mode=mode, closest_cdc_time=time) 
 
 #Travel time from each LSOA to each site
 acute_travel_time<-acute_tt_lsoa %>%
@@ -647,7 +669,7 @@ right_join(., acute_tt_lsoa [,c("ic_sitename", "lsoa11", "car_time", "pt_time")]
 activity_travel_time<-activity %>%
     filter(ic_lsoa %in% West_Mids_Lsoa$lsoa11)   %>%
   left_join(.,acute_travel_time,  by=c("ic_lsoa"= "lsoa11", "ic_sitename")) %>%
-  left_join(., min_cdc_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_cdc_mode"))%>%
+  left_join(., min_cdc_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_cdc_mode", "ic_modality_desc"))%>%
   left_join(., min_private_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_private_mode", "ic_modality_desc"))%>%
   left_join(., min_nhs_travel_time, by=c("ic_lsoa"= "lsoa11", "mode"="closest_nhs_mode", "ic_modality_desc")) %>%
   select(-wm_site,-wm_resident)
@@ -1296,7 +1318,7 @@ save_as_docx(Xray, path = "Xray.docx")
 
 # Flow of patients to new CDCs
 
-```{r, fig.height=7, fig.width=7}
+```{r, fig.height=8, fig.width=7}
  
 # Select current sites where greater than 365 procedures would be moved, based on CDC being closer or equal distance than current site
 higher_use_sites<-Travel_time_edit%>%
@@ -1304,7 +1326,7 @@ higher_use_sites<-Travel_time_edit%>%
   filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode)) %>%
-   filter(count>1800)
+   filter(count>3000)
 
 
 
@@ -1341,7 +1363,7 @@ Travel_time_edit%>%
    labs(y = "Potential no. of imaging procedures")+
   coord_flip()+                           
    scale_x_discrete(labels = wrap_format(37) )+
-  ylim(0, 45000)
+  ylim(0, 30000)
 
 
 ttt<-Travel_time_edit%>%
@@ -1471,10 +1493,10 @@ group_by(ic_sitename) %>%
 site <- unique(as.character(cdc_flow$ic_sitename))
 
 cdc<-unique(as.character(cdc_flow$closest_cdc_site))
-nodes1 <- data.frame(node = c(0:16), 
+nodes1 <- data.frame(node = c(0:18), 
                     name = c(site),
                     type="acute")
-nodes2 <- data.frame(node = c(17:29), 
+nodes2 <- data.frame(node = c(19:34), 
                     name = c(cdc),
                     type="cdc")
 nodes<-rbind(nodes1, nodes2)

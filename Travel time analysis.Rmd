@@ -904,12 +904,12 @@ GP_decrease_TT<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(ic_modality_desc, mode, pt_accessible )%>%
-  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(closest_diff, na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))%>%
+  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(rep(closest_diff,procedures_by_transport_mode), na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))%>%
   bind_rows(Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(mode, pt_accessible )%>%
-  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(closest_diff, na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))) %>%
+  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(rep(closest_diff,procedures_by_transport_mode), na.rm=TRUE), TT_max=round((min(closest_diff, na.rm=TRUE)),1), TT_min=round((max(closest_diff, na.rm=TRUE)),1), Total=round((sum((closest_diff*procedures_by_transport_mode)/60)),1))) %>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
  select(-pt_accessible)%>%
@@ -944,12 +944,12 @@ GP_decrease_TT2<-Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
   filter(cdc_closer==1) %>%
   group_by(ic_modality_desc, mode, pt_accessible )%>%
-  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum(((cdc_diff)*procedures_by_transport_mode), na.rm=TRUE)) %>%
+  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(rep(cdc_diff,procedures_by_transport_mode), na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum(((cdc_diff)*procedures_by_transport_mode), na.rm=TRUE)) %>%
   bind_rows(Travel_time_edit%>%
     filter(did_patsource_code==4) %>%
     filter(cdc_closer==1) %>%
   group_by(mode, pt_accessible )%>%
-  summarise(Number=round(sum(procedures_by_transport_mode),0), TT_diff=median(cdc_diff, na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum((cdc_diff*procedures_by_transport_mode), na.rm=TRUE))) %>%
+  summarise(Number=round(sum(procedures_by_transport_mode),0),TT_diff=median(rep(cdc_diff,procedures_by_transport_mode), na.rm=TRUE), TT_max=round((min(cdc_diff, na.rm=TRUE)),1), TT_min=round((max(cdc_diff, na.rm=TRUE)),1), Total=sum((cdc_diff*procedures_by_transport_mode), na.rm=TRUE))) %>%
   mutate(TT_range=paste(TT_min, -TT_max, sep=' - '))  %>%
   mutate(ic_modality_desc=ifelse(is.na(ic_modality_desc), "All", ic_modality_desc))%>%
  select(-pt_accessible)%>%

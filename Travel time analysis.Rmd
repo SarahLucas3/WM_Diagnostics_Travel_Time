@@ -981,12 +981,12 @@ Unchanged<-Travel_time_edit%>%
   filter(did_patsource_code==4) %>%
 filter(((closest_cdc_site=="Corbett CDC" & closest_site=="CORBETT HOSPITAL (RNA04)")|
                       (closest_cdc_site=="Corbett CDC (Guest)" & closest_site=="GUEST HOSPITAL (RNA02)")|
-                      (closest_cdc_site=="Coventry City Community CDC" & closest_site=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
-                        (closest_cdc_site=="Coventry City Community CDC (Rugby St Cross)" & closest_site=="HOSPITAL OF ST CROSS (RKB03)")|
+                      (closest_cdc_site=="Coventry City CDC" & closest_site=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
+                        (closest_cdc_site=="Coventry City CDC (Rugby St Cross)" & closest_site=="HOSPITAL OF ST CROSS (RKB03)")|
                         (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & closest_site=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
                         (closest_cdc_site=="Kidderminster CDC" & closest_site=="KIDDERMINSTER HOSPITAL (RWP31)")|
                         (closest_cdc_site=="South Warwickshire CDC" & closest_site=="STRATFORD HOSPITAL (RJC03)")|
-                        (closest_cdc_site=="Warwickshire North" & closest_site=="GEORGE ELIOT RADIOLOGY (RLT06)")) ) %>%
+                        (closest_cdc_site=="Warwickshire North CDC" & closest_site=="GEORGE ELIOT RADIOLOGY (RLT06)")) ) %>%
 ungroup()%>%
  # group_by(ic_modality_desc)%>%
   summarise(total=sum(procedures_by_transport_mode))
@@ -997,6 +997,25 @@ ungroup()%>%
     ungroup() %>%
     summarise(total=sum(procedures_by_transport_mode))
   
+  #Checking how many GP direct access currently use a CDC site 
+use_cdc<-activity%>%
+  filter(did_patsource_code==4) %>%
+ group_by(ic_sitename)%>%
+#ungroup()%>% 
+  summarise(total=sum(procedure_count))
+ 
+use_cdc<-Travel_time_edit%>%
+  filter(did_patsource_code==4) %>% 
+ filter(ic_sitename=="CORBETT HOSPITAL (RNA04)"|
+          ic_sitename=="GUEST HOSPITAL (RNA02)"|
+          ic_sitename=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)"|
+          ic_sitename=="HOSPITAL OF ST CROSS (RKB03)"|
+          ic_sitename=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)"|
+          ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)"|
+          ic_sitename=="STRATFORD HOSPITAL (RJC03)"|
+           ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)" ) %>%
+ungroup()%>% 
+   summarise(total=sum(procedures_by_transport_mode))
 ```
 
 # Travel time tables
@@ -1326,7 +1345,7 @@ higher_use_sites<-Travel_time_edit%>%
   filter((closest_cdc_time<=closest_time) & closest_cdc_time!=120) %>%
   group_by(ic_sitename) %>%
   summarise(count=sum(procedures_by_transport_mode)) %>%
-   filter(count>3000)
+   filter(count>5000)
 
 
 
@@ -1493,10 +1512,10 @@ group_by(ic_sitename) %>%
 site <- unique(as.character(cdc_flow$ic_sitename))
 
 cdc<-unique(as.character(cdc_flow$closest_cdc_site))
-nodes1 <- data.frame(node = c(0:18), 
+nodes1 <- data.frame(node = c(0:15), 
                     name = c(site),
                     type="acute")
-nodes2 <- data.frame(node = c(19:34), 
+nodes2 <- data.frame(node = c(16:31), 
                     name = c(cdc),
                     type="cdc")
 nodes<-rbind(nodes1, nodes2)
@@ -1510,8 +1529,8 @@ test<-cdc_flow  %>%
 test<-as.data.frame(test)%>%
   mutate(group=ifelse((closest_cdc_site=="Corbett CDC" & ic_sitename=="CORBETT HOSPITAL (RNA04)")|
                       (closest_cdc_site=="Corbett CDC (Guest)" & ic_sitename=="GUEST HOSPITAL (RNA02)")|
-                      (closest_cdc_site=="Coventry City Community CDC" & ic_sitename=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
-                        (closest_cdc_site=="Coventry City Community CDC (Rugby St Cross)" & ic_sitename=="HOSPITAL OF ST CROSS (RKB03)")|
+                      (closest_cdc_site=="Coventry City CDC" & ic_sitename=="COVENTRY CITY CENTRE HEALTH FACILITY (RKB02)")|
+                        (closest_cdc_site=="Coventry City CDC (Rugby St Cross)" & ic_sitename=="HOSPITAL OF ST CROSS (RKB03)")|
                         (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & ic_sitename=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
                         (closest_cdc_site=="Kidderminster CDC" & ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)")|
                         (closest_cdc_site=="South Warwickshire CDC" & ic_sitename=="STRATFORD HOSPITAL (RJC03)")|

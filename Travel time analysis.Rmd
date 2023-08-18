@@ -1016,6 +1016,13 @@ use_cdc<-Travel_time_edit%>%
            ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)" ) %>%
 ungroup()%>% 
    summarise(total=sum(procedures_by_transport_mode))
+
+#Journeys that are now accessible by pt
+pt_accessible<-Travel_time%>%
+  filter(did_patsource_code==4) %>% 
+ filter(pt_accessible==1)|>
+  group_by(ic_modality_desc)|>
+  summarise(total=sum(procedure_count))
 ```
 
 # Travel time tables

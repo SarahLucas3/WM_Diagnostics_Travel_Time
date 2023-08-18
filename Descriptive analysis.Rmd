@@ -436,7 +436,7 @@ left_join(., West_Mids_Lsoa[,c("geometry","lsoa11")], by=c("lsoa_code_2011"="lso
   #  geom_sf(data = (acute %>% filter(independent==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
   #  geom_sf(data = (acute %>% filter(independent==0)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
    #    geom_sf(data = cdc, aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
-      scale_fill_distiller(type="div", limits = c(1,10), palette = "Spectral") +
+      scale_fill_distiller(type="div", limits = c(1,10), palette = "Spectral", direction=1)+
   theme_void() +
  theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.93,0.82)) +
   labs( fill = "IMD decile", size=16) +

@@ -234,7 +234,7 @@ leaflet() %>%
           weight = 1,
           radius=2.5,
           opacity = 1,  
-            color = "#ec6555", 
+            color = "white", 
              fillColor ="#ec6555",
              fillOpacity = 1) %>%
 #addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7)%>%
@@ -459,10 +459,10 @@ leaflet() %>%
              fillColor = "black",
              fillOpacity = 1)%>%
        addCircleMarkers(data =cdc,
-          weight = 1,
-          radius=2.5,
+          weight = 2,
+          radius=3.5,
           opacity = 1,  
-            color = "#ec6555", 
+            color = "white", 
              fillColor ="#ec6555",
              fillOpacity = 1) 
 
@@ -1541,7 +1541,7 @@ test<-as.data.frame(test)%>%
                         (closest_cdc_site=="Florence Nightingale Community Hospital CDC (Sir Robert Peel CDC)" & ic_sitename=="SIR ROBERT PEEL COMMUNITY HOSPITAL (RTG50)")|
                         (closest_cdc_site=="Kidderminster CDC" & ic_sitename=="KIDDERMINSTER HOSPITAL (RWP31)")|
                         (closest_cdc_site=="South Warwickshire CDC" & ic_sitename=="STRATFORD HOSPITAL (RJC03)")|
-                        (closest_cdc_site=="Warwickshire North" & ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)"), "a","b")) %>%
+                        (closest_cdc_site=="Warwickshire North CDC" & ic_sitename=="GEORGE ELIOT RADIOLOGY (RLT06)"), "a","b")) %>%
   mutate(group=as.factor(group))  
 
 my_color <- 'd3.scaleOrdinal() .domain(["a", "b", "cdc", "acute"]) .range(["#f9bf07", "#9d928a","#f9bf07","#f9bf07" ])'

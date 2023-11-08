@@ -273,7 +273,7 @@ leaflet() %>%
     geom_sf(data = (acute %>% filter(independent==1)%>%filter({{procedure}}==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
     geom_sf(data = (acute %>% filter(independent==0)%>%filter({{procedure}}==1)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
        geom_sf(data = (cdc%>%filter({{procedure}}==1)), aes(color="CDCs"), size=2.5,  show.legend = TRUE ) +
-    scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85")+
+    scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85", guide=guide_bins(order = 1, override.aes = list(shape=NA), reverse=TRUE,axis= FALSE))+
     theme_void() +
     theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.89,0.82)) +
     labs( fill = "Travel time (mins)", size=16) +
@@ -304,15 +304,16 @@ t2<-setDT(t)[ , .SD[which.min(time)], by = lsoa11] %>%
      base_map(bbox = my_bbox, basemap = 'mapnik', increase_zoom = 2) +
   geom_sf(data = t2, aes(fill =time), colour = NA, alpha=0.8) +
     geom_sf(data=map_sub_ICB, fill=NA) +
+     scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85", guide=guide_bins(order = 1, override.aes = list(shape=NA), reverse=TRUE,axis= FALSE))+
     geom_sf(data = (acute %>% filter(independent==1)%>%filter({{procedure}}==1)), aes(color="Private providers"),  size=2.5, show.legend = TRUE ) +
     geom_sf(data = (acute %>% filter(independent==0)%>%filter({{procedure}}==1)), aes(color="Acute providers"), size=2.5, show.legend = TRUE) +
-  scale_fill_stepsn(breaks=breaks2, colors=color2, limits=c(0,60),na.value = "grey85")+
   theme_void() +
  theme(legend.text = element_text(size=11),legend.box.background = element_rect(fill = "white", color = "white", size=5), legend.position = c(0.89,0.82)) +
   labs( fill = "Travel time (mins)", size=16) +
     ggtitle(label)+
     scale_color_manual(values = c("Private providers" = "#9d928a","Acute providers" = "black"), 
-                       name = "" )
+                       name = "" ) +
+    guides(breaks = guide_legend(order = 1),color = guide_legend(order = 2))
 }
 
 
@@ -544,8 +545,6 @@ ggtravel_plot_cdc(isochrones_CDC, cat, "car_time",  "Travel by car for CAT with 
 
 ggtravel_plot(isochrones_LSOA, cat, "pt_time", "Travel by public transport for CAT to acute sites")
 ggtravel_plot_cdc(isochrones_CDC, cat, "pt_time", "Travel by public transport for CAT with CDC included")
-
-
 
 
 

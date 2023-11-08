@@ -252,6 +252,36 @@ group_by(independent)%>%
 
 
 ```
+# Procedure type by referral route
+```{r, fig.height=4.5, fig.width=12}
+
+
+# Number of each procedure type
+Procedures_per_site %>%    
+  mutate(did_patsource_code=case_when(did_patsource_code==3 ~ "Outpatient",
+                               did_patsource_code==4 ~ "GP direct access",
+                               did_patsource_code==6 ~ "Other health care provider",
+                               did_patsource_code==7 ~ "Other"))%>%
+  group_by(ic_modality_desc,did_patsource_code)%>%
+  summarise(total=sum(total)) %>%
+  ggplot(aes(x=did_patsource_code, y =total, fill=ic_modality_desc)) +
+  geom_bar( stat="identity", position="dodge")+
+  geom_text(aes(label=scales::comma(total)),  vjust=-0.5, size=3.5,  position = position_dodge(width = .9)) +
+  theme_bw()+
+  theme(panel.grid.major.y = element_line(color = "grey80"), panel.grid.major.x =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12), 
+        axis.title.y = element_text(size = 14), axis.title.x = element_blank(), 
+        legend.text=element_text(size=14),legend.title=element_blank(),
+        plot.title = element_text(size=14), legend.position="right")+ 
+   labs(y="Number of imaging procedures")+
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555","grey80"))
+
+
+
+
+```
+
 
 #Number of procedures by Hospital
 
@@ -342,11 +372,11 @@ waiting_list %>%
 
 
 ```
-```{r, fig.height=6, fig.width=12}
+```{r, fig.height=5, fig.width=12}
 
 
 waiting_size_order2 <- waiting_list %>% 
-  group_by(provider_name)%>%
+  group_by(provider_name, diagnostic_test_name)%>%
   summarise(total=sum(percentage_waiting_6_weeks)) %>%
   arrange(total) %>% 
   mutate(provider_name = factor(provider_name ))
@@ -359,12 +389,14 @@ waiting_list %>%
   mutate(provider_name = factor(provider_name, levels =unique(waiting_size_order2$provider_name), ordered = TRUE)) %>% 
   ggplot() +
   geom_bar(aes(x=provider_name, y =(percentage_waiting_6_weeks*100), fill=diagnostic_test_name), stat="identity", position="dodge")+
+  facet_wrap(~diagnostic_test_name, ncol=3)+
   theme_bw()+
   theme(panel.grid.major.x = element_line(color = "grey80"), panel.grid.major.y =  element_blank(), panel.grid.minor.x =  element_blank(), panel.border = element_blank(), axis.line = element_line(colour = "black", linewidth=1),
-        axis.text.x = element_text(size = 14), axis.text.y = element_text(size = 12), 
-        axis.title.y = element_blank(), axis.title.x = element_text(size = 16,vjust=2), 
+        axis.text.x = element_text(size = 11), axis.text.y = element_text(size = 11), 
+        axis.title.y = element_blank(), axis.title.x = element_text(size = 12,vjust=2), 
         legend.text=element_text(size=14),legend.title=element_blank(),
-        plot.title = element_text(size=16), legend.position= c(0.65, 0.15))+ 
+        plot.title = element_text(size=16), legend.position="none",
+        strip.background = element_blank() , strip.text = element_text(size=11) )+ 
   scale_y_continuous(labels = scales::comma, limits = c(0,65), breaks = scales::pretty_breaks(n = 6))+
    labs(y = "Percentage waiting 6 weeks+")+
   scale_fill_manual(values=c("#f9bf07", "#5881c1","#ec6555"))+

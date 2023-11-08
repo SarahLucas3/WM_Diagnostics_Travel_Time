@@ -223,6 +223,31 @@ distinct(easting, northing, .keep_all = TRUE)
              fillOpacity = 1) %>%
 addLegendFactor(position = "topright",pal = pal, values = c("NHS acute providers","Private providers","Community Diagnostic Centres"), opacity=1, title = "Diagnostic sites", shape='circle',width=7, height=7)
   
+ pal2<-colorFactor(palette = c( "#ec6555"),domain = c( "Community Diagnostic Centres"),ordered = T)  
+  
+   leaflet() %>% 
+  addTiles() %>% 
+  addPolygons(data = map_sub_ICB,
+              weight = 1,  
+              opacity = 1,  
+              color = "#2c2825", 
+              fillColor = "#f9bf07",
+              label = ~ICB) %>% 
+  addPolygons(data = ICB_buffer,
+              weight = 1,  
+              opacity = 1,  
+              color = "#2c2825", 
+              fillColor = "#f9bf07") %>%
+       addCircleMarkers(data =cdc,
+          weight = 1,
+          radius=3,
+          opacity = 1,  
+            color = "#2c2825", 
+             fillColor = "#ec6555",
+             fillOpacity = 1) %>%
+addLegendFactor(position = "topright",pal = pal2, values = c("Community Diagnostic Centres"), opacity=1, title = NULL, shape='circle',width=7, height=7) 
+  
+  
 
 ```
 
